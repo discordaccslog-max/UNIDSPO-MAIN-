@@ -308,16 +308,31 @@
     border-radius: 10px; text-decoration: none; font-weight: 800;
   }
 
-  /* ============ Animations — minimal, matches live site ============ */
-  /* All scroll-reveal/fade animations removed. Keep only:
-     - related card: subtle lift on hover
-     - button/pill hover states (defined on each component) */
-  .pd-reveal, .pd-reveal.is-visible {
-    opacity: 1; transform: none; animation: none;
+  /* ============ Animations — copied from unidispo.com ============
+     Dawn theme tokens:
+       --duration-long: .5s
+       --duration-extra-long: .6s
+       --ease-out-slow: cubic-bezier(0, 0, .3, 1)   ← slide-in easing
+     Used on: .scroll-trigger.animate--slide-in and .animate--fade-in */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pd-reveal {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    .pd-reveal.is-visible {
+      animation: pd-slide-in .6s cubic-bezier(0, 0, .3, 1) forwards;
+    }
   }
-  .pd-related__card {
-    transition: transform .25s ease-out;
+  @keyframes pd-slide-in {
+    to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Media opacity transition matches live site's .media > img */
+  .pd-related__media img { transition: opacity .4s cubic-bezier(.25, .46, .45, .94); }
+
+  /* Card lift on hover */
+  .pd-related__card { transition: transform .3s cubic-bezier(0, 0, .3, 1); }
   .pd-related__card:hover { transform: translateY(-2px); }
 
   /* Toast */
