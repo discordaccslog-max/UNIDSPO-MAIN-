@@ -570,12 +570,11 @@
 
 <!-- ============ HEADER ============ -->
 <header class="uni-header">
-  <span class="uni-header__banner" aria-hidden="true"></span>
   <div class="uni-header__bar">
     <div class="uni-header__side uni-header__side--left">
-      <a href="catalog.html" aria-label="Search products">
+      <button type="button" aria-label="Search">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      </a>
+      </button>
     </div>
     <a href="index.html" class="uni-logo">UNITED DISPO</a>
     <div class="uni-header__side uni-header__side--right">
@@ -617,7 +616,7 @@
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
 <script src="js/products.js?v=20261119c"></script>
-<script src="js/cart.js?v=20261119f"></script>
+<script src="js/cart.js?v=20261119d"></script>
 <script>
 (function () {
   var slug = new URLSearchParams(window.location.search).get('id') || '';

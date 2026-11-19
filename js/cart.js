@@ -435,7 +435,7 @@
       if (!dot) {
         dot = document.createElement('span');
         dot.className = 'uni-cart-badge';
-        dot.style.cssText = 'position:absolute;top:3px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:linear-gradient(180deg,#E8C766,#BA9930);color:#111;border-radius:999px;box-shadow:0 0 0 2px #0e0e10;font-family:Figtree,"Helvetica Neue",Arial,sans-serif;font-size:11px;font-weight:800;line-height:18px;text-align:center;pointer-events:none;';
+        dot.style.cssText = 'position:absolute;top:-6px;right:-10px;min-width:18px;height:18px;padding:0 5px;background:#E8C766;color:#111;border-radius:999px;font-family:"Avenir Next","Helvetica Neue",Arial,sans-serif;font-size:11px;font-weight:700;line-height:18px;text-align:center;';
         a.appendChild(dot);
       }
       dot.textContent = String(n);
