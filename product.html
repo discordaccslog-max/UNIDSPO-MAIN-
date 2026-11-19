@@ -13,7 +13,7 @@
   .pd-wrap { max-width: 1400px; margin: 0 auto; padding: 36px 20px 80px; }
 
   .pd { display: grid; grid-template-columns: 1fr; gap: 32px; }
-  @media(min-width: 860px) { .pd { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
+  @media(min-width: 860px) { .pd { grid-template-columns: 1fr 1fr; gap: 48px; } }
 
   /* Gallery — flat, image takes its natural portrait height */
   .pd-gallery { display: flex; flex-direction: column; gap: 14px; align-self: start; }
@@ -23,7 +23,8 @@
     overflow: hidden;
   }
   .pd-hero img {
-    width: 100%; height: auto; display: block;
+    width: 100%; height: auto; max-height: 680px;
+    object-fit: contain; display: block;
     transition: transform .4s ease;
   }
   .pd-hero:hover img { transform: scale(1.03); }
