@@ -116,7 +116,8 @@ window.UNI_CATALOG = {
     group: "singles",
     price: 35.99,
     compareAt: null,
-    variants: ["Indica blend", "Sativa blend"],
+    variants: ["Switch", "Custom"],
+    variantLabel: "Options",
     available: true,
     images: [
       "images/boutiq-v5.webp"
@@ -142,7 +143,8 @@ window.UNI_CATALOG = {
     group: "singles",
     price: 32.99,
     compareAt: null,
-    variants: [],
+    variants: ["SWITCH"],
+    variantLabel: "Options",
     available: false,
     images: [
       "images/wholemelts.webp"
@@ -155,8 +157,10 @@ window.UNI_CATALOG = {
     group: "singles",
     price: 38.99,
     compareAt: null,
-    variants: ["Gelato", "Cookies & Cream", "Cereal Milk"],
+    variants: ["Hybrid", "Sativa", "Indica"],
+    variantLabel: "Options",
     available: true,
+    stockStatus: "low",
     images: [
       "images/muha-cookies.webp"
     ],
@@ -193,8 +197,10 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 205.99,
     compareAt: null,
-    variants: ["Mint", "Watermelon", "Blue Dream"],
+    variants: ["Hybrid", "Sativa", "Indica"],
+    variantLabel: "Options",
     available: true,
+    stockStatus: "low",
     images: [
       "images/20pc-ace-ultra.webp"
     ],
@@ -206,8 +212,10 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 195.99,
     compareAt: null,
-    variants: ["Sativa", "Indica", "Hybrid"],
+    variants: ["HYBRID", "SATIVA", "INDICA"],
+    variantLabel: "Options",
     available: true,
+    stockStatus: "low",
     images: [
       "images/10pc-raw-garden.webp"
     ],
@@ -219,7 +227,8 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 125.99,
     compareAt: null,
-    variants: ["Mint", "Watermelon", "Blue Dream"],
+    variants: ["Hybrid", "Sativa", "Indica"],
+    variantLabel: "Options",
     available: true,
     images: [
       "images/10pc-ace-ultra.webp"
@@ -232,8 +241,10 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 145.99,
     compareAt: null,
-    variants: ["Gelato", "Cookies & Cream", "Cereal Milk"],
+    variants: ["Hybrid", "Sativa", "Indica"],
+    variantLabel: "Options",
     available: true,
+    stockStatus: "low",
     images: [
       "images/10pc-muha-cookies.webp"
     ],
@@ -245,7 +256,8 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 135.99,
     compareAt: null,
-    variants: ["Indica blend", "Sativa blend"],
+    variants: ["Switch", "New Gen Switch"],
+    variantLabel: "Options",
     available: true,
     images: [
       "images/10pc-boutiq-v5.webp"

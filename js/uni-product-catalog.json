@@ -1,0 +1,1895 @@
+{
+  "READ_ME_FIRST": [
+    "This is the complete product catalog of the UNI store (unidispo.com), exported from Shopify on 2026-11-18. All 20 products are included: 17 active and 3 archived.",
+    "Only products with status 'active' and a value in 'shown_on_homepage' appear on the homepage today. Archived products are hidden from shoppers on Shopify; don't show them.",
+    "Prices are in USD. Every product has one price for all of its variants. No product is on sale (no compare-at prices).",
+    "Strains: for most cartridges and disposables the variant option is literally named 'Options' in Shopify, and its values are the strain types (Hybrid / Sativa / Indica). Some products use upper case (HYBRID / SATIVA / INDICA). Display them consistently.",
+    "Flavors: GEEK BAR PULSE X uses an option named 'FLAVOR' with 24 values.",
+    "Stock: when 'inventory_tracked' is false, Shopify doesn't count stock, so every variant is sellable and inventory_quantity is null. When it's true, a variant is sold out at 0.",
+    "'description_html' is the product description, cleaned of junk attributes copied from ChatGPT (data-start/data-end) and inline white-text spans. 'description_lines' is the same text without tags. Descriptions are short feature lists; many are reused across products.",
+    "Images are on Shopify's image server (cdn.shopify.com). They stop working if the Shopify store is closed, so download them into the new site.",
+    "'buy_links' are Shopify custom fields. Only 2 products have any, and every one is https://www.youtube.com/ (a placeholder). See 'product_page_layout' for how the live product page uses them.",
+    "Each product's 'notes' list problems found in the data. Ask the store owner before changing product names, prices or descriptions.",
+    "Store-wide context: age-restricted products (21+), nicotine warning required: 'WARNING: Products included in this website contains nicotine. Nicotine is an addictive chemical.' (wording as it appears on the current site's age gate)."
+  ],
+  "store": {
+    "name": "UNI",
+    "domain": "unidispo.com",
+    "currency": "USD",
+    "exported": "2026-11-18",
+    "source": "Shopify Admin API"
+  },
+  "product_page_layout": {
+    "summary": "How the current Shopify product page (templates/product.json, Dawn-based theme) is laid out, so a rebuilt page can match it.",
+    "page": {
+      "background": "#0e0e10 (near black), text #ffffff",
+      "fonts": "Headings Oswald 500; body Avenir Next 500 (fallback Helvetica Neue, Arial). Same as the homepage.",
+      "spacing": "36px above the product section, 12px below (75% of that on phones)."
+    },
+    "media_column": {
+      "position": "Left on desktop, above the info on phones",
+      "size": "Medium (the info column is wider than a 'large' layout would allow)",
+      "gallery": "Main image with thumbnail strip underneath; thumbnails hidden on phones (swipe instead)",
+      "image_fit": "contain (whole image visible, no cropping), constrained to the screen height",
+      "zoom": "Click opens a lightbox",
+      "sticky": "The info column stays in view while scrolling past tall images"
+    },
+    "info_column_blocks_in_order": [
+      {
+        "block": "Title",
+        "notes": "Product title as an h1."
+      },
+      {
+        "block": "Rating",
+        "notes": "Shows nothing: there's no reviews app installed."
+      },
+      {
+        "block": "Price",
+        "notes": "e.g. '$35.99 USD' (the theme shows the currency code)."
+      },
+      {
+        "block": "Variant picker",
+        "notes": "Clickable pill buttons (rounded, 40px corner radius), one per strain or flavor. Sold-out variants are shown crossed out/disabled."
+      },
+      {
+        "block": "Inventory status",
+        "notes": "Shows 'Low stock' when 10 or fewer are left and 'In stock' otherwise, without showing the number. Only meaningful when inventory is tracked."
+      },
+      {
+        "block": "'Buy it now' button (custom code)",
+        "notes": "Full-width gold gradient link (linear-gradient(180deg, #E8C766, #BA9930)), text #111, 600 weight, 16px, 1px #FFD700 border, 4px radius, 14px vertical padding, 20px top margin, shadow 0 2px 4px rgba(0,0,0,.2). Hover: gradient #FFD976 to #C8A732 and shadow 0 4px 12px rgba(212,175,55,.35). Opens the product's custom field 'external_link' in a new tab."
+      },
+      {
+        "block": "Security line (custom code)",
+        "notes": "Centered under the button, 8px gap: green lock icon (#10b981) and 'Checkout secured by Shopify / Whop' (gray #9ca3af, 12.5px; 'Shopify / Whop' bold green)."
+      },
+      {
+        "block": "Quantity selector",
+        "notes": "Standard minus / number / plus control."
+      },
+      {
+        "block": "Description",
+        "notes": "The product's description_html."
+      },
+      {
+        "block": "Share",
+        "notes": "'Share' button that copies the page link."
+      }
+    ],
+    "related_products_section": {
+      "heading": "YOU MAY ALSO LIKE",
+      "heading_size": "h1 (same size as the homepage grid headings)",
+      "products": 4,
+      "columns_desktop": 4,
+      "columns_phone": 2,
+      "cards": "Same card design as the homepage product grid, portrait images, second image on hover, no add-to-cart button on the cards.",
+      "spacing": "0 above, 40px below"
+    },
+    "problems_on_the_live_page": [
+      "There is no Add to cart button: the theme's buy-buttons block isn't on the product page. The only way to buy is 'Buy it now'.",
+      "'Buy it now' reads the custom field 'external_link'. Only ACE ULTRA PREMIUM and Boutiq Switch V5 have it, and both point to https://www.youtube.com/. On the other 18 products the button has no link and goes nowhere.",
+      "The theme also has a script that sends Add to cart / checkout clicks to a different custom field, 'external_buy_url'. Only ACE ULTRA PREMIUM has it (also youtube.com). Pick one field for buy links on the new site.",
+      "The page has a quantity selector, but the external buy link has no way to receive the chosen quantity or strain.",
+      "The theme CSS would also add '🔒 Secured by PayPal' under a buy-buttons block. It doesn't show today because that block is missing, but it contradicts 'Checkout secured by Shopify / Whop'. Use one payment message."
+    ]
+  },
+  "products": [
+    {
+      "title": "ACE ULTRA PREMIUM",
+      "handle": "ace-ultra-premium-2g",
+      "shopify_url": "https://unidispo.com/products/ace-ultra-premium-2g",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 1",
+      "collections": [
+        "single"
+      ],
+      "vendor": "My Store",
+      "price": 35.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Hybrid",
+            "Sativa",
+            "Indica"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Hybrid"
+          },
+          "title": "Hybrid",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "Sativa"
+          },
+          "title": "Sativa",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "Indica"
+          },
+          "title": "Indica",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each Ace Ultra Premium cartridge is lab tested, batch verified and tamper-sealed to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each Ace Ultra Premium cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09_303a935e-3bf7-46c5-ba43-0a8ac9ec2e3f.jpg?v=1784768210",
+          "width": 640,
+          "height": 640,
+          "alt": ""
+        }
+      ],
+      "buy_links": {
+        "external_link": "https://www.youtube.com/",
+        "external_buy_url": "https://www.youtube.com/",
+        "link": "https://www.youtube.com/",
+        "custom_external_link": "https://www.youtube.com/"
+      },
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Every buy link on this product points to https://www.youtube.com/, which looks like a placeholder. Replace it with the real buy link."
+      ]
+    },
+    {
+      "title": "MUHA MEDS (SUMMER EDITION)",
+      "handle": "muha-meds-sumer-edition",
+      "shopify_url": "https://unidispo.com/products/muha-meds-sumer-edition",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 2",
+      "collections": [
+        "single"
+      ],
+      "vendor": "My Store",
+      "price": 35.99,
+      "price_note": null,
+      "available": false,
+      "inventory_tracked": true,
+      "options": [],
+      "variants": [
+        {
+          "title": "Default",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Ultra-refined premium distillate",
+        "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Ultra-refined premium distillate</h3>\n<h3><strong>Lab-tested, batch-verified, and tamper-sealed</strong> to ensure authenticity</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/6228279a8bbf69274593cbe1_mm-logo600.webp?v=1784768209",
+          "width": 600,
+          "height": 600,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Sold out.",
+        "The only photo is the Muha Meds logo, not the product.",
+        "The handle has a typo (\"sumer\"). Keep it if old links must keep working."
+      ]
+    },
+    {
+      "title": "RAW GARDEN LIVE RESIN (1G)",
+      "handle": "raw-garden-live-resin-1g",
+      "shopify_url": "https://unidispo.com/products/raw-garden-live-resin-1g",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 3",
+      "collections": [
+        "single"
+      ],
+      "vendor": "My Store",
+      "price": 42.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "HYBRID",
+            "SATIVA",
+            "INDICA"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "HYBRID"
+          },
+          "title": "HYBRID",
+          "price": 42.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "SATIVA"
+          },
+          "title": "SATIVA",
+          "price": 42.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "INDICA"
+          },
+          "title": "INDICA",
+          "price": 42.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Dispensary-sourced & batch-verified",
+        "Lab-tested for potency and safety",
+        "No fillers, no additives",
+        "Premium Live Resin Quality"
+      ],
+      "description_html": "<p><strong>Dispensary-sourced &amp; batch-verified</strong></p>\n<p><strong>Lab-tested</strong> for potency and safety</p>\n<p><strong>No fillers, no additives</strong></p>\n<p><strong>Premium Live Resin Quality</strong></p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/92a32d66-569e-483b-b001-c19cb128159f_161a28f5-f2cf-46ce-bd7e-70a3c790bfd3.png?v=1784768208",
+          "width": 1024,
+          "height": 1024,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type."
+      ]
+    },
+    {
+      "title": "GEEK BAR PULSE",
+      "handle": "geek-bar-pulse-x",
+      "shopify_url": "https://unidispo.com/products/geek-bar-pulse-x",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 4",
+      "collections": [
+        "single"
+      ],
+      "vendor": "My Store",
+      "price": 28.99,
+      "price_note": null,
+      "available": false,
+      "inventory_tracked": true,
+      "options": [],
+      "variants": [
+        {
+          "title": "Default",
+          "price": 28.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "Geek Bar Pulse X Over 10 Flavors / Options",
+        "15,000 Puffs Regular Mode",
+        "7,500 Puffs Pulse Mode"
+      ],
+      "description_html": "<p>Geek Bar Pulse X Over 10 Flavors / Options</p>\n<p>15,000 Puffs Regular Mode</p>\n<p>7,500 Puffs Pulse Mode</p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/b4c233c1-1f8b-4e5c-a231-01ec7c269284_5de2f718-2f27-48b4-98e4-a0aa9ff9439d22.png?v=1784768207",
+          "width": 1024,
+          "height": 1336,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Sold out.",
+        "The description says \"Geek Bar Pulse X\" and \"Over 10 Flavors\", but this is the regular Pulse and it has no flavor options.",
+        "Its handle is geek-bar-pulse-x, while GEEK BAR PULSE X uses geek-bar-pulse. The two handles are swapped."
+      ]
+    },
+    {
+      "title": "GEEK BAR PULSE X",
+      "handle": "geek-bar-pulse",
+      "shopify_url": "https://unidispo.com/products/geek-bar-pulse",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 5",
+      "collections": [
+        "single"
+      ],
+      "vendor": "My Store",
+      "price": 31.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "FLAVOR",
+          "values": [
+            "Strawberry Watermelon",
+            "Blue Rancher",
+            "Blackberry B-Pop",
+            "Cool Mint",
+            "Grapefrtuit Refresher",
+            "Miami Mint",
+            "Raspberry Peach Lime",
+            "Sour Mango Pineapple",
+            "Sour Fcuking Fab",
+            "Banana Taffy Freeze",
+            "Blue Razz Ice",
+            "Lemon Heads",
+            "Lime Berry Orange",
+            "Orange Fcuking Fab",
+            "Sour Apple Ice",
+            "Sour Straws",
+            "Strawberry B-Pop",
+            "Watermelon Ice",
+            "White Peach Raspberry",
+            "Strawberry Colada",
+            "ATL Mint",
+            "Orange Dragon",
+            "Pink & Blue",
+            "Strawberry Kiwi Ice"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry Watermelon"
+          },
+          "title": "Strawberry Watermelon",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Blue Rancher"
+          },
+          "title": "Blue Rancher",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Blackberry B-Pop"
+          },
+          "title": "Blackberry B-Pop",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Cool Mint"
+          },
+          "title": "Cool Mint",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Grapefrtuit Refresher"
+          },
+          "title": "Grapefrtuit Refresher",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Miami Mint"
+          },
+          "title": "Miami Mint",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Raspberry Peach Lime"
+          },
+          "title": "Raspberry Peach Lime",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Mango Pineapple"
+          },
+          "title": "Sour Mango Pineapple",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Fcuking Fab"
+          },
+          "title": "Sour Fcuking Fab",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Banana Taffy Freeze"
+          },
+          "title": "Banana Taffy Freeze",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Blue Razz Ice"
+          },
+          "title": "Blue Razz Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Lemon Heads"
+          },
+          "title": "Lemon Heads",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Lime Berry Orange"
+          },
+          "title": "Lime Berry Orange",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Orange Fcuking Fab"
+          },
+          "title": "Orange Fcuking Fab",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Apple Ice"
+          },
+          "title": "Sour Apple Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Straws"
+          },
+          "title": "Sour Straws",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry B-Pop"
+          },
+          "title": "Strawberry B-Pop",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Watermelon Ice"
+          },
+          "title": "Watermelon Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "White Peach Raspberry"
+          },
+          "title": "White Peach Raspberry",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry Colada"
+          },
+          "title": "Strawberry Colada",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "ATL Mint"
+          },
+          "title": "ATL Mint",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Orange Dragon"
+          },
+          "title": "Orange Dragon",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Pink & Blue"
+          },
+          "title": "Pink & Blue",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry Kiwi Ice"
+          },
+          "title": "Strawberry Kiwi Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Geek Bar Pulse X Over 10 Flavors / Options",
+        "25,000 Puffs Regular Mode",
+        "15,000 Puffs Pulse Mode"
+      ],
+      "description_html": "<p>Geek Bar Pulse X Over 10 Flavors / Options</p>\n<p>25,000 Puffs Regular Mode</p>\n<p>15,000 Puffs Pulse Mode</p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/14e38133-5113-4d44-b627-64c50bad81de2_2bde79dd-e0fd-44b0-b0bf-734e1b2dcf23.png?v=1784768205",
+          "width": 1024,
+          "height": 1391,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "24 flavors.",
+        "Flavor \"Grapefrtuit Refresher\" is misspelled. Flavor names are otherwise copied exactly as entered in Shopify.",
+        "Its handle is geek-bar-pulse, while GEEK BAR PULSE uses geek-bar-pulse-x. The two handles are swapped."
+      ]
+    },
+    {
+      "title": "Boutiq Switch V5",
+      "handle": "boutiq-switch-v5",
+      "shopify_url": "https://unidispo.com/products/boutiq-switch-v5",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 6",
+      "collections": [
+        "single"
+      ],
+      "vendor": "NST",
+      "price": 35.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Switch",
+            "Custom"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Switch"
+          },
+          "title": "Switch",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "Custom"
+          },
+          "title": "Custom",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Ultra-refined premium distillate",
+        "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity",
+        "Includes Indica + Sativa (Switch)"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Ultra-refined premium distillate</h3>\n<h3><strong>Lab-tested, batch-verified, and tamper-sealed</strong> to ensure authenticity</h3>\n<h3>Includes Indica + Sativa (Switch)</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/7845c05f-e62c-41e4-8bce-77c8c54d6d4a_1457df7a-0d28-4bfd-9560-cacdfe257838.png?v=1784768203",
+          "width": 1201,
+          "height": 1201,
+          "alt": ""
+        }
+      ],
+      "buy_links": {
+        "external_link": "https://www.youtube.com/",
+        "custom_external_link": "https://www.youtube.com/"
+      },
+      "notes": [
+        "The title is not in all caps, unlike every other product.",
+        "What the \"Custom\" variant is isn't explained anywhere.",
+        "Shopify shows -2 in stock for the Switch variant (oversold), but inventory isn't tracked, so it still shows as available.",
+        "Every buy link on this product points to https://www.youtube.com/, which looks like a placeholder. Replace it with the real buy link."
+      ]
+    },
+    {
+      "title": "BIG CHIEF CARTRIDGE (2G)",
+      "handle": "big-chief",
+      "shopify_url": "https://unidispo.com/products/big-chief",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 7",
+      "collections": [
+        "single"
+      ],
+      "vendor": "NST",
+      "price": 36.99,
+      "price_note": null,
+      "available": false,
+      "inventory_tracked": true,
+      "options": [],
+      "variants": [
+        {
+          "title": "Default",
+          "price": 36.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Ultra-refined premium distillate",
+        "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity",
+        "Includes Indica + Sativa (Switch)"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Ultra-refined premium distillate</h3>\n<h3><strong>Lab-tested, batch-verified, and tamper-sealed</strong> to ensure authenticity</h3>\n<h3>Includes Indica + Sativa (Switch)</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/1f1d5468-6074-4637-8f3e-e681071e841d.png?v=1784768203",
+          "width": 1024,
+          "height": 1536,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Sold out.",
+        "The description ends with \"Includes Indica + Sativa (Switch)\", copied from Boutiq Switch V5. Check it applies to this product."
+      ]
+    },
+    {
+      "title": "WHOLEMELTS V7",
+      "handle": "wholemelts-v7-copy",
+      "shopify_url": "https://unidispo.com/products/wholemelts-v7-copy",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 8",
+      "collections": [
+        "single"
+      ],
+      "vendor": "NST",
+      "price": 32.99,
+      "price_note": null,
+      "available": false,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "SWITCH"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "SWITCH"
+          },
+          "title": "SWITCH",
+          "price": 32.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "Dispensary-sourced & batch-verified",
+        "Lab-tested for potency and safety",
+        "No fillers, no additives",
+        "Premium Quality"
+      ],
+      "description_html": "<p><strong>Dispensary-sourced &amp; batch-verified</strong></p>\n<p><strong>Lab-tested</strong> for potency and safety</p>\n<p><strong>No fillers, no additives</strong></p>\n<p><strong>Premium Quality</strong></p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/cf13f73b-c4fa-4f0d-ab86-e7aa8084b72f_6ddfe569-a3f9-4912-90b1-494281e72070.png?v=1784768201",
+          "width": 1024,
+          "height": 1024,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Sold out.",
+        "One variant named SWITCH.",
+        "The handle ends in \"-copy\" because it was duplicated in Shopify."
+      ]
+    },
+    {
+      "title": "MUHA MEDS X COOKIES (LIMITED EDITION)",
+      "handle": "muha-meds-x-cookies-limited-edition",
+      "shopify_url": "https://unidispo.com/products/muha-meds-x-cookies-limited-edition",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 9",
+      "collections": [
+        "single"
+      ],
+      "vendor": "NST",
+      "price": 38.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Hybrid",
+            "Sativa",
+            "Indica"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Hybrid"
+          },
+          "title": "Hybrid",
+          "price": 38.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 5
+        },
+        {
+          "option_values": {
+            "Options": "Sativa"
+          },
+          "title": "Sativa",
+          "price": 38.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        },
+        {
+          "option_values": {
+            "Options": "Indica"
+          },
+          "title": "Indica",
+          "price": 38.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "NEWLY RELEASED LIMITED EDITION / LOW STOCK",
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h2>NEWLY RELEASED LIMITED EDITION / LOW STOCK</h2>\n<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> before shipping to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/image3-1_cd66c1f3-e512-4231-a007-1125c6018ac3.jpg?v=1784768194",
+          "width": 1200,
+          "height": 1501,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Only Hybrid is in stock (5 left). Sativa and Indica are sold out."
+      ]
+    },
+    {
+      "title": "MUHA MEDS 3RD GEN (NEW)",
+      "handle": "muha-meds-limited-edition",
+      "shopify_url": "https://unidispo.com/products/muha-meds-limited-edition",
+      "status": "active",
+      "shown_on_homepage": "Main grid, position 10",
+      "collections": [
+        "single"
+      ],
+      "vendor": "NST",
+      "price": 35.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Hybrid",
+            "Sativa",
+            "Indica"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Hybrid"
+          },
+          "title": "Hybrid",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 5
+        },
+        {
+          "option_values": {
+            "Options": "Sativa"
+          },
+          "title": "Sativa",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 1
+        },
+        {
+          "option_values": {
+            "Options": "Indica"
+          },
+          "title": "Indica",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 4
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> before shipping to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/IMG_1942.jpg?v=1784768192",
+          "width": 571,
+          "height": 724,
+          "alt": ""
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/fa9f46e0-ab92-4d26-a23f-c7de896c9bb0.png?v=1784768192",
+          "width": 1024,
+          "height": 1024,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Has a second photo, shown on hover in the product grid.",
+        "The handle says \"limited-edition\" though the title says 3rd Gen."
+      ]
+    },
+    {
+      "title": "20PC ACE ULTRA PREMIUM",
+      "handle": "20pc-ace-ultra-premium",
+      "shopify_url": "https://unidispo.com/products/20pc-ace-ultra-premium",
+      "status": "active",
+      "shown_on_homepage": "Bulk grid, position 1",
+      "collections": [
+        "blk"
+      ],
+      "vendor": "My Store",
+      "price": 205.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Hybrid",
+            "Sativa",
+            "Indica"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Hybrid"
+          },
+          "title": "Hybrid",
+          "price": 205.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 2
+        },
+        {
+          "option_values": {
+            "Options": "Sativa"
+          },
+          "title": "Sativa",
+          "price": 205.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 2
+        },
+        {
+          "option_values": {
+            "Options": "Indica"
+          },
+          "title": "Indica",
+          "price": 205.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 2
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each Ace Ultra Premium cartridge is lab tested, batch verified and tamper-sealed to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each Ace Ultra Premium cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09_35180b39-64e3-45b9-9c2e-6632d0698281.jpg?v=1784768199",
+          "width": 640,
+          "height": 640,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Bulk pack of 20."
+      ]
+    },
+    {
+      "title": "10PC RAW GARDEN LIVE RESIN (1G)",
+      "handle": "10pc-raw-garden-live-resin-1g",
+      "shopify_url": "https://unidispo.com/products/10pc-raw-garden-live-resin-1g",
+      "status": "active",
+      "shown_on_homepage": "Bulk grid, position 2",
+      "collections": [
+        "blk"
+      ],
+      "vendor": "My Store",
+      "price": 195.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "HYBRID",
+            "SATIVA",
+            "INDICA"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "HYBRID"
+          },
+          "title": "HYBRID",
+          "price": 195.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 2
+        },
+        {
+          "option_values": {
+            "Options": "SATIVA"
+          },
+          "title": "SATIVA",
+          "price": 195.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 2
+        },
+        {
+          "option_values": {
+            "Options": "INDICA"
+          },
+          "title": "INDICA",
+          "price": 195.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 2
+        }
+      ],
+      "description_lines": [
+        "Dispensary-sourced & batch-verified",
+        "Lab-tested for potency and safety",
+        "No fillers, no additives",
+        "Premium Live Resin Quality"
+      ],
+      "description_html": "<p><strong>Dispensary-sourced &amp; batch-verified</strong></p>\n<p><strong>Lab-tested</strong> for potency and safety</p>\n<p><strong>No fillers, no additives</strong></p>\n<p><strong>Premium Live Resin Quality</strong></p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/92a32d66-569e-483b-b001-c19cb128159f_6ba0327b-4684-4c5a-a144-ca499d242ac7.png?v=1784768197",
+          "width": 1024,
+          "height": 1024,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Bulk pack of 10."
+      ]
+    },
+    {
+      "title": "10PC ACE ULTRA PREMIUM",
+      "handle": "10pc-ace-ultra-premium",
+      "shopify_url": "https://unidispo.com/products/10pc-ace-ultra-premium",
+      "status": "active",
+      "shown_on_homepage": "Bulk grid, position 3",
+      "collections": [
+        "blk"
+      ],
+      "vendor": "My Store",
+      "price": 125.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Hybrid",
+            "Sativa",
+            "Indica"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Hybrid"
+          },
+          "title": "Hybrid",
+          "price": 125.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "Sativa"
+          },
+          "title": "Sativa",
+          "price": 125.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "Indica"
+          },
+          "title": "Indica",
+          "price": 125.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each Ace Ultra Premium cartridge is lab tested, batch verified and tamper-sealed to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each Ace Ultra Premium cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09.jpg?v=1784768196",
+          "width": 640,
+          "height": 640,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Bulk pack of 10."
+      ]
+    },
+    {
+      "title": "10PC MUHA MEDS X COOKIES (LIMITED EDITION)",
+      "handle": "10pc-muha-meds-x-cookies-limited-edition",
+      "shopify_url": "https://unidispo.com/products/10pc-muha-meds-x-cookies-limited-edition",
+      "status": "active",
+      "shown_on_homepage": "Bulk grid, position 4",
+      "collections": [
+        "blk"
+      ],
+      "vendor": "NST",
+      "price": 145.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Hybrid",
+            "Sativa",
+            "Indica"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Hybrid"
+          },
+          "title": "Hybrid",
+          "price": 145.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": 5
+        },
+        {
+          "option_values": {
+            "Options": "Sativa"
+          },
+          "title": "Sativa",
+          "price": 145.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        },
+        {
+          "option_values": {
+            "Options": "Indica"
+          },
+          "title": "Indica",
+          "price": 145.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "NEWLY RELEASED LIMITED EDITION / LOW STOCK",
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h2>NEWLY RELEASED LIMITED EDITION / LOW STOCK</h2>\n<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> before shipping to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/710cfa5e-f8b3-4c34-957b-ce9291cdfe12_8b976eaa-c6d8-4c02-bc1a-822f693f0d6a.png?v=1784768194",
+          "width": 796,
+          "height": 796,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "The option called \"Options\" is the strain type.",
+        "Bulk pack of 10.",
+        "Only Hybrid is in stock (5 packs). Sativa and Indica are sold out."
+      ]
+    },
+    {
+      "title": "10PC BOUTIQ SWITCH V5",
+      "handle": "10pc-boutiq-switch-v5",
+      "shopify_url": "https://unidispo.com/products/10pc-boutiq-switch-v5",
+      "status": "active",
+      "shown_on_homepage": "Bulk grid, position 5",
+      "collections": [
+        "blk"
+      ],
+      "vendor": "NST",
+      "price": 135.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Switch",
+            "New Gen Switch"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Switch"
+          },
+          "title": "Switch",
+          "price": 135.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "New Gen Switch"
+          },
+          "title": "New Gen Switch",
+          "price": 135.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Ultra-refined premium distillate",
+        "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity",
+        "Includes Indica + Sativa (Switch)"
+      ],
+      "description_html": "<h5>Strain-specific terpene profiles</h5>\n<h5>Tamper-proof and batch-verified</h5>\n<h5>Ultra-refined premium distillate</h5>\n<h5><strong>Lab-tested, batch-verified, and tamper-sealed</strong> to ensure authenticity</h5>\n<h5>Includes Indica + Sativa (Switch)</h5>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/7845c05f-e62c-41e4-8bce-77c8c54d6d4a_d0b0aab3-d546-476a-b3a8-d65db8a7b6d9.png?v=1784768189",
+          "width": 1201,
+          "height": 1201,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Bulk pack of 10.",
+        "Variants differ from the single Boutiq Switch V5 (Switch / Custom).",
+        "The description uses small h5 headings, unlike the h3 used elsewhere."
+      ]
+    },
+    {
+      "title": "10PC WHOLEMELTS V7",
+      "handle": "10pc-wholemelts-v7",
+      "shopify_url": "https://unidispo.com/products/10pc-wholemelts-v7",
+      "status": "active",
+      "shown_on_homepage": null,
+      "collections": [],
+      "vendor": "NST",
+      "price": 120.99,
+      "price_note": null,
+      "available": false,
+      "inventory_tracked": true,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "SWITCH"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "SWITCH"
+          },
+          "title": "SWITCH",
+          "price": 120.99,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [
+        "Dispensary-sourced & batch-verified",
+        "Lab-tested for potency and safety",
+        "No fillers, no additives",
+        "Premium Quality"
+      ],
+      "description_html": "<p><strong>Dispensary-sourced &amp; batch-verified</strong></p>\n<p><strong>Lab-tested</strong> for potency and safety</p>\n<p><strong>No fillers, no additives</strong></p>\n<p><strong>Premium Quality</strong></p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/cf13f73b-c4fa-4f0d-ab86-e7aa8084b72f.png?v=1784768199",
+          "width": 1024,
+          "height": 1024,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Active on Shopify but in no collection, so it isn't on the homepage.",
+        "Sold out.",
+        "Bulk pack of 10."
+      ]
+    },
+    {
+      "title": "Afterlife FC Maroon Away Jersey",
+      "handle": "afterlife-fc-maroon-away-jersey",
+      "shopify_url": "https://unidispo.com/products/afterlife-fc-maroon-away-jersey",
+      "status": "active",
+      "shown_on_homepage": null,
+      "collections": [],
+      "vendor": "UNI",
+      "price": 25.0,
+      "price_note": null,
+      "available": false,
+      "inventory_tracked": true,
+      "options": [],
+      "variants": [
+        {
+          "title": "Default",
+          "price": 25.0,
+          "compare_at_price": null,
+          "available": false,
+          "inventory_quantity": 0
+        }
+      ],
+      "description_lines": [],
+      "description_html": "",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/4.webp?v=1793420233",
+          "width": 823,
+          "height": 823,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Not a vape product. Added 2026-10-31, no description, in no collection, sold out. Ask the store owner whether it belongs on the site."
+      ]
+    },
+    {
+      "title": "10PC GEEK BAR PULSE X",
+      "handle": "10pc-geek-bar-pulse-x",
+      "shopify_url": null,
+      "status": "archived",
+      "shown_on_homepage": null,
+      "collections": [],
+      "vendor": "My Store",
+      "price": 31.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "FLAVOR",
+          "values": [
+            "Strawberry Watermelon",
+            "Blue Rancher",
+            "Blackberry B-Pop",
+            "Cool Mint",
+            "Grapefrtuit Refresher",
+            "Miami Mint",
+            "Raspberry Peach Lime",
+            "Sour Mango Pineapple",
+            "Sour Fcuking Fab",
+            "Banana Taffy Freeze",
+            "Blue Razz Ice",
+            "Lemon Heads",
+            "Lime Berry Orange",
+            "Orange Fcuking Fab",
+            "Sour Apple Ice",
+            "Sour Straws",
+            "Strawberry B-Pop",
+            "Watermelon Ice",
+            "White Peach Raspberry",
+            "Strawberry Colada",
+            "ATL Mint",
+            "Orange Dragon",
+            "Pink & Blue",
+            "Strawberry Kiwi Ice"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry Watermelon"
+          },
+          "title": "Strawberry Watermelon",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Blue Rancher"
+          },
+          "title": "Blue Rancher",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Blackberry B-Pop"
+          },
+          "title": "Blackberry B-Pop",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Cool Mint"
+          },
+          "title": "Cool Mint",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Grapefrtuit Refresher"
+          },
+          "title": "Grapefrtuit Refresher",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Miami Mint"
+          },
+          "title": "Miami Mint",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Raspberry Peach Lime"
+          },
+          "title": "Raspberry Peach Lime",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Mango Pineapple"
+          },
+          "title": "Sour Mango Pineapple",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Fcuking Fab"
+          },
+          "title": "Sour Fcuking Fab",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Banana Taffy Freeze"
+          },
+          "title": "Banana Taffy Freeze",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Blue Razz Ice"
+          },
+          "title": "Blue Razz Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Lemon Heads"
+          },
+          "title": "Lemon Heads",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Lime Berry Orange"
+          },
+          "title": "Lime Berry Orange",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Orange Fcuking Fab"
+          },
+          "title": "Orange Fcuking Fab",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Apple Ice"
+          },
+          "title": "Sour Apple Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Sour Straws"
+          },
+          "title": "Sour Straws",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry B-Pop"
+          },
+          "title": "Strawberry B-Pop",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Watermelon Ice"
+          },
+          "title": "Watermelon Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "White Peach Raspberry"
+          },
+          "title": "White Peach Raspberry",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry Colada"
+          },
+          "title": "Strawberry Colada",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "ATL Mint"
+          },
+          "title": "ATL Mint",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Orange Dragon"
+          },
+          "title": "Orange Dragon",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Pink & Blue"
+          },
+          "title": "Pink & Blue",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "FLAVOR": "Strawberry Kiwi Ice"
+          },
+          "title": "Strawberry Kiwi Ice",
+          "price": 31.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Geek Bar Pulse X Over 10 Flavors / Options",
+        "25,000 Puffs Regular Mode",
+        "15,000 Puffs Pulse Mode"
+      ],
+      "description_html": "<p>Geek Bar Pulse X Over 10 Flavors / Options</p>\n<p>25,000 Puffs Regular Mode</p>\n<p>15,000 Puffs Pulse Mode</p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/14e38133-5113-4d44-b627-64c50bad81de2.png?v=1784768189",
+          "width": 1024,
+          "height": 1391,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Archived: don't show on the site.",
+        "Priced at $31.99, the same as a single Pulse X, which looks wrong for a 10-pack."
+      ]
+    },
+    {
+      "title": "20PC RAW GARDEN LIVE RESIN (1G)",
+      "handle": "20pc-raw-garden-live-resin-1g",
+      "shopify_url": null,
+      "status": "archived",
+      "shown_on_homepage": null,
+      "collections": [],
+      "vendor": "My Store",
+      "price": 325.99,
+      "price_note": "Same price for every variant.",
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "HYBRID",
+            "SATIVA",
+            "INDICA"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "HYBRID"
+          },
+          "title": "HYBRID",
+          "price": 325.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "SATIVA"
+          },
+          "title": "SATIVA",
+          "price": 325.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        },
+        {
+          "option_values": {
+            "Options": "INDICA"
+          },
+          "title": "INDICA",
+          "price": 325.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Dispensary-sourced & batch-verified",
+        "Lab-tested for potency and safety",
+        "No fillers, no additives",
+        "Premium Live Resin Quality"
+      ],
+      "description_html": "<p><strong>Dispensary-sourced &amp; batch-verified</strong></p>\n<p><strong>Lab-tested</strong> for potency and safety</p>\n<p><strong>No fillers, no additives</strong></p>\n<p><strong>Premium Live Resin Quality</strong></p>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/92a32d66-569e-483b-b001-c19cb128159f.png?v=1784768191",
+          "width": 1024,
+          "height": 1024,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Archived: don't show on the site.",
+        "Bulk pack of 20."
+      ]
+    },
+    {
+      "title": "Boutiq Switch V5",
+      "handle": "boutiq-switch-v5-1",
+      "shopify_url": null,
+      "status": "archived",
+      "shown_on_homepage": null,
+      "collections": [
+        "frontpage (\"Home page\")"
+      ],
+      "vendor": "My Store",
+      "price": 35.99,
+      "price_note": null,
+      "available": true,
+      "inventory_tracked": false,
+      "options": [
+        {
+          "name": "Options",
+          "values": [
+            "Switch"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "option_values": {
+            "Options": "Switch"
+          },
+          "title": "Switch",
+          "price": 35.99,
+          "compare_at_price": null,
+          "available": true,
+          "inventory_quantity": null
+        }
+      ],
+      "description_lines": [
+        "Strain-specific terpene profiles",
+        "Tamper-proof and batch-verified",
+        "Each Ace Ultra Premium cartridge is lab tested, batch verified and tamper-sealed to ensure authenticity, safety, and potency.",
+        "Ultra-refined premium distillate"
+      ],
+      "description_html": "<h3>Strain-specific terpene profiles</h3>\n<h3>Tamper-proof and batch-verified</h3>\n<h3>Each Ace Ultra Premium cartridge is lab tested<strong>, batch verified and tamper-sealed</strong> to ensure authenticity, safety, and potency.</h3>\n<h3>Ultra-refined premium distillate</h3>",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/7845c05f-e62c-41e4-8bce-77c8c54d6d4a_9efc1d6f-c9c4-432f-9c29-facf32da3da0.png?v=1784768187",
+          "width": 1201,
+          "height": 1201,
+          "alt": ""
+        }
+      ],
+      "buy_links": {},
+      "notes": [
+        "Archived duplicate of Boutiq Switch V5: don't show on the site.",
+        "Its description is the ACE ULTRA PREMIUM text (mentions \"Each Ace Ultra Premium cartridge\")."
+      ]
+    }
+  ]
+}
