@@ -79,7 +79,13 @@ window.UNI_CATALOG = {
     images: [
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/14e38133-5113-4d44-b627-64c50bad81de2_2bde79dd-e0fd-44b0-b0bf-734e1b2dcf23.png?v=1784768205"
     ],
-    description: "Geek Bar Pulse X — refreshed design, 25,000+ puffs, adjustable airflow, verified authentic from authorized distributor."
+    description: "Geek Bar Pulse X — refreshed design, 25,000+ puffs, adjustable airflow, verified authentic from authorized distributor.",
+    highlights: [
+      "Geek Bar Pulse X Over 10 Flavors / Options",
+      "25,000 Puffs Regular Mode",
+      "15,000 Puffs Pulse Mode"
+    ],
+    related: ["20pc-ace-ultra-premium", "10pc-ace-ultra-premium", "ace-ultra-premium-2g", "muha-meds-x-cookies-limited-edition"]
   },
 
   "boutiq-switch-v5": {
