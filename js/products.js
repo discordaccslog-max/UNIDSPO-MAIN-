@@ -128,7 +128,15 @@ window.UNI_CATALOG = {
     images: [
       "images/boutiq-v5.webp"
     ],
-    description: "Boutiq Switch V5 vape pen. Dual-cartridge system, variable voltage, batch-verified."
+    description: "Boutiq Switch V5 vape pen. Dual-cartridge system, variable voltage, batch-verified.",
+    highlights: [
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Ultra-refined premium distillate",
+      "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity",
+      "Includes Indica + Sativa (Switch)"
+    ],
+    related: ["10pc-boutiq-switch-v5", "muha-meds-limited-edition", "10pc-ace-ultra-premium", "20pc-ace-ultra-premium"]
   },
 
   "big-chief": {
