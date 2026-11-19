@@ -1,6 +1,6 @@
 {
   "READ_ME_FIRST": [
-    "This is the complete product catalog of the UNI store (unidispo.com), exported from Shopify on 2026-11-18. All 20 products are included: 17 active and 3 archived.",
+    "This is the complete product catalog of the United Dispo store (unidispo.com), exported from Shopify on 2026-11-18. All 20 products are included: 17 active and 3 archived.",
     "Only products with status 'active' and a value in 'shown_on_homepage' appear on the homepage today. Archived products are hidden from shoppers on Shopify; don't show them.",
     "Prices are in USD. Every product has one price for all of its variants. No product is on sale (no compare-at prices).",
     "Strains: for most cartridges and disposables the variant option is literally named 'Options' in Shopify, and its values are the strain types (Hybrid / Sativa / Indica). Some products use upper case (HYBRID / SATIVA / INDICA). Display them consistently.",
@@ -13,7 +13,7 @@
     "Store-wide context: age-restricted products (21+), nicotine warning required: 'WARNING: Products included in this website contains nicotine. Nicotine is an addictive chemical.' (wording as it appears on the current site's age gate)."
   ],
   "store": {
-    "name": "UNI",
+    "name": "United Dispo",
     "domain": "unidispo.com",
     "currency": "USD",
     "exported": "2026-11-18",
@@ -1426,7 +1426,7 @@
       "status": "active",
       "shown_on_homepage": null,
       "collections": [],
-      "vendor": "UNI",
+      "vendor": "United Dispo",
       "price": 25.0,
       "price_note": null,
       "available": false,

@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------
-   UNI — shared cart module + cart drawer
+   United Dispo — shared cart module + cart drawer
    Stores cart in localStorage. Shape:
      [{ slug, title, price, variant, qty, image }]
    Public API (on window.UNI_CART):
@@ -159,7 +159,7 @@
 
   /* Demo values for the drawer banner (same score as the product pages). */
   var UNI_BANNER = {
-    logo: 'images/uni-logo.webp',
+    logo: 'images/united-dispo-logo.webp',
     rating: 4.7,
     outOf: 5,
     customers: 'Over 35,000 satisfied customers'
@@ -191,7 +191,7 @@
     '.uc-body{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:20px}' +
     /* banner */
     '.uc-banner{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;padding:16px 18px;background:radial-gradient(120% 140% at 0% 50%,rgba(212,175,55,.16),rgba(212,175,55,0) 55%),linear-gradient(90deg,#17140d,#0f0f10 70%);border:1px solid rgba(212,175,55,.28);border-radius:4px}' +
-    '.uc-banner::after{content:"UNI";position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-family:"Oswald",sans-serif;font-weight:700;font-size:118px;line-height:1;letter-spacing:2px;color:rgba(212,175,55,.06);pointer-events:none}' +
+    '.uc-banner::after{content:"UNITED";position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-family:"Oswald",sans-serif;font-weight:700;font-size:92px;line-height:1;letter-spacing:2px;color:rgba(212,175,55,.06);pointer-events:none}' +
     '.uc-banner__logo{position:relative;z-index:1;flex:0 0 64px;width:64px;height:64px;display:block}' +
     '.uc-banner__divider{position:relative;z-index:1;flex:0 0 1px;align-self:stretch;background:rgba(212,175,55,.35)}' +
     '.uc-banner__copy{position:relative;z-index:1;min-width:0}' +
@@ -239,7 +239,7 @@
     '.uc-guarantee{margin:14px 0 2px;text-align:center;color:#fff;font-size:15px}' +
     '.uc-note{margin:0 0 14px;text-align:center;color:#9EA0A6;font-size:13.5px}' +
     '.uc :focus-visible{outline:2px solid #E8C766;outline-offset:2px}' +
-    '@media (max-width:480px){.uc-banner{gap:12px;padding:14px}.uc-banner::after{font-size:96px}.uc-banner__logo{flex-basis:52px;width:52px;height:52px}.uc-banner__row{flex-wrap:nowrap;gap:7px;font-size:14px}.uc-boxes i{width:16px;height:16px}.uc-boxes svg{width:11px;height:11px}.uc-banner__score{font-size:16px}.uc-banner__sub{margin-top:6px;letter-spacing:1.3px;font-size:10px}}' +
+    '@media (max-width:480px){.uc-banner{gap:12px;padding:14px}.uc-banner::after{font-size:76px}.uc-banner__logo{flex-basis:52px;width:52px;height:52px}.uc-banner__row{flex-wrap:nowrap;gap:7px;font-size:14px}.uc-boxes i{width:16px;height:16px}.uc-boxes svg{width:11px;height:11px}.uc-banner__score{font-size:16px}.uc-banner__sub{margin-top:6px;letter-spacing:1.3px;font-size:10px}}' +
     '@media (max-width:380px){.uc-banner{gap:10px;padding:12px}.uc-banner__logo{flex-basis:46px;width:46px;height:46px}.uc-banner__row{gap:5px;font-size:13px}.uc-boxes i{width:14px;height:14px}.uc-banner__score{font-size:15px}.uc-banner__sub{letter-spacing:.9px;font-size:9.5px}.uc-item{grid-template-columns:72px 1fr auto;gap:12px}.uc-item__img{width:72px;height:72px}}' +
     '@media (prefers-reduced-motion:reduce){.uc,.uc-overlay{transition:none}}';
 
@@ -291,7 +291,7 @@
         '</div>' +
         '<div class="uc-body">' +
           '<div class="uc-banner">' +
-            '<img class="uc-banner__logo" src="' + esc(UNI_BANNER.logo) + '" alt="UNI Dispo" width="64" height="64">' +
+            '<img class="uc-banner__logo" src="' + esc(UNI_BANNER.logo) + '" alt="United Dispo" width="64" height="64">' +
             '<span class="uc-banner__divider" aria-hidden="true"></span>' +
             '<div class="uc-banner__copy">' +
               '<div class="uc-banner__row" role="img" aria-label="Rated ' + UNI_BANNER.rating + ' out of ' + UNI_BANNER.outOf + ' on Trustpilot">' +

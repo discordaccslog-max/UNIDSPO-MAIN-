@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product — UNI</title>
+<title>Product — United Dispo</title>
 <meta name="description" content="Dispensary-sourced, authenticated vape product detail.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -576,7 +576,7 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       </button>
     </div>
-    <a href="index.html" class="uni-logo">UNI</a>
+    <a href="index.html" class="uni-logo">UNITED DISPO</a>
     <div class="uni-header__side uni-header__side--right">
       <a href="account.html" aria-label="Account">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -616,7 +616,7 @@
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
 <script src="js/products.js?v=20261119b"></script>
-<script src="js/cart.js?v=20261119c"></script>
+<script src="js/cart.js?v=20261119d"></script>
 <script>
 (function () {
   var slug = new URLSearchParams(window.location.search).get('id') || '';
@@ -631,11 +631,11 @@
         '<p>We couldn\'t find a product with that ID.</p>' +
         '<a href="catalog.html">Back to catalog</a>' +
       '</div>';
-    document.title = 'Product not found — UNI';
+    document.title = 'Product not found — United Dispo';
     return;
   }
 
-  document.title = p.title + ' — UNI';
+  document.title = p.title + ' — United Dispo';
   var metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute('content', p.description);
 
@@ -952,7 +952,7 @@
   var shareBtn = document.getElementById('pd-share');
   if (shareBtn) {
     shareBtn.addEventListener('click', function () {
-      var shareData = { title: p.title + ' — UNI', text: p.description, url: window.location.href };
+      var shareData = { title: p.title + ' — United Dispo', text: p.description, url: window.location.href };
       if (navigator.share) {
         navigator.share(shareData).catch(function () {});
       } else if (navigator.clipboard && navigator.clipboard.writeText) {

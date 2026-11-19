@@ -1,9 +1,9 @@
 /*
-Theme Name: UNI Theme
+Theme Name: United Dispo Theme
 Theme URI: https://github.com/discordaccslog-max/uni-dispo
 Author: UNI
 Author URI: https://unidispo.com
-Description: UNI storefront — converted from the original Shopify theme. Black & gold, Oswald + Figtree.
+Description: United Dispo storefront — converted from the original Shopify theme. Black & gold, Oswald + Figtree.
 Version: 4.1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -148,6 +148,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   color: var(--uni-ink);
 }
 .uni-logo:hover { color: var(--uni-gold-soft); }
+.uni-logo { white-space: nowrap; }
 
 .uni-nav { padding: 10px 0 18px; text-align: center; }
 .uni-nav ul {
@@ -294,7 +295,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 @media screen and (max-width: 749px) {
-  .uni-logo { font-size: 28px; }
+  .uni-logo { font-size: 22px; letter-spacing: .06em; white-space: nowrap; }
   .uni-page__title { font-size: 32px; }
   .uni-announce { font-size: 13px; padding: 0 44px; }
 }
@@ -466,7 +467,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   color: #777;
 }
 
-/* Desktop header insets matched to the live UNI site (search / account / cart
+/* Desktop header insets matched to the live site (search / account / cart
    sit further in from the edges than the 20px mobile inset). */
 @media (min-width: 990px) {
   .uni-header__side--left  { left: 54px; }

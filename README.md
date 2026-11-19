@@ -1,4 +1,4 @@
-# UNI — Website
+# United Dispo — Website
 
 Static site for **Uni Dispo**. Plain HTML, CSS and JavaScript — nothing to
 install, no build step, no server code.

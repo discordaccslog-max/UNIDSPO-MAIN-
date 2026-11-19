@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------
-   UNI — product catalog (shared)
+   United Dispo — product catalog (shared)
    Keyed by slug. Used by product.html and (indirectly) by the
    homepage/catalog grids whose card URLs point to product.html?id=<slug>.
 --------------------------------------------------------------- */
