@@ -238,9 +238,10 @@
     border-top: 1px solid rgba(255,255,255,.06);
   }
   .pd-related h2 {
-    margin: 0 0 32px; font-family: "Oswald", sans-serif;
-    font-size: clamp(26px, 3vw, 36px); font-weight: 500;
+    margin: 0 0 36px; font-family: "Oswald", sans-serif;
+    font-size: clamp(36px, 4.6vw, 64px); font-weight: 500;
     letter-spacing: .84px; color: #fff; text-transform: uppercase;
+    line-height: 1.1;
   }
   .pd-related__grid {
     display: grid; gap: 24px;
@@ -451,30 +452,9 @@
 <!-- ============ TOAST ============ -->
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
-<!-- ============ FOOTER ============ -->
-<style>
-  .footer-section, .footer-section * { box-sizing: border-box; }
-  .footer-section {
-    background: #0f0f10; border-top: 1px solid rgba(212,175,55,0.15);
-    padding: 40px 20px; color: #ccc; text-align: center; font-size: 14px;
-  }
-  .footer-section .branding { font-size: 20px; font-weight: 800; color: #FFD976; letter-spacing: 1px; margin-bottom: 12px; }
-  .footer-section .legal { font-size: 12px; color: #777; margin-top: 20px; line-height: 1.5; }
-</style>
-<div class="footer-section">
-  <div class="branding">UNI</div>
-  <div class="legal">
-    © <span class="uni-year">2026</span> UNI. All rights reserved.<br>
-    Licensed vendor. Based in California.
-  </div>
-</div>
-
 <script src="js/products.js"></script>
 <script>
 (function () {
-  var yearEl = document.querySelector('.uni-year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
   var slug = new URLSearchParams(window.location.search).get('id') || '';
   var p = window.UNI_CATALOG[slug];
   var root = document.getElementById('pd-root');
