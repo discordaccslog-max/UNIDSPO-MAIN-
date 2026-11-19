@@ -225,7 +225,7 @@ window.UNI_CATALOG = {
       "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
       "Ultra-refined premium distillate"
     ],
-    related: ["ace-ultra-premium-2g", "muha-meds-x-cookies-limited-edition", "muha-meds-sumer-edition", "raw-garden-live-resin-1g"]
+    related: ["10pc-muha-meds-x-cookies-limited-edition", "muha-meds-x-cookies-limited-edition", "20pc-ace-ultra-premium", "10pc-ace-ultra-premium"]
   },
 
   /* ---------- BULK ---------- */
