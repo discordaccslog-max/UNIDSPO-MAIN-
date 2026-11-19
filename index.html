@@ -742,7 +742,15 @@ var UNI_GRIDS = {
     object-position: center;
   }
   .uni-pg .uni-pg__media .uni-pg__img--hover {
-    display: none;
+    display: none !important;
+  }
+  /* Insurance: the card image never fades, filters, or disappears on hover for any reason */
+  .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img,
+  .uni-pg .uni-pg__card:hover .uni-pg__media,
+  .uni-pg .uni-pg__card .uni-pg__media .uni-pg__img {
+    opacity: 1 !important;
+    filter: none !important;
+    visibility: visible !important;
   }
   .uni-pg .uni-pg__badge {
     position: absolute;
