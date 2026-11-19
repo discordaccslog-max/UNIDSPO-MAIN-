@@ -311,17 +311,17 @@ ul { list-style: none; margin: 0; padding: 0; }
 .ug__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  gap: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 @media screen and (min-width: 750px) {
-  .ug__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .ug__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
   .ug__in { padding: 0 50px; }
 }
 @media screen and (min-width: 990px) {
-  .ug__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; }
+  .ug__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
 }
 
 .ug-card {
