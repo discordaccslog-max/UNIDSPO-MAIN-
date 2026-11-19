@@ -406,14 +406,14 @@ var UNI_GRIDS = {
   .nx-step h3{margin-top:0}
   .nx-afq{display:grid;gap:24px;grid-template-columns:1.25fr 1fr;align-items:start}
   @media(max-width:860px){.nx-afq{grid-template-columns:1fr}}
-  .nx-strip{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;background:linear-gradient(180deg,#171719,#141416);border:1px solid var(--stroke);border-radius:14px;padding:18px;margin:0}
-  .nx-pill{border:1px solid var(--stroke);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:6px 10px;font-size:12px}
-  .nx-faq{border:1px solid rgba(212,175,55,.28);border-radius:14px;overflow:hidden;background:#141416}
-  .nx-faq details{border-top:1px solid rgba(255,255,255,.06)}
-  .nx-faq details:first-of-type{border-top:0}
-  .nx-faq summary{cursor:pointer;padding:14px 16px;background:var(--card);font-weight:700;list-style:none}
+  .nx-strip{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:flex-start;background:transparent;border:0;border-radius:0;padding:0;margin:0}
+  .nx-pill{border:1px solid var(--stroke);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600}
+  .nx-faq{display:flex;flex-direction:column;gap:10px;border:0;border-radius:0;overflow:visible;background:transparent}
+  .nx-faq details{border:0;background:#141416;border-radius:14px;overflow:hidden}
+  .nx-faq details:first-of-type{border:0}
+  .nx-faq summary{cursor:pointer;padding:18px 22px;background:#141416;font-weight:700;list-style:none;border-radius:14px}
   .nx-faq summary::-webkit-details-marker{display:none}
-  .nx-faq .ans{padding:0 16px 14px;color:var(--muted);background:#121314}
+  .nx-faq .ans{padding:0 22px 18px;color:var(--muted);background:#141416}
   .nx-note{color:#A5A7AC;font-size:12.5px;margin-top:10px}
   .nx-note strong{color:#FFD976}
 </style>
