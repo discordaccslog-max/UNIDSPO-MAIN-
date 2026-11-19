@@ -53,12 +53,20 @@ window.UNI_CATALOG = {
     group: "singles",
     price: 42.99,
     compareAt: null,
-    variants: ["Sativa", "Indica", "Hybrid"],
+    variants: ["HYBRID", "SATIVA", "INDICA"],
+    variantLabel: "Options",
     available: true,
     images: [
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/92a32d66-569e-483b-b001-c19cb128159f_161a28f5-f2cf-46ce-bd7e-70a3c790bfd3.png?v=1784768208"
     ],
-    description: "Raw Garden single-source live resin cartridge. 1 gram, lab-tested, sourced direct from licensed California dispensary."
+    description: "Raw Garden single-source live resin cartridge. 1 gram, lab-tested, sourced direct from licensed California dispensary.",
+    highlights: [
+      "**Dispensary-sourced & batch-verified**",
+      "**Lab-tested** for potency and safety",
+      "**No fillers, no additives**",
+      "**Premium Live Resin Quality**"
+    ],
+    related: ["10pc-raw-garden-live-resin-1g", "10pc-boutiq-switch-v5", "muha-meds-limited-edition", "boutiq-switch-v5"]
   },
 
   "geek-bar-pulse-x": {
@@ -163,6 +171,7 @@ window.UNI_CATALOG = {
     variants: ["Mango Kush", "Grape God", "OG Haze"],
     available: true,
     images: [
+      "images/muha-3rd-gen-box.webp",
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/IMG_1942.jpg?v=1784768192",
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/fa9f46e0-ab92-4d26-a23f-c7de896c9bb0.png?v=1784768192"
     ],

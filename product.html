@@ -183,18 +183,22 @@
     margin: 0 0 10px; letter-spacing: .3px;
   }
 
-  /* Highlights / spec lines — bold white statements under the buy block */
+  /* Highlights / spec lines — mixed-weight statements under the buy block.
+     Base text is muted; inline <strong> (from **bold** markers) prints
+     pure white and bold. A line with no bold markers reads as a whole-
+     white bold statement (handled by wrapping it in <strong> at render). */
   .pd-highlights {
     margin: 36px 0 24px;
     font-family: inherit;
     font-size: clamp(18px, 1.5vw, 22px);
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 500;
+    color: #B9BBC0;
     line-height: 1.4;
     letter-spacing: .1px;
   }
   .pd-highlights p { margin: 0 0 22px; }
   .pd-highlights p:last-child { margin-bottom: 0; }
+  .pd-highlights strong { color: #ffffff; font-weight: 700; }
 
   /* Share */
   .pd-share {
@@ -510,12 +514,22 @@
   var buyLabel = 'Buy it now';
   var buyDisabled = '';
 
-  /* Highlights / specs block */
+  /* Highlights / specs block. Lines can use **markdown bold** to
+     emphasize particular phrases in white; the rest stays muted. A line
+     with no bold markers is wrapped in <strong> so the whole statement
+     reads white, matching products like Ace Ultra. */
+  function renderHighlight(line) {
+    var s = esc(line);
+    if (s.indexOf('**') === -1) {
+      return '<strong>' + s + '</strong>';
+    }
+    return s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  }
   var highlightsBlock = '';
   if (p.highlights && p.highlights.length) {
     highlightsBlock = '<div class="pd-highlights">';
     p.highlights.forEach(function (line) {
-      highlightsBlock += '<p>' + esc(line) + '</p>';
+      highlightsBlock += '<p>' + renderHighlight(line) + '</p>';
     });
     highlightsBlock += '</div>';
   }
