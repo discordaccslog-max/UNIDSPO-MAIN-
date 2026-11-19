@@ -1017,20 +1017,13 @@ var UNI_GRIDS = {
     }
   }
 
-  /* Scroll-in animation (same timing as the Shopify theme) */
-  @media (prefers-reduced-motion: no-preference) {
-    .uni-pg .uni-reveal {
-      opacity: .01;
-      transform: translateY(20px);
-    }
-    .uni-pg .uni-reveal:not(.uni-reveal--offscreen) {
-      animation: uni-pg-slide-in 600ms cubic-bezier(0, 0, .3, 1) forwards;
-      animation-delay: calc(var(--animation-order) * 75ms);
-    }
-  }
-  @keyframes uni-pg-slide-in {
-    from { transform: translateY(20px); opacity: .01; }
-    to { transform: translateY(0); opacity: 1; }
+  /* Reveal animation disabled: cards render at full opacity immediately,
+     never fade in or out, so they can never read as "black on hover". */
+  .uni-pg .uni-reveal,
+  .uni-pg .uni-reveal.uni-reveal--offscreen {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 </style>
 <script id="uni-pg-script">
