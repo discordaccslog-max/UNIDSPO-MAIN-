@@ -88,6 +88,176 @@
     }
   }
 </style>
+<style id="uni-home-v2">
+  /* ===== Homepage sections (brand: black + gold, Oswald headings, Figtree text) ===== */
+  .hm-page{max-width:1600px;margin:0 auto;padding:0 15px}
+  @media(min-width:750px){.hm-page{padding:0 50px}}
+  .hm-sec{font-family:"Figtree",sans-serif;color:#F7F7F7;letter-spacing:.4px;line-height:1.7}
+  .hm-sec *,.hm-sec *::before,.hm-sec *::after{box-sizing:border-box}
+  .hm-kicker{display:inline-block;font-size:12px;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;color:#FFD976;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.32);border-radius:999px;padding:6px 11px;margin:0 0 14px;font-weight:700}
+  .hm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px 32px;flex-wrap:wrap;margin:0 0 28px}
+  .hm-head--center{flex-direction:column;align-items:center;text-align:center}
+  .hm-head__copy{max-width:760px}
+  .hm-h2{margin:0;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(30px,3.2vw,46px);line-height:1.08;letter-spacing:-.2px;color:#fff;-webkit-text-stroke:.4px #fff;paint-order:stroke fill}
+  .hm-h2 em{font-style:normal;background:linear-gradient(180deg,#F3D77A,#C9A43A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.4px rgba(232,199,102,.9)}
+  .hm-lead{margin:10px 0 0;color:#A5A7AC;font-size:16px;font-weight:600;line-height:1.65}
+  .hm-link{display:inline-flex;align-items:center;gap:8px;color:#FFD976 !important;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;padding:8px 0;border-bottom:1px solid rgba(255,217,118,.35);transition:border-color .2s ease,gap .2s ease}
+  .hm-link:hover{border-color:#FFD976;gap:12px}
+  .hm-link svg{width:16px;height:16px}
+  .hm-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px 26px;border-radius:12px;font-family:"Figtree",sans-serif;font-weight:700;font-size:16px;letter-spacing:.3px;line-height:1.4;text-decoration:none;cursor:pointer;border:0;transition:filter .15s ease,box-shadow .15s ease,transform .1s ease,border-color .15s ease,background-color .15s ease}
+  .hm-btn svg{width:18px;height:18px}
+  .hm-btn--gold{background:linear-gradient(180deg,#E8C766,#BA9930);color:#111 !important;box-shadow:0 14px 34px rgba(186,153,48,.28)}
+  .hm-btn--gold:hover{filter:brightness(1.06);box-shadow:0 16px 38px rgba(186,153,48,.36)}
+  .hm-btn--hollow{background:transparent;color:#F7F7F7 !important;border:1px solid rgba(255,255,255,.18)}
+  .hm-btn--hollow:hover{border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.06)}
+  .hm-btn:active{transform:translateY(1px)}
+  .hm-btn:focus-visible,.hm-link:focus-visible{outline:2px solid #FFD976;outline-offset:3px}
+  .hm-stars{display:inline-flex;gap:2px;color:#FFD976;vertical-align:middle}
+  .hm-stars svg{width:15px;height:15px;display:block}
+  .hm-stars .is-off{color:rgba(255,217,118,.22)}
+
+  /* Product grid section header sits in the grid's own container */
+  .uni-pg .hm-head{margin-bottom:26px}
+
+  /* Card extras injected by the grid renderer */
+  .uni-pg .uni-pg__rating{display:flex;align-items:center;gap:6px;margin:2px 0 4px;font-size:13px;font-weight:600;color:#A5A7AC;letter-spacing:.2px;line-height:1.4}
+  .uni-pg .uni-pg__rating .hm-stars svg{width:13px;height:13px}
+  .uni-pg .uni-pg__rating > span:last-child{white-space:nowrap}
+  @media(max-width:749px){.uni-pg .uni-pg__rating{font-size:12px;gap:4px}.uni-pg .uni-pg__rating .hm-stars svg:nth-child(n+2){display:none}}
+  .uni-pg .uni-pg__unit{display:block;width:max-content;margin-top:6px;padding:2px 9px;border-radius:999px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);color:#FFD976;font-size:12.5px;font-weight:700;letter-spacing:.3px;line-height:1.6}
+
+  /* How it works */
+  .hm-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:0;padding:0;list-style:none;counter-reset:hm-step}
+  .hm-step{position:relative;padding:24px 22px 24px;border-radius:14px;background:#161718;border:1px solid rgba(255,255,255,.07)}
+  .hm-step__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .hm-step__icon{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.36);color:#FFD976}
+  .hm-step__icon svg{width:23px;height:23px}
+  .hm-step__num{font-family:"Oswald",sans-serif;font-weight:700;font-size:40px;line-height:1;color:rgba(212,175,55,.22);letter-spacing:0}
+  .hm-step h3{margin:0 0 6px;font-family:"Oswald",sans-serif;font-weight:700;font-size:21px;line-height:1.25;letter-spacing:.3px;color:#fff;-webkit-text-stroke:.25px #fff;paint-order:stroke fill}
+  .hm-step p{margin:0;color:#A5A7AC;font-size:14.5px;font-weight:600;line-height:1.7}
+  .hm-step:not(:last-child)::after{content:"";position:absolute;top:47px;right:-18px;width:18px;height:1px;background:linear-gradient(90deg,rgba(212,175,55,.6),rgba(212,175,55,.1))}
+  @media(max-width:1100px){.hm-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.hm-step::after{display:none}}
+  @media(max-width:560px){.hm-steps{grid-template-columns:1fr}}
+
+  /* Reviews */
+  .hm-rev__summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#141416}
+  .hm-rev__tp{display:inline-flex;align-items:center;gap:6px;font-family:"Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.2px;color:#fff}
+  .hm-rev__tp svg{width:20px;height:20px}
+  .hm-boxes{display:inline-flex;gap:2px}
+  .hm-boxes i{width:20px;height:20px;display:grid;place-items:center;background:#00B67A}
+  .hm-boxes i.is-part{background:linear-gradient(90deg,#00B67A 70%,#3a3b3d 70%)}
+  .hm-boxes svg{width:13px;height:13px;color:#fff}
+  .hm-rev__score{font-size:14px;font-weight:600;color:#D5D6D9;letter-spacing:.2px}
+  .hm-rev__score b{color:#fff;font-weight:800}
+  .hm-car{position:relative}
+  .hm-car__track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2 * 20px) / 3);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;margin:0;padding:2px 2px 6px;list-style:none;scrollbar-width:none;overscroll-behavior-x:contain}
+  .hm-car__track::-webkit-scrollbar{display:none}
+  @media(max-width:1100px){.hm-car__track{grid-auto-columns:calc((100% - 20px) / 2)}}
+  @media(max-width:700px){.hm-car__track{grid-auto-columns:86%;gap:14px}}
+  .hm-rcard{scroll-snap-align:start;display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:14px;background:#161718;border:1px solid rgba(255,255,255,.07);min-height:100%}
+  .hm-rcard__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .hm-rcard__date{color:#7E8086;font-size:13px;font-weight:600}
+  .hm-rcard__text{margin:0;color:#E4E5E7;font-size:15px;font-weight:500;line-height:1.7;flex:1}
+  .hm-rcard__who{display:flex;align-items:center;gap:12px}
+  .hm-rcard__avatar{width:40px;height:40px;flex:0 0 40px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;color:#111;letter-spacing:0}
+  .hm-rcard__name{font-weight:800;font-size:15px;color:#fff;line-height:1.3}
+  .hm-rcard__verified{display:flex;align-items:center;gap:5px;color:#7FD3A8;font-size:12.5px;font-weight:700;line-height:1.3}
+  .hm-rcard__verified svg{width:14px;height:14px}
+  .hm-rcard__prod{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:#0F0F10;border:1px solid rgba(255,255,255,.06);text-decoration:none;color:#D5D6D9 !important;transition:border-color .2s ease}
+  .hm-rcard__prod:hover{border-color:rgba(212,175,55,.5)}
+  .hm-rcard__prod img{width:44px;height:44px;border-radius:7px;object-fit:cover;flex:0 0 44px}
+  .hm-rcard__prod span{font-size:13px;font-weight:700;line-height:1.35;letter-spacing:.3px}
+  .hm-rcard__prod small{display:block;color:#7E8086;font-weight:600;font-size:12px}
+  .hm-car__nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:22px}
+  .hm-car__btn{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#161718;border:1px solid rgba(255,255,255,.12);color:#fff;cursor:pointer;transition:border-color .2s ease,color .2s ease,opacity .2s ease}
+  .hm-car__btn:hover:not(:disabled){border-color:#D4AF37;color:#FFD976}
+  .hm-car__btn:disabled{opacity:.35;cursor:default}
+  .hm-car__btn svg{width:18px;height:18px}
+  .hm-car__dots{display:flex;gap:8px}
+  .hm-car__dots button{width:8px;height:8px;padding:0;border-radius:999px;border:0;background:rgba(255,255,255,.22);cursor:pointer;transition:width .25s ease,background-color .25s ease}
+  .hm-car__dots button[aria-current="true"]{width:26px;background:#D4AF37}
+  .hm-car__count{min-width:46px;text-align:center;color:#A5A7AC;font-size:13px;font-weight:700}
+
+  /* Why UNI */
+  .hm-why{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:stretch}
+  @media(max-width:990px){.hm-why{grid-template-columns:1fr}}
+  .hm-why__list{display:grid;gap:14px;margin:26px 0 0;padding:0;list-style:none}
+  .hm-why__item{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:14px;background:#161718;border:1px solid rgba(255,255,255,.07)}
+  .hm-why__item .hm-step__icon{flex:0 0 48px}
+  .hm-why__item h3{margin:0 0 4px;font-family:"Oswald",sans-serif;font-weight:700;font-size:20px;line-height:1.3;letter-spacing:.3px;color:#fff;-webkit-text-stroke:.25px #fff;paint-order:stroke fill}
+  .hm-why__item p{margin:0;color:#A5A7AC;font-size:14.5px;font-weight:600;line-height:1.7}
+  .hm-badge{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;padding:40px 28px;border-radius:18px;border:1px solid rgba(212,175,55,.32);background:radial-gradient(80% 70% at 50% 30%,rgba(212,175,55,.16),rgba(212,175,55,0) 70%),#121213}
+  .hm-badge::after{content:"UNI";position:absolute;top:-30px;right:-12px;font-family:"Oswald",sans-serif;font-weight:700;font-size:170px;line-height:1;color:rgba(212,175,55,.04);pointer-events:none;letter-spacing:2px}
+  .hm-badge img{width:112px;height:112px;position:relative;z-index:1}
+  @media(max-width:749px){.hm-badge::after{display:none}}
+  .hm-badge__title{margin:0;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(24px,2.2vw,30px);line-height:1.15;letter-spacing:.6px;text-transform:uppercase;color:#FFD976}
+  .hm-badge__sub{margin:0;color:#A5A7AC;font-size:14.5px;font-weight:600}
+  .hm-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:6px 0 0;padding:0;list-style:none}
+  .hm-pills li{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(212,175,55,.32);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:6px 13px;font-size:12.5px;line-height:1.6;letter-spacing:.2px;font-weight:700}
+  .hm-pills svg{width:13px;height:13px}
+  .hm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:12px 0 0;padding:18px 0 0;border-top:1px solid rgba(212,175,55,.18);list-style:none}
+  .hm-stats li{display:flex;flex-direction:column;gap:2px}
+  .hm-stats li + li{border-left:1px solid rgba(255,255,255,.07)}
+  .hm-stats b{font-family:"Oswald",sans-serif;font-weight:700;font-size:28px;line-height:1.1;color:#fff;letter-spacing:.3px}
+  .hm-stats span{color:#A5A7AC;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.4}
+
+  /* FAQ */
+  .hm-faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:start}
+  @media(max-width:990px){.hm-faq{grid-template-columns:1fr;gap:24px}}
+  .hm-faq__aside .hm-btn{margin-top:22px}
+  .hm-faq__note{margin:18px 0 0;color:#A5A7AC;font-size:13px;font-weight:600;line-height:1.6}
+  .hm-faq__note strong{color:#FFD976}
+  .hm-acc{border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden;background:#161718}
+  .hm-acc details + details{border-top:1px solid rgba(255,255,255,.06)}
+  .hm-acc summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;padding:20px 22px;font-weight:700;font-size:16px;line-height:1.5;letter-spacing:.4px;color:#F7F7F7;transition:background-color .2s ease}
+  .hm-acc summary::-webkit-details-marker{display:none}
+  .hm-acc summary:hover{background:rgba(255,255,255,.02)}
+  .hm-acc summary:focus-visible{outline:2px solid #FFD976;outline-offset:-2px}
+  .hm-acc__plus{position:relative;width:28px;height:28px;flex:0 0 28px;border-radius:50%;border:1px solid rgba(212,175,55,.4)}
+  .hm-acc__plus::before,.hm-acc__plus::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.6px;background:#FFD976;transform:translate(-50%,-50%);transition:transform .25s ease}
+  .hm-acc__plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+  .hm-acc details[open] .hm-acc__plus::after{transform:translate(-50%,-50%) rotate(0)}
+  .hm-acc__body{padding:0 22px 20px;color:#A5A7AC;font-size:15px;font-weight:600;line-height:1.75}
+  .hm-acc__body p{margin:0}
+  .hm-acc__body strong{color:#fff}
+
+  /* Final CTA */
+  .hm-final{position:relative;overflow:hidden;text-align:center;padding:64px 24px;border-radius:20px;border:1px solid rgba(212,175,55,.3);background:radial-gradient(60% 90% at 50% 0%,rgba(212,175,55,.18),rgba(212,175,55,0) 70%),#121213}
+  .hm-final img{width:84px;height:84px;margin:0 auto 18px;display:block}
+  .hm-final h2{margin:0 auto;max-width:900px;font-family:"Oswald",sans-serif;font-weight:700;font-style:italic;font-size:clamp(28px,4vw,56px);line-height:1.1;letter-spacing:.3px;color:#fff;-webkit-text-stroke:.4px #fff;paint-order:stroke fill}
+  .hm-final h2 span{display:block;background:linear-gradient(180deg,#F3D77A,#C9A43A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.4px rgba(232,199,102,.9)}
+  .hm-final p{margin:14px auto 26px;max-width:560px;color:#A5A7AC;font-size:16px;font-weight:600}
+  .hm-final__cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+  /* Footer */
+  .hm-foot{border-top:1px solid rgba(212,175,55,.15);background:#0b0b0c;padding:56px 0 28px}
+  .hm-foot__grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,.7fr)) minmax(0,1fr);gap:32px}
+  @media(max-width:990px){.hm-foot__grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.hm-foot__grid{grid-template-columns:1fr 1fr;gap:28px 20px}.hm-foot__brand,.hm-foot__pay{grid-column:1/-1}}
+  .hm-foot__logo{display:inline-flex;align-items:center;gap:12px;text-decoration:none}
+  .hm-foot__logo img{width:52px;height:52px}
+  .hm-foot__logo span{font-family:"Oswald",sans-serif;font-weight:700;font-size:30px;letter-spacing:3px;color:#fff}
+  .hm-foot__brand p{margin:14px 0 0;max-width:380px;color:#A5A7AC;font-size:14px;font-weight:600;line-height:1.7}
+  .hm-foot h3{margin:4px 0 14px;font-family:"Figtree",sans-serif;font-size:12.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#FFD976}
+  .hm-foot ul{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+  .hm-foot ul a{display:inline-block;padding:4px 0;color:#D5D6D9 !important;font-size:14.5px;font-weight:600;text-decoration:none;transition:color .2s ease}
+  .hm-foot ul a:hover{color:#FFD976 !important}
+  .hm-foot__pay p{margin:0 0 12px;color:#A5A7AC;font-size:13.5px;font-weight:600;line-height:1.6}
+  .hm-foot .hm-foot__pay .uni-pay{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px}
+  .hm-foot__bottom{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.06);color:#7E8086;font-size:13px;font-weight:600;letter-spacing:.3px}
+  .hm-foot__age{display:inline-flex;align-items:center;gap:8px}
+  .hm-foot__age b{display:inline-grid;place-items:center;min-width:34px;height:22px;padding:0 6px;border-radius:6px;border:1px solid rgba(212,175,55,.45);color:#FFD976;font-size:11.5px;letter-spacing:.04em}
+
+  /* Section spacing */
+  .uni-home > .uni-section.hm-gap{padding:72px 0 0}
+  @media(max-width:749px){.uni-home > .uni-section.hm-gap{padding:48px 0 0}}
+
+  /* Scroll reveal (only when JS is running; final state when motion is reduced) */
+  .hm-js .hm-rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0) * 80ms)}
+  .hm-js .hm-rv.is-in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){.hm-js .hm-rv{opacity:1;transform:none;transition:none}.hm-car__track{scroll-behavior:auto}}
+</style>
+<script>document.documentElement.classList.add('hm-js');</script>
 <script>
 /* =====================================================================
    EDIT YOUR STORE HERE
@@ -142,14 +312,14 @@ var UNI_PRODUCTS = {
   ]
 };
 
-/* The two product sections, with the same settings as on Shopify. */
+/* The two product sections. headerHtml is the section heading shown above the grid. */
 var UNI_GRIDS = {
   singles: {
     products: "singles",
     limit: 10,
-    heading: "<em><strong>Dispensary-Sourced, Authenticated &amp; Delivered. (FREE SHIPPING UNTIL AUGUST 1ST!)</strong></em>",
-    headingSize: "h1",
-    hasDescription: true,
+    headerHtml: '<div class="hm-head hm-sec"><div class="hm-head__copy"><span class="hm-kicker">Shop</span><h2 class="hm-h2" id="uni-pg-1-title">Best <em>Sellers.</em></h2><p class="hm-lead">Lab-tested carts and disposables, sourced from licensed dispensaries and verified before they ship.</p></div><a class="hm-link" href="catalog.html">View full catalog<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>',
+    soldOutLast: true,         // in-stock products first
+    showRating: true,          // star rating line on each card
     columnsDesktop: 5,
     columnsMobile: 2,
     imageRatio: "portrait",
@@ -158,26 +328,32 @@ var UNI_GRIDS = {
     viewAll: false,
     viewAllUrl: "",
     paddingTop: 0,
-    paddingBottom: 48,
-    promoBar: "Dispensary-Sourced, Authenticated & Delivered."
+    paddingBottom: 0,
+    promoBar: ""
   },
   bulk: {
     products: "bulk",
     limit: 6,
-    heading: "Bulk  Orders / Prices. Please contact us for any larger bulk order inquires!",
-    headingSize: "h1",
-    hasDescription: false,
+    headerHtml: '<div class="hm-head hm-sec"><div class="hm-head__copy"><span class="hm-kicker">Bulk &amp; Save</span><h2 class="hm-h2" id="uni-pg-2-title">Buy in bulk. <em>Pay less per unit.</em></h2><p class="hm-lead">10 and 20-packs with every unit sealed and verified. Need a larger order? Contact us for a quote.</p></div><a class="hm-link" href="contact.html">Request a bulk quote<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>',
+    perUnit: true,             // "$12.60 / unit" pill from the "10PC" / "20PC" in the title
     columnsDesktop: 5,
     columnsMobile: 2,
-    imageRatio: "adapt",
+    imageRatio: "square",
     secondaryImage: false,
-    quickAdd: false,
+    quickAdd: true,
     viewAll: true,             // only shows when there are more products than the limit
     viewAllUrl: "",            // set this to a page listing all bulk products
-    paddingTop: 36,
-    paddingBottom: 36,
-    promoBar: "Dispensary-Sourced, Authenticated & Delivered."
+    paddingTop: 0,
+    paddingBottom: 0,
+    promoBar: ""
   }
+};
+
+/* Sample star ratings shown on the product cards (demo content). */
+var UNI_CARD_RATINGS = {
+  "ace-ultra-premium-2g": [4.8, 412], "muha-meds-sumer-edition": [4.7, 198], "raw-garden-live-resin-1g": [4.8, 356],
+  "geek-bar-pulse-x": [4.6, 241], "geek-bar-pulse": [4.7, 287], "boutiq-switch-v5": [4.6, 173], "big-chief": [4.5, 129],
+  "wholemelts-v7-copy": [4.6, 98], "muha-meds-x-cookies-limited-edition": [4.9, 264], "muha-meds-limited-edition": [4.7, 219]
 };
 </script>
 </head>
@@ -319,6 +495,7 @@ var UNI_GRIDS = {
   <div class="uni-announce__track">
     <div class="uni-announce__slide is-active">Based In California</div>
     <div class="uni-announce__slide">Over 35,000+ Customers</div>
+    <div class="uni-announce__slide">Order by 2 PM PT · Packed Next Business Day</div>
   </div>
   <button class="uni-announce__arrow uni-announce__arrow--next" type="button" aria-label="Next">&#8250;</button>
 </div>
@@ -373,7 +550,6 @@ var UNI_GRIDS = {
 <style>
   /* Shopify's theme sized every element with border-box; keep that here so the layout matches */
   .nx-wrap, .nx-wrap *, .nx-wrap *::before, .nx-wrap *::after { box-sizing: border-box; }
-  /* ---- Your section styles ---- */
   .nx-wrap{
     --bg:#0F0F10;
     --card:#161718;
@@ -383,223 +559,138 @@ var UNI_GRIDS = {
     --gold-2:#BA9930;
     --stroke:rgba(212,175,55,.28);
   }
-  /* Layout + type matched to the live UNI homepage: one full-width bordered
-     panel, Figtree body text (with the theme's .6px tracking), Oswald 700 headings. */
-  .nx-wrap{color:var(--ink);background:var(--bg);font-family:"Figtree",sans-serif;letter-spacing:.6px;line-height:1.8;border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:28px 24px 46px;margin:16px 0 0;max-width:none}
-  @media(max-width:749px){.nx-wrap{padding:24px 16px 32px;border-radius:10px}}
-  .nx-kicker{display:inline-block;font-size:12px !important;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;color:#FFD976;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.32);border-radius:999px;padding:7px 10px;margin:0 0 14px;font-weight:700}
-  .nx-h1{font-family:"Oswald",sans-serif;font-size:clamp(28px,3.4vw,44px) !important;line-height:1.1;margin:0 0 6px;font-weight:700 !important;letter-spacing:-.3px;color:#fff;-webkit-text-stroke:.6px #fff;paint-order:stroke fill}
-  .nx-sub{color:rgb(165,167,172);font-size:clamp(14px,1.2vw,16px) !important;line-height:1.8;letter-spacing:.6px;font-weight:600;margin:0 0 22px;max-width:none}
-  .nx-cta{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 26px}
-  .nx-btn{appearance:none;cursor:pointer;border:none;border-radius:12px;padding:13px 24px;font-family:"Figtree",sans-serif;font-weight:700;font-size:16px;letter-spacing:.3px;line-height:1.5;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+  /* Full-width bordered panel, Figtree body text, Oswald 700 headings */
+  .nx-wrap{position:relative;overflow:hidden;color:var(--ink);background:radial-gradient(60% 90% at 88% 40%,rgba(212,175,55,.10),rgba(212,175,55,0) 60%),var(--bg);font-family:"Figtree",sans-serif;letter-spacing:.6px;line-height:1.8;border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:28px 24px 34px;margin:16px 0 0;max-width:none}
+  @media(min-width:990px){.nx-wrap{padding:56px 56px 60px}}
+  @media(max-width:749px){.nx-wrap{padding:24px 16px 28px;border-radius:10px}}
+  .nx-hero{display:grid;gap:36px;align-items:center;max-width:1500px;margin:0 auto}
+  @media(min-width:990px){.nx-hero{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:56px}}
+  .nx-kicker{display:inline-block;font-size:12px !important;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;color:#FFD976;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.32);border-radius:999px;padding:7px 10px;margin:0 0 18px;font-weight:700}
+  .nx-h1{font-family:"Oswald",sans-serif;font-size:clamp(32px,4.2vw,64px) !important;line-height:1.04;margin:0 0 16px;font-weight:700 !important;letter-spacing:-.3px;color:#fff;-webkit-text-stroke:.6px #fff;paint-order:stroke fill}
+  .nx-h1 .nx-l1{display:block}
+  @media(min-width:400px){.nx-h1 .nx-l1{white-space:nowrap}}
+  @media(max-width:989px){.nx-h1{font-size:clamp(32px,7.4vw,56px) !important}}
+  .nx-h1 .nx-gold{display:block;background:linear-gradient(180deg,#F3D77A,#C9A43A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.6px rgba(232,199,102,.9)}
+  .nx-sub{color:rgb(165,167,172);font-size:clamp(15px,1.15vw,17px) !important;line-height:1.75;letter-spacing:.4px;font-weight:600;margin:0 0 26px;max-width:600px}
+  .nx-cta{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 28px}
+  .nx-btn{appearance:none;cursor:pointer;border:none;border-radius:12px;padding:14px 24px;font-family:"Figtree",sans-serif;font-weight:700;font-size:16px;letter-spacing:.3px;line-height:1.5;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease}
+  .nx-btn svg{width:18px;height:18px;flex:0 0 18px;transition:transform .2s ease}
+  .nx-btn--gold{background:linear-gradient(180deg,#E8C766,#BA9930);color:#111 !important;box-shadow:0 14px 34px rgba(186,153,48,.28)}
   .nx-btn--gold:hover{filter:brightness(1.06);box-shadow:0 16px 38px rgba(186,153,48,.36)}
+  .nx-btn--gold:hover svg{transform:translateX(3px)}
+  .nx-btn--hollow{background:transparent;color:var(--ink) !important;border:1px solid rgba(255,255,255,.18)}
+  .nx-btn--hollow:hover{border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.06)}
   .nx-btn:active{transform:translateY(1px)}
+  @media(max-width:520px){.nx-cta{gap:10px}.nx-btn{padding:13px 18px;font-size:15px;flex:1 1 auto}}
   .nx-btn:focus-visible{outline:2px solid #FFD976;outline-offset:3px}
-  .nx-btn--gold{background:linear-gradient(180deg,#E8C766,#BA9930);color:#111;box-shadow:0 14px 34px rgba(186,153,48,.28)}
-  .nx-btn--hollow{background:transparent;color:var(--ink);border:1px solid var(--stroke)}
-  .nx-grid{display:grid;gap:18px}
-  .nx-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .nx-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-  @media(max-width:980px){.nx-3{grid-template-columns:repeat(2,1fr)}.nx-4{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:620px){.nx-3,.nx-4{grid-template-columns:1fr}}
-  .nx-card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px}
-  .nx-card h3{margin:10px 0 4px;font-family:"Oswald",sans-serif;font-size:18px;line-height:1.3;font-weight:700;letter-spacing:.4px;color:#fff;-webkit-text-stroke:.25px #fff;paint-order:stroke fill}
-  .nx-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.8;letter-spacing:.6px;font-weight:600}
-  .nx-icon{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.36);font-size:17px;line-height:1;letter-spacing:0}
-  .nx-step{display:flex;gap:14px;align-items:flex-start}
-  .nx-step .num{flex:0 0 34px;width:34px;height:34px;border-radius:999px;background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.36);display:grid;place-items:center;font-weight:800;color:#FFD976;font-size:14px;letter-spacing:0;line-height:1}
-  .nx-step h3{margin:0 0 3px;line-height:34px}
-  .nx-afq{display:grid;gap:14px;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;max-width:1380px}
-  @media(max-width:860px){.nx-afq{grid-template-columns:1fr}}
-  .nx-strip{display:flex;gap:10px 12px;flex-wrap:wrap;align-items:center;align-content:center;justify-content:flex-start;background:#171719;border:1px solid var(--stroke);border-radius:12px;padding:14px;min-height:230px;margin-top:9px}
-  @media(max-width:860px){.nx-strip{margin-top:0;min-height:0;padding:18px 14px}}
-  .nx-pill{border:1px solid rgba(212,175,55,.32);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:7px 14px;font-size:12px;line-height:1.6;letter-spacing:0;font-weight:600}
-  .nx-faq{border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;background:var(--card)}
-  .nx-faq details{border-top:1px solid rgba(255,255,255,.04)}
-  .nx-faq details:first-of-type{border-top:0}
-  .nx-faq summary{cursor:pointer;padding:14.5px 17px;background:transparent;font-size:16px;line-height:1.8;font-weight:700;letter-spacing:.6px;list-style:none;color:#F7F7F7}
-  .nx-faq summary::-webkit-details-marker{display:none}
-  .nx-faq .ans{padding:0 17px 16px;color:var(--muted);background:transparent;font-size:14px;font-weight:600}
-  .nx-note{color:#A5A7AC;font-size:12.5px;line-height:1.5;margin:14px 0 0;font-weight:600}
-  .nx-note strong{color:#FFD976}
+  /* Social proof line */
+  .nx-proof{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .nx-avatars{display:flex}
+  .nx-avatars span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;margin-left:-9px;border:2px solid #0F0F10;font-size:12px;font-weight:800;letter-spacing:0;color:#111}
+  .nx-avatars span:first-child{margin-left:0}
+  .nx-proof__stars{display:flex;gap:2px;color:#FFD976}
+  .nx-proof__stars svg{width:15px;height:15px}
+  .nx-proof__text{font-size:14px;font-weight:600;color:#D5D6D9;letter-spacing:.3px;line-height:1.4}
+  .nx-proof__text strong{color:#fff;font-weight:800}
+  /* Product showcase */
+  .nx-show{position:relative;max-width:560px;width:100%;margin:0 auto;aspect-ratio:1/1}
+  .nx-show__glow{position:absolute;inset:8% 6%;border-radius:50%;background:radial-gradient(closest-side,rgba(212,175,55,.28),rgba(212,175,55,0));filter:blur(10px)}
+  .nx-show__card{position:absolute;overflow:hidden;border-radius:18px;border:1px solid rgba(212,175,55,.32);background:#0b0b0c;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+  .nx-show__card img{display:block;width:100%;height:100%;object-fit:cover}
+  .nx-show__card--main{inset:6% 16% 10% 4%;z-index:2}
+  .nx-show__card--back{top:0;right:0;width:46%;height:54%;z-index:1;transform:rotate(5deg);opacity:.92}
+  .nx-chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:rgba(20,20,22,.92);border:1px solid rgba(212,175,55,.35);box-shadow:0 14px 34px rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);line-height:1.25;color:#fff;text-decoration:none}
+  .nx-chip small{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#A5A7AC}
+  .nx-chip b{display:block;font-size:14.5px;font-weight:800;letter-spacing:.2px}
+  .nx-chip__icon{width:34px;height:34px;flex:0 0 34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,#E8C766,#BA9930);color:#111}
+  .nx-chip__icon svg{width:18px;height:18px}
+  .nx-chip--eta{right:3%;bottom:2%}
+  .nx-chip--best{left:-3%;top:11%}
+  .nx-chip--best:hover{border-color:rgba(212,175,55,.7)}
+  @media(max-width:989px){.nx-show{max-width:460px}}
+  @media(max-width:520px){.nx-chip{padding:8px 11px;gap:8px}.nx-chip b{font-size:13px}.nx-chip small{font-size:10px}.nx-chip__icon{width:30px;height:30px;flex-basis:30px}.nx-chip--best{left:0}.nx-chip--eta{right:0}}
+
+  /* Trust bar (sits right under the hero) */
+  .hm-trust{max-width:1600px;margin:0 auto;padding:0 15px}
+  @media(min-width:750px){.hm-trust{padding:0 50px}}
+  .hm-trust__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:0;list-style:none;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:#141416}
+  .hm-trust__list li{display:flex;align-items:center;gap:14px;padding:18px 22px;font-family:"Figtree",sans-serif;line-height:1.35;letter-spacing:.3px}
+  .hm-trust__list li + li{border-left:1px solid rgba(255,255,255,.07)}
+  .hm-trust__icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;display:grid;place-items:center;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.32);color:#FFD976}
+  .hm-trust__icon svg{width:21px;height:21px}
+  .hm-trust__list b{display:block;color:#fff;font-size:15px;font-weight:800}
+  .hm-trust__list span{display:block;color:#A5A7AC;font-size:13.5px;font-weight:600;margin-top:2px}
+  .hm-trust__list b .hm-live{display:inline;margin:0;font-size:inherit;font-weight:800;color:#FFD976}
+  @media(max-width:1100px){.hm-trust__list{grid-template-columns:repeat(2,minmax(0,1fr))}.hm-trust__list li:nth-child(3){border-left:0}.hm-trust__list li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.07)}}
+  @media(max-width:560px){.hm-trust__list{grid-template-columns:1fr}.hm-trust__list li{padding:14px 16px}.hm-trust__list li + li{border-left:0;border-top:1px solid rgba(255,255,255,.07)}}
 </style>
 
-<section class="nx-wrap">
-  <!-- HERO / INTRO -->
-  <span class="nx-kicker">Premium • Fast • Verified</span>
-  <h1 class="nx-h1">Dispensary-Sourced Vapes. Delivered To Your Door.</h1>
-  <p class="nx-sub">
-    We source directly from licensed dispensaries and deliver to you quickly and discreetly.
-    Every product is authenticated and quality-checked so you always know exactly what you’re getting.
-  </p>
-  <div class="nx-cta">
-    <a href="#products" class="nx-btn nx-btn--gold">Explore Products</a>
-  </div>
-
-  <!-- VALUE PROPS -->
-  <div class="nx-grid nx-3">
-    <div class="nx-card">
-      <div class="nx-icon">🏷️</div>
-      <h3>Dispensary Direct</h3>
-      <p>We only partner with licensed dispensaries so products remain compliant, traceable, and fresh.</p>
-    </div>
-    <div class="nx-card">
-      <div class="nx-icon">✅</div>
-      <h3>Authenticated &amp; Verified</h3>
-      <p>Each item is sealed, batch-checked, and verified for authenticity before it ships to you.</p>
-    </div>
-    <div class="nx-card">
-      <div class="nx-icon">🚚</div>
-      <h3>Fast, Discreet Delivery</h3>
-      <p>Plain packaging, real-time updates, and quick fulfillment — your privacy comes first.</p>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <div style="margin-top:39px">
-    <span class="nx-kicker">How it works</span>
-    <div class="nx-grid nx-4">
-      <div class="nx-card nx-step">
-        <div class="num">1</div>
-        <div>
-          <h3>Browse</h3>
-          <p>Choose verified products curated from trusted dispensaries.</p>
-        </div>
+<section class="nx-wrap" aria-labelledby="nx-title">
+  <div class="nx-hero">
+    <div class="nx-copy">
+      <span class="nx-kicker">Premium • Fast • Verified</span>
+      <h1 class="nx-h1" id="nx-title"><span class="nx-l1">Dispensary-Sourced Vapes.</span> <span class="nx-gold">Delivered To Your Door.</span></h1>
+      <p class="nx-sub">We source directly from licensed dispensaries and deliver to you quickly and discreetly. Every product is authenticated and quality-checked so you always know exactly what you’re getting.</p>
+      <div class="nx-cta">
+        <a href="#products" class="nx-btn nx-btn--gold">Explore Products<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#how" class="nx-btn nx-btn--hollow">How It Works</a>
       </div>
-      <div class="nx-card nx-step">
-        <div class="num">2</div>
-        <div>
-          <h3>Verify</h3>
-          <p>We confirm authenticity, seal integrity, and batch details on every item.</p>
+      <div class="nx-proof">
+        <div class="nx-avatars" aria-hidden="true">
+          <span style="background:#E8C766">MT</span><span style="background:#C9B48A">JR</span><span style="background:#B99A4A">AK</span><span style="background:#F1DFA4">DS</span>
         </div>
-      </div>
-      <div class="nx-card nx-step">
-        <div class="num">3</div>
         <div>
-          <h3>Deliver</h3>
-          <p>Your order ships quickly in discreet, protective packaging with tracking.</p>
-        </div>
-      </div>
-      <div class="nx-card nx-step">
-        <div class="num">4</div>
-        <div>
-          <h3>Enjoy</h3>
-          <p>Open-box confidence: what you ordered is exactly what arrives — verified.</p>
+          <div class="nx-proof__stars" role="img" aria-label="Rated 4.7 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="nx-half"><stop offset="70%" stop-color="currentColor"/><stop offset="70%" stop-color="rgba(255,217,118,.25)"/></linearGradient></defs><path fill="url(#nx-half)" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>
+          </div>
+          <div class="nx-proof__text"><strong>4.7/5</strong> on Trustpilot · Trusted by <strong>35,000+</strong> customers nationwide</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ASSURANCES + FAQs (side-by-side on desktop, stacked on mobile) -->
-  <div class="nx-afq" style="margin-top:22px">
-    <!-- VERIFICATION STRIP (left) -->
-    <div class="nx-strip" aria-label="Assurances">
-      <span class="nx-pill">Licensed sourcing</span>
-      <span class="nx-pill">Tamper-evident seals</span>
-      <span class="nx-pill">Batch / lot checks</span>
-      <span class="nx-pill">Discreet packaging</span>
-    </div>
-
-    <!-- FAQs (right) -->
-    <div>
-      <span class="nx-kicker">FAQs</span>
-      <div class="nx-faq">
-        <details>
-          <summary>Where do you source products?</summary>
-          <div class="ans">Exclusively from licensed dispensaries and authorized suppliers. We do not purchase from grey-market sources.</div>
-        </details>
-        <details>
-          <summary>How do you verify authenticity?</summary>
-          <div class="ans">We inspect tamper-evident seals, confirm batch/lot info, and cross-check with supplier data. If an item doesn’t pass, it doesn’t ship.</div>
-        </details>
-        <details>
-          <summary>What does delivery look like?</summary>
-          <div class="ans">Your order ships quickly in plain packaging with full tracking. Delivery timelines are shown at checkout based on your address.</div>
-        </details>
+    <div class="nx-show" aria-hidden="false">
+      <div class="nx-show__glow" aria-hidden="true"></div>
+      <div class="nx-show__card nx-show__card--back" aria-hidden="true"><img src="images/muha-3rd-gen-logo.webp" alt="" width="614" height="736" loading="eager"></div>
+      <a class="nx-show__card nx-show__card--main" href="product.html?id=ace-ultra-premium-2g" aria-label="Shop Ace Ultra Premium"><img src="images/ace-ultra.webp" alt="Ace Ultra Premium cartridge" width="640" height="640" fetchpriority="high"></a>
+      <a class="nx-chip nx-chip--best" href="product.html?id=ace-ultra-premium-2g">
+        <span class="nx-chip__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+        <span><small>Best seller</small><b>Ace Ultra Premium · $35.99</b></span>
+      </a>
+      <div class="nx-chip nx-chip--eta">
+        <span class="nx-chip__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span>
+        <span><small>Order today, arrives</small><b data-hm-eta>in 3–5 business days</b></span>
       </div>
-      <p class="nx-note">
-        <strong>Important:</strong> By ordering you confirm you are 21+ and agree to abide by all local regulations. Availability may vary by region.
-      </p>
     </div>
   </div>
 </section>
 </div>
 
-<!-- ============ SHIPPING ETA ============ -->
+<!-- ============ TRUST BAR ============ -->
 <div class="uni-section">
-<div class="uni-eta-banner" role="status" aria-live="polite">
-  <div class="uni-eta-banner__inner">
-    <span class="uni-eta-banner__dot" aria-hidden="true"></span>
-    <span class="uni-eta-banner__text">
-      Current Shipping ETA: <strong>2–4 Business Days (Standard USPS Shipping)</strong>
-    </span>
-  </div>
+<div class="hm-trust">
+  <ul class="hm-trust__list" aria-label="Why shop with UNI">
+    <li>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9 2h6"/></svg></span>
+      <div><b data-hm-cutoff>Fast dispatch</b><span>Standard USPS · 2–4 business days, tracked</span></div>
+    </li>
+    <li>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <div><b>100% Authentic</b><span>Sealed, batch-checked and verified</span></div>
+    </li>
+    <li>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
+      <div><b>Discreet Packaging</b><span>Plain box, no logos or product names</span></div>
+    </li>
+    <li>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+      <div><b>4.7/5 on Trustpilot</b><span>35,000+ customers nationwide</span></div>
+    </li>
+  </ul>
 </div>
-
-<style>
-  /* Shopify's theme sized every element with border-box; keep that here so the layout matches */
-  .uni-eta-banner, .uni-eta-banner * { box-sizing: border-box; }
-
-  .uni-eta-banner{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 10px 12px;
-    margin: 12px 0;
-  }
-
-  .uni-eta-banner__inner{
-    width: min(980px, 100%);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    border-radius: 14px;
-
-    /* Dark theme look */
-    background: rgba(0,0,0,0.45);
-    border: 1px solid rgba(212, 175, 55, 0.35); /* gold accent */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-
-  .uni-eta-banner__dot{
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: #d4af37; /* gold */
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.16);
-    flex: 0 0 auto;
-  }
-
-  .uni-eta-banner__text{
-    color: rgba(255,255,255,0.92);
-    font-size: 14px;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-  }
-
-  .uni-eta-banner__text strong{
-    color: #d4af37; /* gold highlight */
-    font-weight: 700;
-  }
-
-  /* Mobile tweaks */
-  @media (max-width: 480px){
-    .uni-eta-banner__inner{
-      padding: 10px 12px;
-      border-radius: 12px;
-    }
-    .uni-eta-banner__text{
-      font-size: 13px;
-    }
-  }
-</style>
 </div>
 
 <!-- ============ PRODUCTS (built from UNI_PRODUCTS at the top of this file) ============ -->
-<div class="uni-section" id="products">
+<div class="uni-section hm-gap" id="products">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap">
@@ -1089,10 +1180,6 @@ var UNI_GRIDS = {
   })();
 </script>
 <section id="uni-pg-1" class="uni-pg" data-uni-grid="singles"><noscript><p style="padding:20px;text-align:center;">Turn on JavaScript to see our products.</p></noscript></section>
-</div>
-
-<div class="uni-section">
-<section id="uni-pg-2" class="uni-pg" data-uni-grid="bulk"></section>
 <script>
 /* Builds the product sections from UNI_PRODUCTS / UNI_GRIDS (same markup as the WordPress version). */
 (function () {
@@ -1138,12 +1225,25 @@ var UNI_GRIDS = {
     h += '</div><div class="uni-pg__content"><div class="uni-pg__info">';
     h += '<h3 class="uni-pg__name" id="' + pid + '-title"><a class="uni-pg__link" href="' + esc(p.url || '#') + '"' +
       (badge ? ' aria-describedby="' + pid + '-badge"' : '') + '>' + esc(p.title) + '</a></h3>';
+    if (g.showRating) {
+      var rid = String(p.url || '').split('id=')[1] || '';
+      var rt = window.UNI_CARD_RATINGS && UNI_CARD_RATINGS[decodeURIComponent(rid)];
+      if (rt) {
+        var full = Math.round(rt[0]), st = '';
+        for (var si = 1; si <= 5; si++) st += '<svg viewBox="0 0 24 24" fill="currentColor"' + (si > full ? ' class="is-off"' : '') + ' aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
+        h += '<div class="uni-pg__rating"><span class="hm-stars" role="img" aria-label="Rated ' + rt[0] + ' out of 5">' + st + '</span><span>' + rt[0] + ' (' + rt[1] + ')</span></div>';
+      }
+    }
     h += '<div class="uni-pg__price">';
     if (onSale) {
       h += '<span class="uni-pg__sr">Regular price</span><s class="uni-pg__price-item uni-pg__price-item--compare">' + esc(money(p.compareAt)) + '</s>';
       h += '<span class="uni-pg__sr">Sale price</span><span class="uni-pg__price-item">' + esc(priceText) + '</span>';
     } else {
       h += '<span class="uni-pg__sr">Regular price</span><span class="uni-pg__price-item">' + esc(priceText) + '</span>';
+    }
+    if (g.perUnit) {
+      var pack = /^(\d+)\s*PC/i.exec(p.title || '');
+      if (pack && +pack[1] > 1) h += '<span class="uni-pg__unit">' + esc(fmt.format(Number(p.price) / +pack[1])) + ' / unit</span>';
     }
     h += '</div></div>';
     if (g.quickAdd) {
@@ -1166,13 +1266,17 @@ var UNI_GRIDS = {
     if (!g) return;
     var all = UNI_PRODUCTS[g.products] || [];
     var items = all.slice(0, g.limit);
+    if (g.soldOutLast) items = items.filter(function (p) { return p.available !== false; }).concat(items.filter(function (p) { return p.available === false; }));
     var gid = el.id;
     var pt = g.paddingTop || 0, pb = g.paddingBottom || 0;
     el.setAttribute('style', '--uni-pg-pt:' + pt + 'px;--uni-pg-pb:' + pb + 'px;--uni-pg-pt-m:' + Math.round(pt * 0.75) + 'px;--uni-pg-pb-m:' + Math.round(pb * 0.75) +
       'px;--uni-pg-cols:' + g.columnsDesktop + ';--uni-pg-cols-m:' + g.columnsMobile + ';');
     var h = '';
     if (g.promoBar) h += '<div class="uni-pg__promo">' + esc(g.promoBar) + '</div>';
-    if (g.heading) {
+    if (g.headerHtml) {
+      el.setAttribute('aria-labelledby', gid + '-title');
+      h += '<div class="uni-pg__page">' + g.headerHtml + '</div>';
+    } else if (g.heading) {
       el.setAttribute('aria-labelledby', gid + '-title');
       h += '<div class="uni-pg__page uni-pg__head' + (g.hasDescription ? '' : ' uni-pg__head--plain') + '">' +
         '<h2 id="' + gid + '-title" class="uni-pg__title uni-pg__title--' + (g.headingSize || 'h1') + ' uni-reveal">' + g.heading + '</h2></div>';
@@ -1185,303 +1289,227 @@ var UNI_GRIDS = {
     }
     el.innerHTML = h;
   }
+  window.UNI_RENDER_GRID = grid;
   Array.prototype.forEach.call(document.querySelectorAll('[data-uni-grid]'), grid);
 })();
 </script>
 </div>
 
-<!-- ============ SPONSOR BADGE ============ -->
-<div class="uni-section" style="--uni-pt: 40px; --uni-pb: 52px;">
-<style>
-  /* Shopify's theme sized every element with border-box; keep that here so the layout matches */
-  .partner-badge, .partner-badge *, .partner-badge::before { box-sizing: border-box; }
-
-  .partner-badge {
-    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.08), rgba(0, 0, 0, 0.4));
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    margin: 60px auto;
-    max-width: 640px;
-    box-shadow: 0 0 24px rgba(255, 215, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .partner-badge::before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    top: -100px;
-    left: calc(50% - 150px);
-    z-index: 0;
-    animation: pulseRing 5s infinite ease-in-out;
-  }
-
-  .partner-badge h2 {
-    font-size: 28px;
-    color: #FFD976;
-    margin: 0;
-    z-index: 2;
-    position: relative;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .partner-badge p {
-    font-size: 14px;
-    color: #aaa;
-    margin-top: 10px;
-    letter-spacing: 0.5px;
-    z-index: 2;
-    position: relative;
-  }
-
-  @keyframes pulseRing {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 0.25;
-    }
-    50% {
-      transform: scale(1.2);
-      opacity: 0.4;
-    }
-  }
-</style>
-
-<div class="partner-badge">
-  <h2>Official Sponsor of Raw Garden</h2>
-  <p>Based in California</p>
-</div>
+<!-- ============ HOW IT WORKS ============ -->
+<div class="uni-section hm-gap" id="how">
+<section class="hm-sec" aria-labelledby="hm-how-title">
+  <div class="hm-page">
+    <div class="hm-head hm-rv">
+      <div class="hm-head__copy">
+        <span class="hm-kicker">How it works</span>
+        <h2 class="hm-h2" id="hm-how-title">From the dispensary <em>to your door.</em></h2>
+        <p class="hm-lead">Four steps, zero guesswork. Every order is checked by hand before it leaves California.</p>
+      </div>
+    </div>
+    <ol class="hm-steps">
+      <li class="hm-step hm-rv" style="--d:0">
+        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><span class="hm-step__num" aria-hidden="true">01</span></div>
+        <h3>Browse</h3>
+        <p>Choose verified products curated from trusted dispensaries.</p>
+      </li>
+      <li class="hm-step hm-rv" style="--d:1">
+        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="hm-step__num" aria-hidden="true">02</span></div>
+        <h3>Verify</h3>
+        <p>We confirm authenticity, seal integrity, and batch details on every item.</p>
+      </li>
+      <li class="hm-step hm-rv" style="--d:2">
+        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><span class="hm-step__num" aria-hidden="true">03</span></div>
+        <h3>Deliver</h3>
+        <p>Your order ships quickly in discreet, protective packaging with tracking.</p>
+      </li>
+      <li class="hm-step hm-rv" style="--d:3">
+        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M8.5 12.5l2.5 2.5 4.5-4.5"/></svg></span><span class="hm-step__num" aria-hidden="true">04</span></div>
+        <h3>Enjoy</h3>
+        <p>Open-box confidence: what you ordered is exactly what arrives — verified.</p>
+      </li>
+    </ol>
+  </div>
+</section>
 </div>
 
-<!-- ============ 35,000+ CUSTOMERS ============ -->
-<div class="uni-section">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap">
-
-<style>
-  .uni-rich,
-  .uni-rich * {
-    box-sizing: border-box;
-  }
-  .uni-rich {
-    padding: 24px 0 39px;
-    background: #0e0e10;
-    color: #ffffff;
-    font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.8;
-    letter-spacing: .6px;
-  }
-  .uni-rich .uni-rich__wrapper {
-    display: flex;
-    justify-content: center;
-    max-width: 1600px;
-    margin: 0 20px;
-    padding: 0 15px;
-  }
-  .uni-rich .uni-rich__blocks {
-    width: 100%;
-    max-width: none;
-    text-align: center;
-  }
-  .uni-rich .uni-rich__heading {
-    margin: 0;
-    padding: 0;
-    color: #ffffff;
-    font-family: "Oswald", sans-serif;
-    font-size: 42px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.2142857;
-    letter-spacing: .84px;
-    text-transform: none;
-    word-break: break-word;
-  }
-  .uni-rich .uni-rich__buttons {
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 450px;
-    margin: 20px 0 0;
-  }
-  .uni-rich .uni-rich__button,
-  .uni-rich .uni-rich__button:visited,
-  .uni-rich .uni-rich__button:hover,
-  .uni-rich .uni-rich__button:focus {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 122px;
-    min-height: 47px;
-    margin: 0;
-    padding: 0 30px;
-    background: linear-gradient(180deg, #E8C766, #BA9930);
-    border: 0;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(186, 153, 48, .25);
-    color: #111111;
-    font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 1px;
-    text-decoration: none;
-    text-transform: none;
-    transition: box-shadow .1s ease;
-  }
-  .uni-rich .uni-rich__button:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, .5);
-    outline-offset: 3px;
-  }
-  @media screen and (min-width: 750px) {
-    .uni-rich {
-      padding: 32px 0 52px;
-      font-size: 16px;
-    }
-    .uni-rich .uni-rich__wrapper {
-      margin: 0 auto;
-      padding: 0 50px;
-    }
-    .uni-rich .uni-rich__blocks { max-width: 500px; }
-    .uni-rich .uni-rich__heading { font-size: 56px; }
-  }
-  @media screen and (min-width: 990px) {
-    .uni-rich .uni-rich__blocks { max-width: 780px; }
-  }
-
-  /* Scroll-in animation (same timing as the Shopify theme) */
-  @media (prefers-reduced-motion: no-preference) {
-    .uni-rich .uni-rich__reveal {
-      opacity: .01;
-      transform: translateY(20px);
-    }
-    .uni-rich .uni-rich__reveal:not(.uni-rich__reveal--offscreen) {
-      animation: uni-rich-slide-in 600ms cubic-bezier(0, 0, .3, 1) forwards;
-      animation-delay: calc(var(--animation-order) * 75ms);
-    }
-  }
-  @keyframes uni-rich-slide-in {
-    from { transform: translateY(20px); opacity: .01; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-</style>
-
-<div class="uni-rich">
-  <div class="uni-rich__wrapper">
-    <div class="uni-rich__blocks">
-      <h2 class="uni-rich__heading uni-rich__reveal" data-cascade style="--animation-order: 1;"><em>Presented / Managed By UNI. 35,000+ Customers Nationwide</em></h2>
-      <div class="uni-rich__buttons uni-rich__reveal" data-cascade style="--animation-order: 2;">
-        <a class="uni-rich__button" href="#products">Shop Now!</a>
+<!-- ============ REVIEWS ============ -->
+<div class="uni-section hm-gap" id="reviews">
+<section class="hm-sec" aria-labelledby="hm-rev-title">
+  <div class="hm-page">
+    <div class="hm-head hm-rv">
+      <div class="hm-head__copy">
+        <span class="hm-kicker">Reviews</span>
+        <h2 class="hm-h2" id="hm-rev-title">Rated 4.7/5 by <em>35,000+ customers.</em></h2>
+        <p class="hm-lead">Real orders, real people. Here’s what customers say after their package arrives.</p>
+      </div>
+      <div class="hm-rev__summary" role="img" aria-label="Excellent, 4.7 out of 5 on Trustpilot">
+        <span class="hm-rev__tp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M17.227 16.67l2.19 6.742-7.413-5.388 5.223-1.354zM24 9.31h-9.165L12.005.589l-2.84 8.723L0 9.3l7.422 5.397-2.84 8.714 7.422-5.388 4.583-3.326L24 9.311z"/></svg>Trustpilot</span>
+        <span class="hm-boxes" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i class="is-part"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i></span>
+        <span class="hm-rev__score"><b>Excellent</b> · 4.7 / 5</span>
+      </div>
+    </div>
+    <div class="hm-car hm-rv" data-hm-carousel>
+      <ul class="hm-car__track" id="hm-rev-track" aria-label="Customer reviews" tabindex="0"></ul>
+      <div class="hm-car__nav">
+        <button type="button" class="hm-car__btn" data-dir="-1" aria-label="Previous reviews" aria-controls="hm-rev-track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="hm-car__dots" role="group" aria-label="Choose review page"></div>
+        <button type="button" class="hm-car__btn" data-dir="1" aria-label="Next reviews" aria-controls="hm-rev-track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
     </div>
   </div>
+</section>
 </div>
 
-<script>
-  (function () {
-    function init() {
-      var els = Array.prototype.slice.call(document.querySelectorAll('.uni-rich .uni-rich__reveal'));
-      if (!els.length || !('IntersectionObserver' in window)) return;
-      var observer = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (entry, index) {
-          var el = entry.target;
-          if (entry.isIntersecting) {
-            if (el.classList.contains('uni-rich__reveal--offscreen')) {
-              el.classList.remove('uni-rich__reveal--offscreen');
-              if (el.hasAttribute('data-cascade')) el.style.setProperty('--animation-order', index);
-            }
-            obs.unobserve(el);
-          } else {
-            el.classList.add('uni-rich__reveal--offscreen');
-          }
-        });
-      }, { rootMargin: '0px 0px -50px 0px' });
-      els.forEach(function (el) { observer.observe(el); });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
-  })();
-</script>
-</div>
-
-<!-- ============ COPYRIGHT ============ -->
-<div class="uni-section">
-<style>
-  /* Shopify's theme sized every element with border-box; keep that here so the layout matches */
-  .footer-section, .footer-section * { box-sizing: border-box; }
-
-  .footer-section {
-    background: #0f0f10;
-    border-top: 1px solid rgba(212,175,55,0.15);
-    padding: 40px 20px;
-    color: #ccc;
-    text-align: center;
-    font-size: 14px;
-  }
-
-  .footer-section .branding {
-    font-size: 20px;
-    font-weight: 800;
-    color: #FFD976;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
-
-  .footer-section .links {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 14px;
-  }
-
-  .footer-section .links a {
-    color: #aaa;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
-  }
-
-  .footer-section .links a:hover {
-    color: #FFD976;
-  }
-
-  .footer-section .legal {
-    font-size: 12px;
-    color: #777;
-    margin-top: 20px;
-    line-height: 1.5;
-  }
-</style>
-
-<div class="footer-section">
-  <div class="branding">
-  <div class="links">
-    
-   
+<!-- ============ WHY UNI ============ -->
+<div class="uni-section hm-gap" id="why">
+<section class="hm-sec" aria-labelledby="hm-why-title">
+  <div class="hm-page">
+    <div class="hm-why">
+      <div>
+        <div class="hm-rv">
+          <span class="hm-kicker">Why UNI</span>
+          <h2 class="hm-h2" id="hm-why-title">Dispensary-direct. Verified. <em>Discreet.</em></h2>
+          <p class="hm-lead">No grey market, no guesswork. We only sell what we can trace back to a licensed source.</p>
+        </div>
+        <ul class="hm-why__list">
+          <li class="hm-why__item hm-rv" style="--d:0">
+            <span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span>
+            <div><h3>Dispensary Direct</h3><p>We only partner with licensed dispensaries so products remain compliant, traceable, and fresh.</p></div>
+          </li>
+          <li class="hm-why__item hm-rv" style="--d:1">
+            <span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <div><h3>Authenticated &amp; Verified</h3><p>Each item is sealed, batch-checked, and verified for authenticity before it ships to you.</p></div>
+          </li>
+          <li class="hm-why__item hm-rv" style="--d:2">
+            <span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
+            <div><h3>Fast, Discreet Delivery</h3><p>Plain packaging, real-time updates, and quick fulfillment — your privacy comes first.</p></div>
+          </li>
+        </ul>
+      </div>
+      <div class="hm-badge hm-rv" style="--d:1">
+        <img src="images/uni-logo.webp" alt="UNI Dispo emblem" width="112" height="112" loading="lazy">
+        <p class="hm-badge__title">Official Sponsor of Raw Garden</p>
+        <p class="hm-badge__sub">Based in California · Shipping nationwide</p>
+        <ul class="hm-pills" aria-label="Our checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Licensed sourcing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Tamper-evident seals</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Batch / lot checks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Discreet packaging</li>
+        </ul>
+        <ul class="hm-stats">
+          <li><b>35K+</b><span>Customers</span></li>
+          <li><b>4.7★</b><span>Trustpilot</span></li>
+          <li><b>1 Day</b><span>To pack</span></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="legal">
-    © <span class="uni-year">2026</span> UNI. All rights reserved.<br>
-  
-    Licensed vendor. Based in California.
+</section>
+</div>
+
+<!-- ============ BULK ============ -->
+<div class="uni-section hm-gap" id="bulk">
+<section id="uni-pg-2" class="uni-pg" data-uni-grid="bulk"></section>
+<script>window.UNI_RENDER_GRID && UNI_RENDER_GRID(document.getElementById('uni-pg-2'));</script>
+</div>
+
+<!-- ============ FAQ ============ -->
+<div class="uni-section hm-gap" id="faq">
+<section class="hm-sec" aria-labelledby="hm-faq-title">
+  <div class="hm-page">
+    <div class="hm-faq">
+      <div class="hm-faq__aside hm-rv">
+        <span class="hm-kicker">FAQs</span>
+        <h2 class="hm-h2" id="hm-faq-title">Questions? <em>Answered.</em></h2>
+        <p class="hm-lead">Everything you need to know before you order. Still unsure? Our team usually replies within the hour.</p>
+        <a class="hm-btn hm-btn--hollow" href="contact.html">Contact Us<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <p class="hm-faq__note"><strong>Important:</strong> By ordering you confirm you are 21+ and agree to abide by all local regulations. Availability may vary by region.</p>
+      </div>
+      <div class="hm-acc hm-rv" style="--d:1">
+        <details>
+          <summary>Where do you source products?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
+          <div class="hm-acc__body"><p>Exclusively from licensed dispensaries and authorized suppliers. We do not purchase from grey-market sources.</p></div>
+        </details>
+        <details>
+          <summary>How do you verify authenticity?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
+          <div class="hm-acc__body"><p>We inspect tamper-evident seals, confirm batch/lot info, and cross-check with supplier data. If an item doesn’t pass, it doesn’t ship.</p></div>
+        </details>
+        <details>
+          <summary>How fast will my order arrive?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
+          <div class="hm-acc__body"><p>Orders placed before 2 PM Pacific on a business day are packed the next business day, then delivered by USPS in 2–4 business days with full tracking. <span data-hm-eta-sentence></span></p></div>
+        </details>
+        <details>
+          <summary>Is the packaging discreet?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
+          <div class="hm-acc__body"><p>Yes. Every order ships in a plain outer box with no logos or product names on it.</p></div>
+        </details>
+        <details>
+          <summary>What if something’s wrong with my order?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
+          <div class="hm-acc__body"><p>Every order is covered by our <strong>100% Satisfaction Guarantee</strong>. Reach out through our <a href="contact.html">contact page</a> and we’ll make it right.</p></div>
+        </details>
+        <details>
+          <summary>Do you offer bulk pricing?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
+          <div class="hm-acc__body"><p>Yes. Our 10 and 20-packs come in at a lower price per unit — see <a href="#bulk">Bulk &amp; Save</a> above. For larger orders, <a href="contact.html">contact us</a> for a quote.</p></div>
+        </details>
+      </div>
+    </div>
   </div>
+</section>
 </div>
+
+<!-- ============ FINAL CTA ============ -->
+<div class="uni-section hm-gap">
+<section class="hm-sec" aria-labelledby="hm-final-title">
+  <div class="hm-page">
+    <div class="hm-final hm-rv">
+      <img src="images/uni-logo.webp" alt="" width="84" height="84" loading="lazy">
+      <h2 id="hm-final-title">Presented / Managed By UNI. <span>35,000+ Customers Nationwide</span></h2>
+      <p>Authentic products, verified by hand, delivered discreetly. Order today — <span data-hm-eta-short>arrives in 3–5 business days</span>.</p>
+      <div class="hm-final__cta">
+        <a class="hm-btn hm-btn--gold" href="#products">Shop Now<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="hm-btn hm-btn--hollow" href="catalog.html">View Full Catalog</a>
+      </div>
+    </div>
+  </div>
+</section>
 </div>
+
+<!-- ============ FOOTER ============ -->
+<div class="uni-section hm-gap">
+<footer class="hm-sec hm-foot">
+  <div class="hm-page">
+    <div class="hm-foot__grid">
+      <div class="hm-foot__brand">
+        <a class="hm-foot__logo" href="index.html" aria-label="UNI home"><img src="images/uni-logo.webp" alt="" width="52" height="52" loading="lazy"><span>UNI</span></a>
+        <p>Dispensary-sourced, authenticated vapes delivered fast and discreetly. Based in California, shipping nationwide.</p>
+      </div>
+      <nav aria-label="Shop">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="#products">Best Sellers</a></li>
+          <li><a href="#bulk">Bulk &amp; Save</a></li>
+          <li><a href="catalog.html">Full Catalog</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Help">
+        <h3>Help</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#faq">Shipping &amp; FAQ</a></li>
+          <li><a href="account.html">My Account</a></li>
+        </ul>
+      </nav>
+      <div class="hm-foot__pay">
+        <h3>Secure Checkout</h3>
+        <p>Pay your way. Every order is encrypted and covered by our 100% Satisfaction Guarantee.</p>
+        <div data-hm-pay></div>
+      </div>
+    </div>
+    <div class="hm-foot__bottom">
+      <span>© 2026 UNI. All rights reserved. Licensed vendor. Based in California.</span>
+      <span class="hm-foot__age"><b>21+</b>For adults 21 and over only.</span>
+    </div>
+  </div>
+</footer>
 </div>
 
 <!-- ============ HIGH VOLUME NOTICE ============ -->
@@ -2194,6 +2222,132 @@ var UNI_GRIDS = {
   })();
 </script>
 <script src="js/cart.js?v=20261119c"></script>
+<script>
+/* ===== Homepage: live delivery dates, reviews carousel, scroll reveal ===== */
+(function () {
+  function ready(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var STAR = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
+  function stars(n) { var h = ''; for (var i = 1; i <= 5; i++) h += i <= n ? STAR : STAR.replace('<svg ', '<svg class="is-off" '); return '<span class="hm-stars" role="img" aria-label="' + n + ' out of 5 stars">' + h + '</span>'; }
+
+  /* ---- Delivery dates + 2 PM Pacific cutoff countdown (same rule as product pages and cart) ---- */
+  function delivery() {
+    var D = window.UNI_DELIVERY; if (!D) return;
+    var est = D.estimate();
+    var range = D.format(est.earliest) + ' – ' + D.format(est.latest);
+    document.querySelectorAll('[data-hm-eta]').forEach(function (el) { el.textContent = range; });
+    document.querySelectorAll('[data-hm-eta-short]').forEach(function (el) { el.textContent = 'arrives ' + range; });
+    document.querySelectorAll('[data-hm-eta-sentence]').forEach(function (el) { el.textContent = 'Order today and it’s estimated to arrive ' + range + '.'; });
+    var cut = document.querySelector('[data-hm-cutoff]');
+    if (!cut) return;
+    function tick() {
+      var S = D.settings, now = new Date();
+      var f = new Intl.DateTimeFormat('en-US', { timeZone: S.timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+      var o = {}; f.formatToParts(now).forEach(function (x) { o[x.type] = x.value; });
+      var today = new Date(Date.UTC(+o.year, +o.month - 1, +o.day));
+      var mins = S.cutoffHour * 60 - (+o.hour * 60 + +o.minute);
+      var e = D.estimate(now), r = D.format(e.earliest) + ' – ' + D.format(e.latest);
+      if (D.isBusinessDay(today) && mins > 0) {
+        var h = Math.floor(mins / 60), m = mins % 60;
+        cut.innerHTML = 'Order within <span class="hm-live">' + (h ? h + 'h ' : '') + m + 'm</span>';
+        cut.nextElementSibling.textContent = 'Arrives ' + r + ' · USPS tracked';
+      } else {
+        cut.innerHTML = 'Arrives <span class="hm-live">' + r + '</span>';
+        cut.nextElementSibling.textContent = 'Order today · tracked USPS shipping';
+      }
+    }
+    tick(); setInterval(tick, 30000);
+  }
+
+  /* ---- Reviews (sample demo content; dates are counted back from today) ---- */
+  var REVIEWS = [
+    { n: 'Marcus T.', st: 'TX', r: 5, d: 3, p: 'ace-ultra-premium-2g', pt: 'Ace Ultra Premium', img: 'images/ace-ultra.webp', c: '#E8C766',
+      t: 'Third order from UNI and every single one showed up sealed with the batch sticker intact. Ordered Monday afternoon, had it Thursday.' },
+    { n: 'Jess R.', st: 'FL', r: 5, d: 5, p: 'muha-meds-x-cookies-limited-edition', pt: 'Muha Meds x Cookies', img: 'images/muha-cookies.webp', c: '#C9B48A',
+      t: 'packaging is super discreet, plain box nothing on it. flavor is legit the real thing not a knockoff' },
+    { n: 'Daniel K.', st: 'OH', r: 4, d: 8, p: 'raw-garden-live-resin-1g', pt: 'Raw Garden Live Resin (1G)', img: 'images/raw-garden-sauce.webp', c: '#B99A4A',
+      t: 'Great cart, tastes exactly like the ones from my local dispo back in CA. Took one extra day because of the weekend but tracking updated the whole way.' },
+    { n: 'Alyssa M.', st: 'NY', r: 5, d: 11, p: 'boutiq-switch-v5', pt: 'Boutiq Switch V5', img: 'images/boutiq-v5.webp', c: '#F1DFA4',
+      t: 'I was nervous ordering online after getting burned by a fake before. Checked the code on the box and it verified. Customer service answered my email within an hour too.' },
+    { n: 'Chris P.', st: 'AZ', r: 5, d: 13, p: 'geek-bar-pulse', pt: 'Geek Bar Pulse X', img: 'images/geek-pulse-x.webp', c: '#E8C766',
+      t: 'Fast. Exactly as described. Will order again.' },
+    { n: 'Brianna L.', st: 'GA', r: 3, d: 17, p: 'muha-meds-limited-edition', pt: 'Muha Meds 3rd Gen', img: 'images/muha-3rd-gen-box.webp', c: '#C9B48A',
+      t: 'Product itself is good, no complaints there. Shipping took 5 business days to me, a bit longer than the estimate, but support replied quickly when I asked about it.' },
+    { n: 'Tony V.', st: 'NV', r: 5, d: 21, p: '20pc-ace-ultra-premium', pt: '20PC Ace Ultra Premium', img: 'images/20pc-ace-ultra.webp', c: '#B99A4A',
+      t: 'Bulk pack is the move. Way better per-unit price and every unit in the box was sealed. Splitting it with my roommates lol' },
+    { n: 'Sam O.', st: 'CO', r: 4, d: 26, p: 'ace-ultra-premium-2g', pt: 'Ace Ultra Premium', img: 'images/ace-ultra.webp', c: '#F1DFA4',
+      t: 'Smooth hit, solid build. Only knocking a star because the flavor I wanted was sold out and I went with my second pick.' },
+    { n: 'Natalie W.', st: 'IL', r: 5, d: 30, p: 'raw-garden-live-resin-1g', pt: 'Raw Garden Live Resin (1G)', img: 'images/raw-garden-sauce.webp', c: '#E8C766',
+      t: 'Honestly the best experience I’ve had ordering carts. Everything verified, arrived in 3 days, packaging was clean.' }
+  ];
+  function reviews() {
+    var track = document.getElementById('hm-rev-track'); if (!track) return;
+    var today = new Date();
+    track.innerHTML = REVIEWS.map(function (v, i) {
+      var dt = new Date(today.getTime() - v.d * 864e5);
+      var date = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var initials = v.n.replace(/[^A-Z]/g, '').slice(0, 2);
+      return '<li class="hm-rcard" aria-roledescription="review" aria-label="Review ' + (i + 1) + ' of ' + REVIEWS.length + '">' +
+        '<div class="hm-rcard__top">' + stars(v.r) + '<time class="hm-rcard__date" datetime="' + dt.toISOString().slice(0, 10) + '">' + date + '</time></div>' +
+        '<p class="hm-rcard__text">“' + esc(v.t) + '”</p>' +
+        '<div class="hm-rcard__who"><span class="hm-rcard__avatar" style="background:' + v.c + '" aria-hidden="true">' + initials + '</span>' +
+          '<div><div class="hm-rcard__name">' + esc(v.n) + ' <span style="color:#7E8086;font-weight:600">· ' + v.st + '</span></div>' +
+          '<div class="hm-rcard__verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>Verified purchase</div></div></div>' +
+        '<a class="hm-rcard__prod" href="product.html?id=' + encodeURIComponent(v.p) + '"><img src="' + esc(v.img) + '" alt="" width="44" height="44" loading="lazy"><span>' + esc(v.pt) + '<small>View product →</small></span></a>' +
+      '</li>';
+    }).join('');
+
+    var root = track.closest('[data-hm-carousel]');
+    var dotsWrap = root.querySelector('.hm-car__dots');
+    var prev = root.querySelector('[data-dir="-1"]'), next = root.querySelector('[data-dir="1"]');
+    function perView() { var c = track.children[0]; if (!c) return 1; var gap = parseFloat(getComputedStyle(track).columnGap) || 0; return Math.max(1, Math.round((track.clientWidth + gap) / (c.getBoundingClientRect().width + gap))); }
+    function pages() { return Math.max(1, Math.ceil(REVIEWS.length / perView())); }
+    function step() { var c = track.children[0]; var gap = parseFloat(getComputedStyle(track).columnGap) || 0; return (c.getBoundingClientRect().width + gap) * perView(); }
+    function current() { var max = track.scrollWidth - track.clientWidth; if (track.scrollLeft >= max - 4) return pages() - 1; return Math.round(track.scrollLeft / step()); }
+    function buildDots() {
+      var n = pages(); dotsWrap.innerHTML = '';
+      for (var i = 0; i < n; i++) {
+        var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Show reviews page ' + (i + 1) + ' of ' + n);
+        (function (k) { b.addEventListener('click', function () { track.scrollTo({ left: k * step() }); }); })(i);
+        dotsWrap.appendChild(b);
+      }
+      sync();
+    }
+    function sync() {
+      var c = current(), n = pages();
+      Array.prototype.forEach.call(dotsWrap.children, function (b, i) { b.setAttribute('aria-current', i === c ? 'true' : 'false'); });
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      void n;
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -step() }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: step() }); });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); }
+    });
+    var t; track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(sync, 60); }, { passive: true });
+    var rw; window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(buildDots, 150); });
+    buildDots();
+  }
+
+  function payments() {
+    var el = document.querySelector('[data-hm-pay]');
+    if (el && window.UNI_UI) el.innerHTML = UNI_UI.paymentsHtml();
+  }
+
+  function reveal() {
+    var els = document.querySelectorAll('.hm-rv');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (e) { io.observe(e); });
+  }
+
+  ready(function () { delivery(); reviews(); payments(); reveal(); });
+})();
+</script>
 <script>
 /* Wire the homepage product-grid "Add to cart" buttons to the shared
    cart. For multi-variant products the button says "Choose options"
