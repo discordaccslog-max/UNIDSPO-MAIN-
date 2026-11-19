@@ -368,6 +368,7 @@
   .hm-dlg__actions .hm-btn{width:100%}
   @media(max-width:560px){.hm-dlg{width:100%;max-height:100%;margin:auto 0 0;border-radius:18px 18px 0 0}.hm-dlg__panel{border-radius:18px 18px 0 0;padding:34px 22px calc(24px + env(safe-area-inset-bottom))}}
   @media (prefers-reduced-motion: reduce){.hm-dlg[open] .hm-dlg__panel{animation:none}}
+  .uni-pg .uni-pg__note{margin:6px 0 0;color:#E8A54F;font-size:13px;font-weight:600;line-height:1.45;letter-spacing:.2px}
   /* Bulk: per-unit price as plain gold text */
   .uni-pg .uni-pg__unit{padding:0;background:none;border:0;border-radius:0;color:#FFD976;font-size:13.5px;letter-spacing:.2px}
 </style>
@@ -387,6 +388,8 @@
      priceMax   Highest variant price. If higher than price, shows "From $..".
      variants   Number of variants. More than 1 shows "Choose options".
      available  false shows "Sold out".
+     soldOutNote Optional line under the price on a sold-out card,
+                e.g. "Temporarily unavailable due to low stock".
      image      Main photo: src, width, height (width/height set the shape).
      image2     Optional second photo, shown on hover (desktop).
      buyUrl     Optional link for "Add to cart" (opens in a new tab), like the
@@ -407,19 +410,19 @@ var UNI_SETTINGS = {
 var UNI_PRODUCTS = {
   singles: [
     {"title": "ACE ULTRA PREMIUM", "url": "product.html?id=ace-ultra-premium-2g", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 3, "available": true, "image": {"src": "images/ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
+    {"title": "Boutiq Switch V5", "url": "product.html?id=boutiq-switch-v5", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 2, "available": true, "image": {"src": "images/boutiq-v5.webp", "width": 1201, "height": 1201}, "buyUrl": ""},
     {"title": "MUHA MEDS (SUMMER EDITION)", "url": "product.html?id=muha-meds-sumer-edition", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 1, "available": false, "image": {"src": "images/muha-summer.webp", "width": 600, "height": 600}, "buyUrl": ""},
     {"title": "RAW GARDEN LIVE RESIN (1G)", "url": "product.html?id=raw-garden-live-resin-1g", "price": 42.99, "compareAt": null, "priceMax": 42.99, "variants": 3, "available": true, "image": {"src": "images/raw-garden.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
+    {"title": "MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=muha-meds-x-cookies-limited-edition", "price": 38.99, "compareAt": null, "priceMax": 38.99, "variants": 3, "available": true, "image": {"src": "images/muha-cookies.webp", "width": 1200, "height": 1501}, "buyUrl": ""},
     {"title": "GEEK BAR PULSE", "url": "product.html?id=geek-bar-pulse-x", "price": 28.99, "compareAt": null, "priceMax": 28.99, "variants": 1, "available": false, "image": {"src": "images/geek-pulse.webp", "width": 1024, "height": 1336}, "buyUrl": ""},
     {"title": "GEEK BAR PULSE X", "url": "product.html?id=geek-bar-pulse", "price": 31.99, "compareAt": null, "priceMax": 31.99, "variants": 24, "available": true, "image": {"src": "images/geek-pulse-x.webp", "width": 1024, "height": 1391}, "buyUrl": ""},
-    {"title": "Boutiq Switch V5", "url": "product.html?id=boutiq-switch-v5", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 2, "available": true, "image": {"src": "images/boutiq-v5.webp", "width": 1201, "height": 1201}, "buyUrl": ""},
-    {"title": "BIG CHIEF CARTRIDGE (2G)", "url": "product.html?id=big-chief", "price": 36.99, "compareAt": null, "priceMax": 36.99, "variants": 1, "available": false, "image": {"src": "images/big-chief.webp", "width": 1024, "height": 1536}, "buyUrl": ""},
     {"title": "WHOLEMELTS V7", "url": "product.html?id=wholemelts-v7-copy", "price": 32.99, "compareAt": null, "priceMax": 32.99, "variants": 1, "available": false, "image": {"src": "images/wholemelts.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
-    {"title": "MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=muha-meds-x-cookies-limited-edition", "price": 38.99, "compareAt": null, "priceMax": 38.99, "variants": 3, "available": true, "image": {"src": "images/muha-cookies.webp", "width": 1200, "height": 1501}, "buyUrl": ""},
-    {"title": "MUHA MEDS 3RD GEN (NEW)", "url": "product.html?id=muha-meds-limited-edition", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 3, "available": true, "image": {"src": "images/muha-3rd-gen-logo.webp", "width": 1024, "height": 1024}, "image2": {"src": "images/muha-3rd-gen-box.webp", "width": 571, "height": 724}, "buyUrl": ""}
+    {"title": "MUHA MEDS 3RD GEN (NEW)", "url": "product.html?id=muha-meds-limited-edition", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 3, "available": true, "image": {"src": "images/muha-3rd-gen-logo.webp", "width": 1024, "height": 1024}, "image2": {"src": "images/muha-3rd-gen-box.webp", "width": 571, "height": 724}, "buyUrl": ""},
+    {"title": "BIG CHIEF CARTRIDGE (2G)", "url": "product.html?id=big-chief", "price": 36.99, "compareAt": null, "priceMax": 36.99, "variants": 1, "available": false, "image": {"src": "images/big-chief.webp", "width": 1024, "height": 1536}, "buyUrl": ""}
   ],
   bulk: [
-    {"title": "20PC ACE ULTRA PREMIUM", "url": "product.html?id=20pc-ace-ultra-premium", "price": 205.99, "compareAt": null, "priceMax": 205.99, "variants": 3, "available": true, "image": {"src": "images/20pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
-    {"title": "10PC RAW GARDEN LIVE RESIN (1G)", "url": "product.html?id=10pc-raw-garden-live-resin-1g", "price": 195.99, "compareAt": null, "priceMax": 195.99, "variants": 3, "available": true, "image": {"src": "images/10pc-raw-garden.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
+    {"title": "20PC ACE ULTRA PREMIUM", "url": "product.html?id=20pc-ace-ultra-premium", "price": 205.99, "compareAt": null, "priceMax": 205.99, "variants": 3, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/20pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
+    {"title": "10PC RAW GARDEN LIVE RESIN (1G)", "url": "product.html?id=10pc-raw-garden-live-resin-1g", "price": 195.99, "compareAt": null, "priceMax": 195.99, "variants": 3, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/10pc-raw-garden.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
     {"title": "10PC ACE ULTRA PREMIUM", "url": "product.html?id=10pc-ace-ultra-premium", "price": 125.99, "compareAt": null, "priceMax": 125.99, "variants": 3, "available": true, "image": {"src": "images/10pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
     {"title": "10PC MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=10pc-muha-meds-x-cookies-limited-edition", "price": 145.99, "compareAt": null, "priceMax": 145.99, "variants": 3, "available": true, "image": {"src": "images/10pc-muha-cookies.webp", "width": 796, "height": 796}, "buyUrl": ""},
     {"title": "10PC BOUTIQ SWITCH V5", "url": "product.html?id=10pc-boutiq-switch-v5", "price": 135.99, "compareAt": null, "priceMax": 135.99, "variants": 2, "available": true, "image": {"src": "images/10pc-boutiq-v5.webp", "width": 1201, "height": 1201}, "buyUrl": ""}
@@ -432,7 +435,7 @@ var UNI_GRIDS = {
     products: "singles",
     limit: 10,
     headerHtml: '<div class="hm-head hm-sec"><div class="hm-head__copy"><span class="hm-kicker">Shop</span><h2 class="hm-h2" id="uni-pg-1-title">Best <em>Sellers.</em></h2><p class="hm-lead">Lab-tested carts and disposables, sourced from licensed dispensaries and verified before they ship.</p></div><a class="hm-link" href="catalog.html">View full catalog<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>',
-    soldOutLast: true,         // in-stock products first
+    soldOutLast: false,        // false = keep the order of UNI_PRODUCTS.singles above
     showRating: true,          // star rating line on each card
     columnsDesktop: 5,
     columnsMobile: 2,
@@ -1433,14 +1436,19 @@ var UNI_CARD_RATINGS = {
     } else {
       h += '<span class="uni-pg__sr">Regular price</span><span class="uni-pg__price-item">' + esc(priceText) + '</span>';
     }
-    if (g.perUnit) {
+    if (p.available === false && p.soldOutNote) {
+      h += '<p class="uni-pg__note">' + esc(p.soldOutNote) + '</p>';
+    }
+    if (g.perUnit && p.available !== false) {
       var pack = /^(\d+)\s*PC/i.exec(p.title || '');
       if (pack && +pack[1] > 1) h += '<span class="uni-pg__unit">' + esc(fmt.format(Number(p.price) / +pack[1])) + ' / unit</span>';
     }
     h += '</div></div>';
     if (g.quickAdd) {
       h += '<div class="uni-pg__quick">';
-      if ((p.variants || 1) > 1) {
+      if (p.available === false) {
+        h += '<span class="uni-pg__btn uni-pg__btn--disabled" aria-disabled="true"><span class="uni-pg__btn-text">' + esc(UNI_SETTINGS.soldOutLabel) + '</span></span>';
+      } else if ((p.variants || 1) > 1) {
         h += '<a class="uni-pg__btn" href="' + esc(p.url || '#') + '" aria-label="' + esc(UNI_SETTINGS.chooseOptionsLabel + ' for ' + p.title) + '"><span class="uni-pg__btn-text">' + esc(UNI_SETTINGS.chooseOptionsLabel) + '</span></a>';
       } else if (p.available === false) {
         h += '<span class="uni-pg__btn uni-pg__btn--disabled" aria-disabled="true"><span class="uni-pg__btn-text">' + esc(UNI_SETTINGS.soldOutLabel) + '</span></span>';

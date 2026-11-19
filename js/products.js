@@ -237,8 +237,8 @@ window.UNI_CATALOG = {
     compareAt: null,
     variants: ["Hybrid", "Sativa", "Indica"],
     variantLabel: "Options",
-    available: true,
-    stockStatus: "low",
+    available: false,
+    soldOutNote: "Temporarily unavailable due to low stock",
     images: [
       "images/20pc-ace-ultra.webp"
     ],
@@ -252,8 +252,8 @@ window.UNI_CATALOG = {
     compareAt: null,
     variants: ["HYBRID", "SATIVA", "INDICA"],
     variantLabel: "Options",
-    available: true,
-    stockStatus: "low",
+    available: false,
+    soldOutNote: "Temporarily unavailable due to low stock",
     images: [
       "images/10pc-raw-garden.webp"
     ],
