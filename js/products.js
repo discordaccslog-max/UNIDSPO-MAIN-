@@ -149,7 +149,15 @@ window.UNI_CATALOG = {
     images: [
       "images/big-chief.webp"
     ],
-    description: "Big Chief 2G cartridge. Full-gram+ full-spectrum, sealed from dispensary stock."
+    description: "Big Chief 2G cartridge. Full-gram+ full-spectrum, sealed from dispensary stock.",
+    highlights: [
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Ultra-refined premium distillate",
+      "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity",
+      "Includes Indica + Sativa (Switch)"
+    ],
+    related: ["10pc-ace-ultra-premium", "ace-ultra-premium-2g", "10pc-boutiq-switch-v5", "20pc-ace-ultra-premium"]
   },
 
   "wholemelts-v7-copy": {
