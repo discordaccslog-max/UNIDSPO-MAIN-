@@ -65,12 +65,42 @@
     font-weight: 700; margin-bottom: 14px;
   }
   .pd-price {
-    margin: 10px 0 20px; font-family: "Oswald", sans-serif;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    margin: 10px 0 14px;
+    font-family: "Oswald", sans-serif;
     font-size: 30px; color: #FFD976; letter-spacing: .5px;
   }
   .pd-price .compare {
-    margin-left: 10px; font-size: 18px; color: #777;
-    text-decoration: line-through;
+    font-size: 18px; color: #777; text-decoration: line-through;
+  }
+  .pd-price__soldout {
+    display: inline-flex; align-items: center;
+    padding: 6px 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    color: #fff;
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    letter-spacing: .3px;
+  }
+
+  .pd-stock {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin: 4px 0 20px;
+    font-size: 15px; color: #B9BBC0; font-weight: 500;
+  }
+  .pd-stock__dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.4);
+    background: rgba(255,255,255,.08);
+    position: relative;
+  }
+  .pd-stock__dot::after {
+    content: ""; position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255,255,255,.6);
+    transform: translate(-50%, -50%);
   }
   .pd-desc { color: #B9BBC0; line-height: 1.75; font-size: 15px; margin: 0 0 24px; }
 
@@ -463,14 +493,22 @@
     thumbsBlock += '</div>';
   }
 
-  var priceHtml = '<div class="pd-price">' + esc(money(p.price));
+  var priceHtml = '<div class="pd-price"><span>' + esc(money(p.price)) + '</span>';
   if (p.compareAt && Number(p.compareAt) > Number(p.price)) {
     priceHtml += '<span class="compare">' + esc(money(p.compareAt)) + '</span>';
   }
+  if (!p.available) {
+    priceHtml += '<span class="pd-price__soldout">Sold out</span>';
+  }
   priceHtml += '</div>';
+  if (!p.available) {
+    priceHtml += '<div class="pd-stock" role="status"><span class="pd-stock__dot" aria-hidden="true"></span><span>Out of stock</span></div>';
+  }
 
-  var buyLabel = p.available ? 'Buy it now' : 'Sold out';
-  var buyDisabled = p.available ? '' : 'disabled';
+  /* Buy-it-now stays visible even when sold out (matching the live site);
+     the click handler shows a toast instead of placing an order. */
+  var buyLabel = 'Buy it now';
+  var buyDisabled = '';
 
   /* Highlights / specs block */
   var highlightsBlock = '';
@@ -592,8 +630,12 @@
 
   /* Buy it now */
   var buyBtn = document.getElementById('pd-buy');
-  if (buyBtn && !buyBtn.disabled) {
+  if (buyBtn) {
     buyBtn.addEventListener('click', function () {
+      if (!p.available) {
+        showToast('This item is sold out — restock pending', 2800);
+        return;
+      }
       var qty = parseInt(qtyInput.value, 10) || 1;
       var msg = 'Order placed: ' + qty + ' × ' + p.title + (selectedVariant ? ' (' + selectedVariant + ')' : '');
       showToast(msg, 2600);

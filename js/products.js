@@ -38,7 +38,14 @@ window.UNI_CATALOG = {
     images: [
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/6228279a8bbf69274593cbe1_mm-logo600.webp?v=1784768209"
     ],
-    description: "Limited Summer Edition drop from Muha Meds. Rotating seasonal flavors, sealed from the dispensary."
+    description: "Limited Summer Edition drop from Muha Meds. Rotating seasonal flavors, sealed from the dispensary.",
+    highlights: [
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Ultra-refined premium distillate",
+      "Lab-tested, batch-verified, and tamper-sealed to ensure authenticity"
+    ],
+    related: ["muha-meds-limited-edition", "muha-meds-x-cookies-limited-edition", "10pc-muha-meds-x-cookies-limited-edition", "boutiq-switch-v5"]
   },
 
   "raw-garden-live-resin-1g": {
