@@ -1008,7 +1008,7 @@
 </style>
 <div id="cat-toast" class="cat-toast" role="status" aria-live="polite"></div>
 <script src="js/products.js?v=20261119b"></script>
-<script src="js/cart.js?v=20261119b"></script>
+<script src="js/cart.js?v=20261119c"></script>
 <script>
 (function () {
   var toast = document.getElementById('cat-toast');
@@ -1039,7 +1039,6 @@
         qty: 1,
         image: (p && p.images && p.images[0]) || ''
       });
-      show('Added ' + title + (variant ? ' (' + variant + ')' : '') + ' to cart');
       var original = btn.textContent;
       btn.textContent = '✓ Added';
       btn.style.background = '#2d2d2e';
