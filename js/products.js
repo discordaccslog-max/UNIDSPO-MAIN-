@@ -16,7 +16,7 @@ window.UNI_CATALOG = {
     variantLabel: "Options",
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09_303a935e-3bf7-46c5-ba43-0a8ac9ec2e3f.jpg?v=1784768210"
+      "images/ace-ultra.webp"
     ],
     description: "Dispensary-sourced ACE Ultra Premium 2G cartridge. Full-spectrum live resin with lab-verified batch and tamper-evident seal.",
     highlights: [
@@ -36,7 +36,7 @@ window.UNI_CATALOG = {
     variants: [],
     available: false,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/6228279a8bbf69274593cbe1_mm-logo600.webp?v=1784768209"
+      "images/muha-summer.webp"
     ],
     description: "Limited Summer Edition drop from Muha Meds. Rotating seasonal flavors, sealed from the dispensary.",
     highlights: [
@@ -57,7 +57,7 @@ window.UNI_CATALOG = {
     variantLabel: "Options",
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/92a32d66-569e-483b-b001-c19cb128159f_161a28f5-f2cf-46ce-bd7e-70a3c790bfd3.png?v=1784768208"
+      "images/raw-garden.webp"
     ],
     description: "Raw Garden single-source live resin cartridge. 1 gram, lab-tested, sourced direct from licensed California dispensary.",
     highlights: [
@@ -77,7 +77,7 @@ window.UNI_CATALOG = {
     variants: [],
     available: false,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/b4c233c1-1f8b-4e5c-a231-01ec7c269284_5de2f718-2f27-48b4-98e4-a0aa9ff9439d22.png?v=1784768207"
+      "images/geek-pulse-x.webp"
     ],
     description: "Geek Bar Pulse disposable. Smart display, dual-mode output, authentic sealed packaging."
   },
@@ -100,7 +100,7 @@ window.UNI_CATALOG = {
     variantLabel: "Flavor",
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/14e38133-5113-4d44-b627-64c50bad81de2_2bde79dd-e0fd-44b0-b0bf-734e1b2dcf23.png?v=1784768205"
+      "images/geek-pulse.webp"
     ],
     description: "Geek Bar Pulse X — refreshed design, 25,000+ puffs, adjustable airflow, verified authentic from authorized distributor.",
     highlights: [
@@ -119,7 +119,7 @@ window.UNI_CATALOG = {
     variants: ["Indica blend", "Sativa blend"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/7845c05f-e62c-41e4-8bce-77c8c54d6d4a_1457df7a-0d28-4bfd-9560-cacdfe257838.png?v=1784768203"
+      "images/boutiq-v5.webp"
     ],
     description: "Boutiq Switch V5 vape pen. Dual-cartridge system, variable voltage, batch-verified."
   },
@@ -132,7 +132,7 @@ window.UNI_CATALOG = {
     variants: [],
     available: false,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/1f1d5468-6074-4637-8f3e-e681071e841d.png?v=1784768203"
+      "images/big-chief.webp"
     ],
     description: "Big Chief 2G cartridge. Full-gram+ full-spectrum, sealed from dispensary stock."
   },
@@ -145,7 +145,7 @@ window.UNI_CATALOG = {
     variants: [],
     available: false,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/cf13f73b-c4fa-4f0d-ab86-e7aa8084b72f_6ddfe569-a3f9-4912-90b1-494281e72070.png?v=1784768201"
+      "images/wholemelts.webp"
     ],
     description: "Wholemelts V7 live resin disposable. Terpene-forward, tamper-evident packaging."
   },
@@ -158,7 +158,7 @@ window.UNI_CATALOG = {
     variants: ["Gelato", "Cookies & Cream", "Cereal Milk"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/image3-1_cd66c1f3-e512-4231-a007-1125c6018ac3.jpg?v=1784768194"
+      "images/muha-cookies.webp"
     ],
     description: "Muha Meds × Cookies limited-edition collab cartridge. Co-branded sealed packaging, authenticated."
   },
@@ -196,7 +196,7 @@ window.UNI_CATALOG = {
     variants: ["Mint", "Watermelon", "Blue Dream"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09_35180b39-64e3-45b9-9c2e-6632d0698281.jpg?v=1784768199"
+      "images/20pc-ace-ultra.webp"
     ],
     description: "20-pack ACE Ultra Premium — bulk pricing for larger orders. Same dispensary-sourced authenticity on every unit."
   },
@@ -209,7 +209,7 @@ window.UNI_CATALOG = {
     variants: ["Sativa", "Indica", "Hybrid"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/92a32d66-569e-483b-b001-c19cb128159f_6ba0327b-4684-4c5a-a144-ca499d242ac7.png?v=1784768197"
+      "images/10pc-raw-garden.webp"
     ],
     description: "10-pack Raw Garden Live Resin 1G cartridges. Choose one strain for the whole pack."
   },
@@ -222,7 +222,7 @@ window.UNI_CATALOG = {
     variants: ["Mint", "Watermelon", "Blue Dream"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09.jpg?v=1784768196"
+      "images/10pc-ace-ultra.webp"
     ],
     description: "10-pack ACE Ultra Premium. Tamper-evident bulk packaging, batch documentation included."
   },
@@ -235,7 +235,7 @@ window.UNI_CATALOG = {
     variants: ["Gelato", "Cookies & Cream", "Cereal Milk"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/710cfa5e-f8b3-4c34-957b-ce9291cdfe12_8b976eaa-c6d8-4c02-bc1a-822f693f0d6a.png?v=1784768194"
+      "images/10pc-muha-cookies.webp"
     ],
     description: "10-pack Muha Meds × Cookies limited-edition cartridges. Limited run, sealed from dispensary."
   },
@@ -248,7 +248,7 @@ window.UNI_CATALOG = {
     variants: ["Indica blend", "Sativa blend"],
     available: true,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/7845c05f-e62c-41e4-8bce-77c8c54d6d4a_d0b0aab3-d546-476a-b3a8-d65db8a7b6d9.png?v=1784768189"
+      "images/10pc-boutiq-v5.webp"
     ],
     description: "10-pack Boutiq Switch V5 pens. Pick one flavor blend for the full pack."
   },
@@ -261,7 +261,7 @@ window.UNI_CATALOG = {
     variants: [],
     available: false,
     images: [
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/cf13f73b-c4fa-4f0d-ab86-e7aa8084b72f_6ddfe569-a3f9-4912-90b1-494281e72070.png?v=1784768201"
+      "images/wholemelts.webp"
     ],
     description: "10-pack Wholemelts V7 live resin disposables. Sold out — restock pending."
   }
