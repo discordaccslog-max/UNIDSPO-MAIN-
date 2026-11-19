@@ -383,39 +383,41 @@ var UNI_GRIDS = {
     --gold-2:#BA9930;
     --stroke:rgba(212,175,55,.28);
   }
-  .nx-wrap{color:var(--ink);background:transparent;border:0;border-top:1px solid rgba(255,255,255,.06);border-radius:0;padding:28px 20px 10px;margin:0 auto;max-width:1600px}
-  @media(min-width:750px){.nx-wrap{padding:40px 50px 20px}}
-  .nx-kicker{display:inline-block;font-size:clamp(11px,.9vw,12px) !important;letter-spacing:.16em;text-transform:uppercase;color:#FFD976;background:rgba(212,175,55,.08);border:1px solid var(--stroke);border-radius:999px;padding:7px 13px;margin-bottom:14px;font-weight:700}
-  .nx-h1{font-family:"Oswald",sans-serif;font-size:clamp(28px,3.4vw,44px) !important;line-height:1.1;margin:0 0 14px;font-weight:800 !important;letter-spacing:.84px;color:#fff}
-  .nx-sub{color:rgb(165,167,172);font-size:clamp(14px,1.2vw,16px) !important;line-height:1.8;letter-spacing:.6px;font-weight:500;margin:0 0 24px;max-width:1200px}
-  .nx-cta{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 36px}
-  .nx-btn{appearance:none;cursor:pointer;border:none;border-radius:12px;padding:12px 18px;font-weight:800;font-size:clamp(15px,1.1vw,16px);letter-spacing:.6px;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;justify-content:center}
+  /* Layout + type matched to the live UNI homepage: one full-width bordered
+     panel, Figtree body text (with the theme's .6px tracking), Oswald 700 headings. */
+  .nx-wrap{color:var(--ink);background:var(--bg);font-family:"Figtree",sans-serif;letter-spacing:.6px;line-height:1.8;border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:28px 24px 46px;margin:16px 0 0;max-width:none}
+  @media(max-width:749px){.nx-wrap{padding:24px 16px 32px;border-radius:10px}}
+  .nx-kicker{display:inline-block;font-size:12px !important;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;color:#FFD976;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.32);border-radius:999px;padding:7px 10px;margin:0 0 14px;font-weight:700}
+  .nx-h1{font-family:"Oswald",sans-serif;font-size:clamp(28px,3.4vw,44px) !important;line-height:1.1;margin:0 0 6px;font-weight:700 !important;letter-spacing:-.3px;color:#fff}
+  .nx-sub{color:rgb(165,167,172);font-size:clamp(14px,1.2vw,16px) !important;line-height:1.8;letter-spacing:.6px;font-weight:500;margin:0 0 22px;max-width:none}
+  .nx-cta{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 26px}
+  .nx-btn{appearance:none;cursor:pointer;border:none;border-radius:12px;padding:12px 18px;font-weight:800;font-size:clamp(15px,1.1vw,16px);letter-spacing:.6px;line-height:1.6;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;justify-content:center}
   .nx-btn--gold{background:linear-gradient(180deg,#E8C766,#BA9930);color:#111;box-shadow:0 14px 34px rgba(186,153,48,.28)}
   .nx-btn--hollow{background:transparent;color:var(--ink);border:1px solid var(--stroke)}
-  .nx-grid{display:grid;gap:20px}
+  .nx-grid{display:grid;gap:18px}
   .nx-3{grid-template-columns:repeat(3,minmax(0,1fr))}
   .nx-4{grid-template-columns:repeat(4,minmax(0,1fr))}
   @media(max-width:980px){.nx-3{grid-template-columns:repeat(2,1fr)}.nx-4{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:620px){.nx-3,.nx-4{grid-template-columns:1fr}}
-  .nx-card{background:#141416;border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:24px}
-  .nx-card h3{margin:14px 0 8px;font-family:"Oswald",sans-serif;font-size:21px;font-weight:600;letter-spacing:.3px}
-  .nx-card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
-  .nx-icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:#1c1b17;border:1px solid rgba(212,175,55,.2);font-size:22px;line-height:1}
-  .nx-step{display:flex;gap:16px;align-items:flex-start}
-  .nx-step .num{min-width:38px;height:38px;border-radius:999px;background:rgba(212,175,55,.14);border:1px solid var(--stroke);display:grid;place-items:center;font-weight:800;color:#FFD976;font-size:15px}
-  .nx-step h3{margin-top:0}
-  .nx-afq{display:grid;gap:24px;grid-template-columns:1fr 1.6fr;align-items:start}
+  .nx-card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px}
+  .nx-card h3{margin:10px 0 4px;font-family:"Oswald",sans-serif;font-size:18px;line-height:1.3;font-weight:700;letter-spacing:.3px;color:#fff}
+  .nx-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.8;letter-spacing:.6px}
+  .nx-icon{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.36);font-size:17px;line-height:1;letter-spacing:0}
+  .nx-step{display:flex;gap:14px;align-items:flex-start}
+  .nx-step .num{flex:0 0 34px;width:34px;height:34px;border-radius:999px;background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.36);display:grid;place-items:center;font-weight:800;color:#FFD976;font-size:14px;letter-spacing:0;line-height:1}
+  .nx-step h3{margin:0 0 3px;line-height:34px}
+  .nx-afq{display:grid;gap:14px;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;max-width:1380px}
   @media(max-width:860px){.nx-afq{grid-template-columns:1fr}}
-  .nx-strip{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-start;background:#141416;border:1px solid var(--stroke);border-radius:14px;padding:22px;min-height:230px}
-  .nx-pill{border:1px solid var(--stroke);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:600}
-  .nx-faq{border:1px solid var(--stroke);border-radius:14px;overflow:hidden;background:transparent}
-  .nx-faq details{border-top:1px solid rgba(255,255,255,.05)}
+  .nx-strip{display:flex;gap:10px 12px;flex-wrap:wrap;align-items:center;align-content:center;justify-content:flex-start;background:#171719;border:1px solid var(--stroke);border-radius:12px;padding:14px;min-height:230px;margin-top:9px}
+  @media(max-width:860px){.nx-strip{margin-top:0;min-height:0;padding:18px 14px}}
+  .nx-pill{border:1px solid rgba(212,175,55,.32);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:7px 14px;font-size:12px;line-height:1.6;letter-spacing:0;font-weight:600}
+  .nx-faq{border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;background:var(--card)}
+  .nx-faq details{border-top:1px solid rgba(255,255,255,.04)}
   .nx-faq details:first-of-type{border-top:0}
-  .nx-faq summary{cursor:pointer;padding:18px 22px;background:transparent;font-weight:700;list-style:none;color:#F7F7F7}
+  .nx-faq summary{cursor:pointer;padding:14.5px 17px;background:transparent;font-size:16px;line-height:1.8;font-weight:700;letter-spacing:.6px;list-style:none;color:#F7F7F7}
   .nx-faq summary::-webkit-details-marker{display:none}
-  .nx-faq .ans{padding:0 22px 18px;color:var(--muted);background:transparent}
-  .nx-afq{align-items:start}
-  .nx-note{color:#A5A7AC;font-size:12.5px;margin-top:10px}
+  .nx-faq .ans{padding:0 17px 16px;color:var(--muted);background:transparent;font-size:14px}
+  .nx-note{color:#A5A7AC;font-size:12.5px;line-height:1.5;margin:14px 0 0}
   .nx-note strong{color:#FFD976}
 </style>
 
@@ -432,7 +434,7 @@ var UNI_GRIDS = {
   </div>
 
   <!-- VALUE PROPS -->
-  <div class="nx-grid nx-3" style="margin-top:14px">
+  <div class="nx-grid nx-3">
     <div class="nx-card">
       <div class="nx-icon">🏷️</div>
       <h3>Dispensary Direct</h3>
@@ -451,9 +453,9 @@ var UNI_GRIDS = {
   </div>
 
   <!-- HOW IT WORKS -->
-  <div style="margin-top:40px">
+  <div style="margin-top:39px">
     <span class="nx-kicker">How it works</span>
-    <div class="nx-grid nx-4" style="margin-top:14px">
+    <div class="nx-grid nx-4">
       <div class="nx-card nx-step">
         <div class="num">1</div>
         <div>
@@ -486,7 +488,7 @@ var UNI_GRIDS = {
   </div>
 
   <!-- ASSURANCES + FAQs (side-by-side on desktop, stacked on mobile) -->
-  <div class="nx-afq" style="margin-top:28px">
+  <div class="nx-afq" style="margin-top:22px">
     <!-- VERIFICATION STRIP (left) -->
     <div class="nx-strip" aria-label="Assurances">
       <span class="nx-pill">Licensed sourcing</span>
@@ -498,7 +500,7 @@ var UNI_GRIDS = {
     <!-- FAQs (right) -->
     <div>
       <span class="nx-kicker">FAQs</span>
-      <div class="nx-faq" style="margin-top:14px">
+      <div class="nx-faq">
         <details>
           <summary>Where do you source products?</summary>
           <div class="ans">Exclusively from licensed dispensaries and authorized suppliers. We do not purchase from grey-market sources.</div>
@@ -512,7 +514,7 @@ var UNI_GRIDS = {
           <div class="ans">Your order ships quickly in plain packaging with full tracking. Delivery timelines are shown at checkout based on your address.</div>
         </details>
       </div>
-      <p class="nx-note" style="margin-top:14px">
+      <p class="nx-note">
         <strong>Important:</strong> By ordering you confirm you are 21+ and agree to abide by all local regulations. Availability may vary by region.
       </p>
     </div>

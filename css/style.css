@@ -465,3 +465,10 @@ ul { list-style: none; margin: 0; padding: 0; }
   background: transparent;
   color: #777;
 }
+
+/* Desktop header insets matched to the live UNI site (search / account / cart
+   sit further in from the edges than the 20px mobile inset). */
+@media (min-width: 990px) {
+  .uni-header__side--left  { left: 54px; }
+  .uni-header__side--right { right: 60px; }
+}
