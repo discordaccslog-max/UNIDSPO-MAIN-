@@ -67,7 +67,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   height: 42px;
   padding: 0 56px;
   background: #0f0f10;
-  color: var(--uni-gold-soft);
+  color: #ffffff;
   font-size: 15px;
   font-weight: 600;
   text-align: center;
@@ -93,7 +93,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   transform: translateY(-50%);
   background: none;
   border: 0;
-  color: var(--uni-gold-soft);
+  color: #ffffff;
   font-size: 18px;
   line-height: 1;
   padding: 8px 12px;
