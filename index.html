@@ -256,6 +256,68 @@
   .hm-js .hm-rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0) * 80ms)}
   .hm-js .hm-rv.is-in{opacity:1;transform:none}
   @media (prefers-reduced-motion: reduce){.hm-js .hm-rv{opacity:1;transform:none;transition:none}.hm-car__track{scroll-behavior:auto}}
+
+  /* ===== Clean pass: no gold boxes. Open layouts, hairline rules, plain line icons ===== */
+  /* Eyebrow labels: gold text with a short rule instead of a pill */
+  .hm-kicker,.nx-wrap .nx-kicker{display:inline-flex;align-items:center;gap:10px;background:none;border:0;border-radius:0;padding:0;color:#D4AF37;font-size:12.5px !important;letter-spacing:.22em;font-weight:700}
+  .hm-kicker::before,.nx-wrap .nx-kicker::before{content:"";width:24px;height:1px;background:currentColor;flex:0 0 24px}
+
+  /* Plain line icons */
+  .hm-step__icon{width:auto;height:auto;background:none;border:0;border-radius:0;color:#E6E6E8;display:block}
+  .hm-step__icon svg{width:28px;height:28px;stroke-width:1.5;display:block}
+
+  /* How it works: open columns split by hairlines */
+  .hm-steps{gap:0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+  .hm-step{background:none;border:0;border-radius:0;padding:30px 28px 32px}
+  .hm-step:first-child{padding-left:0}
+  .hm-step:last-child{padding-right:0}
+  .hm-step:not(:last-child)::after{display:none}
+  .hm-step + .hm-step::before{content:"";position:absolute;left:0;top:30px;bottom:32px;width:1px;background:rgba(255,255,255,.08)}
+  .hm-step__top{margin-bottom:22px}
+  .hm-step__num{font-family:"Figtree",sans-serif;font-size:13px;font-weight:700;letter-spacing:.16em;color:#D4AF37}
+  @media(max-width:1100px){.hm-step{padding:26px 24px}.hm-step:nth-child(odd){padding-left:0}.hm-step:nth-child(even){padding-right:0}.hm-step:nth-child(3)::before{display:none}.hm-step:nth-child(n+3){border-top:1px solid rgba(255,255,255,.08)}.hm-step + .hm-step::before{top:26px;bottom:26px}}
+  @media(max-width:560px){.hm-step,.hm-step:nth-child(odd),.hm-step:nth-child(even){padding:22px 0}.hm-step + .hm-step{border-top:1px solid rgba(255,255,255,.08)}.hm-step + .hm-step::before{display:none}.hm-step__top{margin-bottom:14px}}
+
+  /* Reviews: open cards with a top rule, no panels */
+  .hm-rev__summary{padding:0;border:0;background:none}
+  .hm-rcard{background:none;border:0;border-top:1px solid rgba(255,255,255,.12);border-radius:0;padding:24px 4px 4px;gap:16px}
+  .hm-rcard__prod{padding:0;background:none;border:0;border-radius:0}
+  .hm-rcard__prod:hover span{color:#FFD976}
+  .hm-rcard__prod img{width:40px;height:40px;flex-basis:40px;border-radius:6px}
+  .hm-car__btn{background:none;border-color:rgba(255,255,255,.14)}
+
+  /* Why UNI: hairline list, neutral panel, plain check list */
+  .hm-why__list{gap:0;border-top:1px solid rgba(255,255,255,.08)}
+  .hm-why__item{background:none;border:0;border-bottom:1px solid rgba(255,255,255,.08);border-radius:0;padding:24px 0;gap:20px}
+  .hm-why__item .hm-step__icon{flex:0 0 28px;margin-top:2px}
+  .hm-badge{border:1px solid rgba(255,255,255,.07);background:radial-gradient(70% 60% at 50% 25%,rgba(212,175,55,.09),rgba(212,175,55,0) 70%),#111112}
+  .hm-badge::after{display:none}
+  .hm-pills{gap:10px 22px}
+  .hm-pills li{padding:0;background:none;border:0;border-radius:0;color:#D5D6D9;font-weight:600;font-size:14px}
+  .hm-pills svg{width:15px;height:15px;color:#D4AF37}
+  .hm-stats{border-top-color:rgba(255,255,255,.08)}
+
+  /* FAQ: open list with hairlines */
+  .hm-acc{border:0;border-radius:0;background:none;border-top:1px solid rgba(255,255,255,.1)}
+  .hm-acc details{border-bottom:1px solid rgba(255,255,255,.08)}
+  .hm-acc details + details{border-top:0}
+  .hm-acc summary{padding:22px 0}
+  .hm-acc summary:hover{background:none;color:#FFD976}
+  .hm-acc__body{padding:0 44px 22px 0}
+  .hm-acc__plus{border:0;width:20px;height:20px;flex-basis:20px}
+  .hm-acc__plus::before,.hm-acc__plus::after{width:14px;height:1.5px;background:#E6E6E8}
+
+  /* Closing banner + hero: neutral borders, plain chip icons */
+  .hm-final{border-color:rgba(255,255,255,.07);background:radial-gradient(60% 90% at 50% 0%,rgba(212,175,55,.12),rgba(212,175,55,0) 70%),#111112}
+  .nx-wrap .nx-show__card{border-color:rgba(255,255,255,.08)}
+  .nx-wrap .nx-chip{border-color:rgba(255,255,255,.1);gap:12px}
+  .nx-wrap .nx-chip__icon{width:auto;height:auto;flex:0 0 auto;background:none;border-radius:0;color:#FFD976}
+  .nx-wrap .nx-chip__icon svg{width:22px;height:22px;stroke-width:1.6}
+  .hm-foot{border-top-color:rgba(255,255,255,.07)}
+  .hm-foot__age b{border-color:rgba(255,255,255,.2);color:#E6E6E8}
+
+  /* Bulk: per-unit price as plain gold text */
+  .uni-pg .uni-pg__unit{padding:0;background:none;border:0;border-radius:0;color:#FFD976;font-size:13.5px;letter-spacing:.2px}
 </style>
 <script>document.documentElement.classList.add('hm-js');</script>
 <script>
