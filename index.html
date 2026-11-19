@@ -1751,7 +1751,7 @@ var UNI_GRIDS = {
   <div class="uni-pop__card" tabindex="-1">
     <svg class="uni-pop__flag" viewBox="0 0 190 100" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
               <defs>
-          <linearGradient id="uni-foil" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="380" y2="200" spreadMethod="repeat">
+          <linearGradient id="uni-foil" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="380" y2="200" spreadMethod="repeat" gradientTransform="translate(45.60 24.00)">
             <stop offset="0" stop-color="#9C7A36"/>
             <stop offset=".18" stop-color="#B8913F"/>
             <stop offset=".36" stop-color="#C9A24B"/>
@@ -1938,10 +1938,19 @@ var UNI_GRIDS = {
     background-color: var(--uni-gold);
     background-image: linear-gradient(110deg, #9C7A36 0%, #C9A24B 35%, #F8EBC0 50%, #C9A24B 65%, #9C7A36 100%);
     background-size: 300% 100%;
-    background-position: 10% 50%;
+    background-position: 9.2% 50%;
     transition: filter .2s ease;
   }
   .uni-pop .uni-pop__btn:hover { filter: brightness(1.07); }
+  /* The opening shine runs as a CSS animation. Changing the button's style from a script
+     on every frame stopped iPhones from registering taps until the shine ended. */
+  .uni-pop.is-open .uni-pop__btn {
+    animation: uni-pop-btn-sweep 1.7s cubic-bezier(.65, 0, .35, 1) .24s backwards;
+  }
+  @keyframes uni-pop-btn-sweep {
+    from { background-position: 93.2% 50%; }
+    to { background-position: 9.2% 50%; }
+  }
 
   .uni-pop .uni-pop__close {
     margin: 0;
@@ -1975,6 +1984,7 @@ var UNI_GRIDS = {
   @media (prefers-reduced-motion: reduce) {
     .uni-pop, .uni-pop .uni-pop__card { transition: opacity .2s ease; }
     .uni-pop .uni-pop__card { transform: none; }
+    .uni-pop.is-open .uni-pop__btn { animation: none; }
   }
 </style>
 
@@ -2000,26 +2010,45 @@ var UNI_GRIDS = {
     var REST = 0.12;
     var cur = REST, target = REST, frame = null, sweeping = false;
 
+    function foilAt(s) {
+      return "translate(" + (s * 380).toFixed(2) + " " + (s * 200).toFixed(2) + ")";
+    }
     function paintFoil(s) {
-      if (foil) foil.setAttribute("gradientTransform", "translate(" + (s * 380).toFixed(2) + " " + (s * 200).toFixed(2) + ")");
+      if (foil) foil.setAttribute("gradientTransform", foilAt(s));
       if (btn) btn.style.backgroundPosition = ((0.5 - (s + 0.22) * 1.2) * 100).toFixed(1) + "% 50%";
     }
 
-    function sweep() {
-      if (reduceMotion) { paintFoil(REST); return; }
-      var from = -0.58, startTime = null, duration = 1700;
+    /* Opening shine. The browser animates it (SVG animation for the flag, CSS animation
+       for the button), so no script changes the page while it plays. Doing it frame by
+       frame from a script stopped iPhones from registering taps until it finished. */
+    var SWEEP_FROM = -0.58, sweepAnim = null, sweepTimer = null;
+    function endSweep() {
+      clearTimeout(sweepTimer);
+      if (sweepAnim && sweepAnim.parentNode) sweepAnim.parentNode.removeChild(sweepAnim);
+      sweepAnim = null;
+      if (foil) foil.setAttribute("gradientTransform", foilAt(REST));
+      sweeping = false;
+      cur = target = REST;
+    }
+    function startSweep() {
+      endSweep();
+      if (btn) btn.style.backgroundPosition = "";
+      if (reduceMotion || !foil || typeof SVGAnimationElement === "undefined") return;
+      foil.setAttribute("gradientTransform", foilAt(SWEEP_FROM));
+      sweepAnim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+      sweepAnim.setAttribute("attributeName", "gradientTransform");
+      sweepAnim.setAttribute("type", "translate");
+      sweepAnim.setAttribute("values", (SWEEP_FROM * 380).toFixed(2) + " " + (SWEEP_FROM * 200).toFixed(2) + ";" + (REST * 380).toFixed(2) + " " + (REST * 200).toFixed(2));
+      sweepAnim.setAttribute("keyTimes", "0;1");
+      sweepAnim.setAttribute("calcMode", "spline");
+      sweepAnim.setAttribute("keySplines", ".65 0 .35 1");
+      sweepAnim.setAttribute("dur", "1.7s");
+      sweepAnim.setAttribute("begin", "indefinite");
+      sweepAnim.setAttribute("fill", "freeze");
+      foil.appendChild(sweepAnim);
       sweeping = true;
-      if (frame) cancelAnimationFrame(frame);
-      function step(now) {
-        if (startTime === null) startTime = now;
-        var k = Math.min(1, (now - startTime) / duration);
-        var eased = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-        cur = from + (REST - from) * eased;
-        paintFoil(cur);
-        if (k < 1) { frame = requestAnimationFrame(step); }
-        else { frame = null; sweeping = false; target = REST; }
-      }
-      frame = requestAnimationFrame(step);
+      try { sweepAnim.beginElementAt(0.24); } catch (e) { endSweep(); return; }
+      sweepTimer = setTimeout(endSweep, 240 + 1700 + 60);
     }
 
     function follow() {
@@ -2049,14 +2078,13 @@ var UNI_GRIDS = {
 
     function open() {
       lastFocus = document.activeElement;
-      paintFoil(-0.58);
+      startSweep();
       pop.hidden = false;
       void pop.offsetWidth;
       pop.classList.add("is-open");
       document.documentElement.style.overflow = "hidden";
       try { sessionStorage.setItem(SEEN_KEY, "1"); } catch (e) {}
       card.focus({ preventScroll: true });
-      setTimeout(sweep, 240);
     }
 
     function close() {
@@ -2064,13 +2092,25 @@ var UNI_GRIDS = {
       document.documentElement.style.overflow = "";
       if (frame) cancelAnimationFrame(frame);
       frame = null;
-      sweeping = false;
+      endSweep();
       setTimeout(function () { pop.hidden = true; }, 420);
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
 
     pop.querySelectorAll("[data-uni-close]").forEach(function (el) {
       el.addEventListener("click", close);
+      /* Buttons also close on touch release, so a tap always counts on phones. */
+      if (el.tagName === "BUTTON") {
+        el.addEventListener("touchend", function (e) {
+          var t = e.changedTouches && e.changedTouches[0];
+          if (!t || !pop.classList.contains("is-open")) return;
+          var hit = document.elementFromPoint(t.clientX, t.clientY);
+          if (hit && (hit === el || el.contains(hit))) {
+            e.preventDefault();
+            close();
+          }
+        }, { passive: false });
+      }
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && pop.classList.contains("is-open")) close();
