@@ -79,7 +79,13 @@ window.UNI_CATALOG = {
     images: [
       "images/geek-pulse.webp"
     ],
-    description: "Geek Bar Pulse disposable. Smart display, dual-mode output, authentic sealed packaging."
+    description: "Geek Bar Pulse disposable. Smart display, dual-mode output, authentic sealed packaging.",
+    highlights: [
+      "Geek Bar Pulse X Over 10 Flavors / Options",
+      "15,000 Puffs Regular Mode",
+      "7,500 Puffs Pulse Mode"
+    ],
+    related: ["geek-bar-pulse", "20pc-ace-ultra-premium", "10pc-ace-ultra-premium", "ace-ultra-premium-2g"]
   },
 
   "geek-bar-pulse": {
