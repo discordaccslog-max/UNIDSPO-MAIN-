@@ -505,42 +505,15 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .uni-header__bar { min-height: 64px; }
 
-/* Logo banner */
-.uni-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  color: #fff;
-  white-space: nowrap;
-  line-height: 1;
+/* Logo banner: UNITED DISPO ribbon (images/united-dispo-banner.svg) */
+.uni-logo { display: inline-block; line-height: 0; }
+.uni-logo__banner {
+  display: block;
+  width: 340px; height: auto;
+  filter: drop-shadow(0 6px 18px rgba(212,175,55,.16));
+  transition: filter .3s ease, transform .3s ease;
 }
-.uni-logo:hover { color: #fff; }
-.uni-logo__mark {
-  width: 58px; height: 58px; flex: 0 0 auto;
-  filter: drop-shadow(0 4px 14px rgba(212,175,55,.18));
-  transition: transform .5s ease;
-}
-.uni-logo:hover .uni-logo__mark { transform: rotate(-8deg); }
-.uni-logo__rule {
-  width: 1px; height: 44px; flex: 0 0 1px;
-  background: linear-gradient(180deg, rgba(212,175,55,0), rgba(212,175,55,.7), rgba(212,175,55,0));
-}
-.uni-logo__text { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.uni-logo__word {
-  font-family: var(--font-heading-family);
-  font-size: 31px;
-  font-weight: 600;
-  letter-spacing: .16em;
-  color: #fff;
-}
-.uni-logo__tag {
-  font-family: var(--font-body-family);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  color: var(--uni-gold);
-}
+.uni-logo:hover .uni-logo__banner { filter: drop-shadow(0 8px 22px rgba(212,175,55,.3)); transform: translateY(-1px); }
 
 /* Icons: larger tap targets, gold on hover */
 .uni-header__side { gap: 4px; }
@@ -591,8 +564,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 .uni-nav .current_page_item > a::after { transform: scaleX(1); height: 2px; background: linear-gradient(90deg, #E8C766, #BA9930); }
 
 @media (max-width: 989px) {
-  .uni-logo__mark { width: 50px; height: 50px; }
-  .uni-logo__word { font-size: 27px; }
+  .uni-logo__banner { width: 300px; }
 }
 @media (max-width: 749px) {
   .uni-announce { font-size: 11px; letter-spacing: .12em; padding: 0 40px; }
@@ -601,18 +573,14 @@ ul { list-style: none; margin: 0; padding: 0; }
   .uni-header__side--left { left: 8px; }
   .uni-header__side--right { right: 8px; }
   .uni-header__side { gap: 0; }
-  .uni-logo { gap: 10px; }
-  .uni-logo__mark { width: 36px; height: 36px; }
-  .uni-logo__rule, .uni-logo__tag { display: none; }
-  .uni-logo__word { font-size: 19px; letter-spacing: .12em; }
+  .uni-logo__banner { width: 186px; }
   .uni-nav { padding: 2px 0 10px; }
   .uni-nav ul { gap: 26px; }
   .uni-nav a { font-size: 12px; letter-spacing: .14em; }
 }
 @media (max-width: 374px) {
-  .uni-logo__mark { width: 30px; height: 30px; }
-  .uni-logo__word { font-size: 17px; letter-spacing: .1em; }
+  .uni-logo__banner { width: 162px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .uni-logo__mark, .uni-nav a::after { transition: none; }
+  .uni-logo__banner, .uni-nav a::after { transition: none; }
 }
