@@ -188,12 +188,21 @@ window.UNI_CATALOG = {
     compareAt: null,
     variants: ["Hybrid", "Sativa", "Indica"],
     variantLabel: "Options",
+    soldOutVariants: ["Sativa", "Indica"],
     available: true,
     stockStatus: "low",
     images: [
       "images/muha-cookies.webp"
     ],
-    description: "Muha Meds × Cookies limited-edition collab cartridge. Co-branded sealed packaging, authenticated."
+    description: "Muha Meds × Cookies limited-edition collab cartridge. Co-branded sealed packaging, authenticated.",
+    highlights: [
+      "## NEWLY RELEASED LIMITED EDITION / LOW STOCK",
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
+      "Ultra-refined premium distillate"
+    ],
+    related: ["10pc-muha-meds-x-cookies-limited-edition", "muha-meds-limited-edition", "10pc-ace-ultra-premium", "20pc-ace-ultra-premium"]
   },
 
   "muha-meds-limited-edition": {
@@ -272,12 +281,20 @@ window.UNI_CATALOG = {
     compareAt: null,
     variants: ["Hybrid", "Sativa", "Indica"],
     variantLabel: "Options",
+    soldOutVariants: ["Sativa", "Indica"],
     available: true,
     stockStatus: "low",
     images: [
       "images/10pc-muha-cookies.webp"
     ],
-    description: "10-pack Muha Meds × Cookies limited-edition cartridges. Limited run, sealed from dispensary."
+    description: "10-pack Muha Meds × Cookies limited-edition cartridges. Limited run, sealed from dispensary.",
+    highlights: [
+      "## NEWLY RELEASED LIMITED EDITION / LOW STOCK",
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
+      "Ultra-refined premium distillate"
+    ]
   },
 
   "10pc-boutiq-switch-v5": {

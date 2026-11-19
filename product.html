@@ -133,6 +133,14 @@
     background: #ffffff; border-color: #ffffff; color: #0e0e10;
     font-weight: 600;
   }
+  /* Sold-out variant — strikethrough + muted, matches live reference */
+  .pd-variant.is-out {
+    color: rgba(255,255,255,.4);
+    border-color: rgba(255,255,255,.14);
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+  .pd-variant.is-out:hover { border-color: rgba(255,255,255,.14); }
 
   /* Buy it now — matches unidispo.com spec (Shopify Dawn custom block):
        linear-gradient(180deg,#E8C766,#BA9930), 1px #FFD700 border,
@@ -222,6 +230,17 @@
   .pd-highlights p { margin: 0 0 20px; }
   .pd-highlights p:last-child { margin-bottom: 0; }
   .pd-highlights strong { color: #ffffff; font-weight: 700; }
+  /* Featured heading — "## " prefixed highlight renders larger (h2 in catalog) */
+  .pd-highlights h2 {
+    font-family: inherit;
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0;
+    line-height: 1.25;
+    margin: 0 0 26px;
+    text-transform: uppercase;
+  }
 
   /* Share — subtle, matches live reference (muted white, no accent color) */
   .pd-share {
@@ -517,11 +536,20 @@
   else if (!p.available) badge = '<span class="pd-hero__badge">Sold out</span>';
 
   var variantLabel = p.variantLabel || 'Variant';
+  var soldOut = (p.soldOutVariants || []).reduce(function (m, v) { m[v] = true; return m; }, {});
+  /* First selected variant is the first non-sold-out one (or the first) */
+  var firstAvailableIdx = (p.variants || []).findIndex(function (v) { return !soldOut[v]; });
+  if (firstAvailableIdx < 0) firstAvailableIdx = 0;
   var variantsBlock = '';
   if (p.variants && p.variants.length > 0) {
     variantsBlock = '<span class="pd-sec-label">' + esc(variantLabel) + '</span><div class="pd-variants" role="radiogroup" aria-label="' + esc(variantLabel) + '">';
     p.variants.forEach(function(v, i){
-      variantsBlock += '<button type="button" class="pd-variant' + (i === 0 ? ' is-selected' : '') + '" role="radio" aria-checked="' + (i === 0 ? 'true' : 'false') + '" data-v="' + esc(v) + '">' + esc(v) + '</button>';
+      var out = !!soldOut[v];
+      var selected = (i === firstAvailableIdx);
+      variantsBlock += '<button type="button" class="pd-variant' + (selected ? ' is-selected' : '') + (out ? ' is-out' : '') + '"' +
+        ' role="radio" aria-checked="' + (selected ? 'true' : 'false') + '"' +
+        (out ? ' aria-disabled="true"' : '') +
+        ' data-v="' + esc(v) + '">' + esc(v) + '</button>';
     });
     variantsBlock += '</div>';
   }
@@ -561,17 +589,21 @@
      with no bold markers is wrapped in <strong> so the whole statement
      reads white, matching products like Ace Ultra. */
   function renderHighlight(line) {
+    /* Lines prefixed with "## " render as an <h2> featured heading */
+    if (line.indexOf('## ') === 0) {
+      return '<h2>' + esc(line.slice(3)) + '</h2>';
+    }
     var s = esc(line);
     if (s.indexOf('**') === -1) {
-      return '<strong>' + s + '</strong>';
+      return '<p><strong>' + s + '</strong></p>';
     }
-    return s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    return '<p>' + s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>') + '</p>';
   }
   var highlightsBlock = '';
   if (p.highlights && p.highlights.length) {
     highlightsBlock = '<div class="pd-highlights">';
     p.highlights.forEach(function (line) {
-      highlightsBlock += '<p>' + renderHighlight(line) + '</p>';
+      highlightsBlock += renderHighlight(line);
     });
     highlightsBlock += '</div>';
   }
@@ -645,21 +677,17 @@
     '</div>' +
     relatedBlock;
 
-  /* Variant selection — adds a short pop animation on the newly-chosen pill */
-  var selectedVariant = (p.variants && p.variants.length > 0) ? p.variants[0] : null;
+  /* Variant selection — sold-out variants cannot be selected */
+  var selectedVariant = (p.variants && p.variants.length > 0) ? p.variants[firstAvailableIdx] : null;
   root.querySelectorAll('.pd-variant').forEach(function (btn) {
     btn.addEventListener('click', function () {
+      if (btn.classList.contains('is-out')) return;
       root.querySelectorAll('.pd-variant').forEach(function (b) {
         b.classList.remove('is-selected');
-        b.classList.remove('is-just-selected');
         b.setAttribute('aria-checked', 'false');
       });
       btn.classList.add('is-selected');
       btn.setAttribute('aria-checked', 'true');
-      /* retrigger the pop animation */
-      btn.classList.remove('is-just-selected');
-      void btn.offsetWidth;
-      btn.classList.add('is-just-selected');
       selectedVariant = btn.getAttribute('data-v');
     });
   });
