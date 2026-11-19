@@ -1002,17 +1002,19 @@ var UNI_GRIDS = {
     .uni-pg .uni-pg__grid { grid-template-columns: repeat(var(--uni-pg-cols), minmax(0, 1fr)); }
     .uni-pg .uni-pg__head--plain { margin-bottom: 30px; }
 
-    .uni-pg .uni-pg__media .uni-pg__img:only-child {
+    /* Single-image cards: never fade the primary image on hover, just a small zoom */
+    .uni-pg .uni-pg__media:not(.uni-pg__media--has-hover) .uni-pg__img {
       transition: transform .5s ease;
     }
-    .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img:only-child {
+    .uni-pg .uni-pg__card:hover .uni-pg__media:not(.uni-pg__media--has-hover) .uni-pg__img {
       transform: scale(1.03);
-      opacity: 1; /* keep single-image cards visible on hover */
+      opacity: 1;
     }
-    .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img:first-child:not(:only-child) {
+    /* Two-image cards: cross-fade on hover */
+    .uni-pg .uni-pg__card:hover .uni-pg__media--has-hover .uni-pg__img:not(.uni-pg__img--hover) {
       opacity: 0;
     }
-    .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img--hover {
+    .uni-pg .uni-pg__card:hover .uni-pg__media--has-hover .uni-pg__img--hover {
       opacity: 1;
       transform: scale(1.03);
       transition: transform .5s ease;
@@ -1111,9 +1113,10 @@ var UNI_GRIDS = {
     if (p.priceMax && Number(p.priceMax) > Number(p.price)) priceText = 'From ' + priceText;
 
     var h = '<li class="uni-pg__item uni-reveal" data-cascade style="--animation-order: ' + (i + 1) + ';"><div class="uni-pg__card">';
-    h += '<div class="uni-pg__media" style="--uni-ratio: ' + Math.round(ratio * 10000) / 10000 + '%;">';
+    var hasHover = !!(g.secondaryImage && p.image2);
+    h += '<div class="uni-pg__media' + (hasHover ? ' uni-pg__media--has-hover' : '') + '" style="--uni-ratio: ' + Math.round(ratio * 10000) / 10000 + '%;">';
     if (p.image) h += img(p.image, 'uni-pg__img', p.title);
-    if (g.secondaryImage && p.image2) h += img(p.image2, 'uni-pg__img uni-pg__img--hover', '');
+    if (hasHover) h += img(p.image2, 'uni-pg__img uni-pg__img--hover', '');
     if (badge) h += '<span id="' + pid + '-badge" class="uni-pg__badge">' + esc(badge) + '</span>';
     h += '</div><div class="uni-pg__content"><div class="uni-pg__info">';
     h += '<h3 class="uni-pg__name" id="' + pid + '-title"><a class="uni-pg__link" href="' + esc(p.url || '#') + '"' +
