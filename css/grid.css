@@ -1,0 +1,481 @@
+/* United Dispo — product grid (homepage + catalog) */
+
+  .uni-pg,
+  .uni-pg *,
+  .uni-pg *::before,
+  .uni-pg *::after {
+    box-sizing: border-box;
+  }
+  .uni-pg {
+    display: block;
+    margin: 0;
+    padding: var(--uni-pg-pt-m) 0 var(--uni-pg-pb-m);
+    background: #0e0e10;
+    color: #ffffff;
+    font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 1.8;
+    letter-spacing: .6px;
+    text-align: start;
+  }
+
+  /* Gold promo bar */
+  .uni-pg .uni-pg__promo {
+    display: block;
+    margin: 0 0 20px;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, rgba(212, 175, 55, .14), rgba(212, 175, 55, .07) 55%, rgba(0, 0, 0, 0) 100%);
+    border: 1px solid rgba(212, 175, 55, .28);
+    border-radius: 12px;
+    color: #d4af37;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.8;
+    letter-spacing: .04em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* Page-width containers */
+  .uni-pg .uni-pg__page {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  .uni-pg .uni-pg__head {
+    margin-bottom: 25px;
+  }
+
+  /* Heading */
+  .uni-pg .uni-pg__title {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-family: "Oswald", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.2142857;
+    letter-spacing: .84px;
+    text-transform: none;
+    word-break: break-word;
+  }
+  .uni-pg .uni-pg__title--h0 { font-size: 56px; }
+  .uni-pg .uni-pg__title--h1 { font-size: 42px; }
+  .uni-pg .uni-pg__title--h2 { font-size: 28px; }
+  .uni-pg .uni-pg__title a { color: inherit; }
+  .uni-pg .uni-pg__title strong,
+  .uni-pg .uni-pg__title b {
+    font-weight: bolder;
+  }
+  .uni-pg .uni-pg__head--desc .uni-pg__title { margin-bottom: 10px; }
+  .uni-pg .uni-pg__desc { margin: 0; }
+  .uni-pg .uni-pg__desc > :first-child { margin-top: 0; }
+  .uni-pg .uni-pg__desc > :last-child { margin-bottom: 0; }
+
+  /* Grid */
+  /* Themes often give lists their own font (Twenty Twenty-One does), so reset it. */
+  .uni-pg .uni-pg__grid,
+  .uni-pg .uni-pg__item {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+  .uni-pg .uni-pg__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--uni-pg-cols-m), minmax(0, 1fr));
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .uni-pg .uni-pg__item {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .uni-pg .uni-pg__item::before,
+  .uni-pg .uni-pg__item::marker {
+    content: none;
+  }
+
+  /* Card */
+  .uni-pg .uni-pg__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    background: #0F0F10;
+    border: 0;
+    border-radius: 0;
+    color: #ffffff;
+    text-align: left;
+  }
+  .uni-pg .uni-pg__media {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 0;
+    padding-bottom: var(--uni-ratio, 125%);
+    overflow: hidden;
+  }
+  /* !important on size/position: some themes (Twenty Twenty-One, for one) add an inline
+     style with width/height/max-width to every image WordPress outputs. */
+  .uni-pg .uni-pg__media .uni-pg__img {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    object-fit: cover;
+    object-position: center;
+  }
+  .uni-pg .uni-pg__media .uni-pg__img--hover {
+    display: none !important;
+  }
+  /* Insurance: the card image never fades, filters, or disappears on hover for any reason */
+  .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img,
+  .uni-pg .uni-pg__card:hover .uni-pg__media,
+  .uni-pg .uni-pg__card .uni-pg__media .uni-pg__img {
+    opacity: 1 !important;
+    filter: none !important;
+    visibility: visible !important;
+  }
+  .uni-pg .uni-pg__badge {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    z-index: 1;
+    display: inline-block;
+    padding: 8px 16px;
+    background: #000000;
+    border: 0;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: .02em;
+    text-align: center;
+    word-break: break-word;
+  }
+
+  .uni-pg .uni-pg__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+    padding: 10px;
+  }
+  .uni-pg .uni-pg__info {
+    flex-grow: 1;
+    padding: 13px 10px;
+  }
+  .uni-pg .uni-pg__name {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-family: "Oswald", sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    word-break: break-word;
+  }
+  .uni-pg .uni-pg__card .uni-pg__link,
+  .uni-pg .uni-pg__card .uni-pg__link:visited,
+  .uni-pg .uni-pg__card .uni-pg__link:hover,
+  .uni-pg .uni-pg__card .uni-pg__link:focus {
+    color: inherit;
+    background: none;
+    box-shadow: none;
+    outline: 0;
+    text-decoration: none;
+  }
+  /* The title link covers the whole card, so the card is clickable. */
+  .uni-pg .uni-pg__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .uni-pg .uni-pg__card .uni-pg__link:focus-visible::after {
+    box-shadow: 0 0 0 3px #0e0e10, 0 0 5px 4px rgba(255, 255, 255, .3);
+    outline: 2px solid rgba(255, 255, 255, .5);
+  }
+
+  /* Price */
+  .uni-pg .uni-pg__price {
+    margin: 7px 0 0;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+  }
+  .uni-pg .uni-pg__price-item {
+    display: inline-block;
+    margin: 0;
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+  }
+  .uni-pg .uni-pg__price-item--compare {
+    margin-right: 10px;
+    font-size: 13px;
+    text-decoration: line-through;
+  }
+
+  /* Buttons */
+  .uni-pg .uni-pg__quick {
+    position: relative;
+    z-index: 1;
+    margin: 0 13px 10px;
+  }
+  .uni-pg .uni-pg__card .uni-pg__btn,
+  .uni-pg .uni-pg__card .uni-pg__btn:visited,
+  .uni-pg .uni-pg__card .uni-pg__btn:hover,
+  .uni-pg .uni-pg__card .uni-pg__btn:focus,
+  .uni-pg .uni-pg__card .uni-pg__btn:active {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 47px;
+    margin: 0;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, .55);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(186, 153, 48, .25);
+    color: #ffffff;
+    cursor: pointer;
+    font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 1.35px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    transition: box-shadow .1s ease;
+  }
+  .uni-pg .uni-pg__card .uni-pg__btn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, .5);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px #0e0e10, 0 0 5px 4px rgba(255, 255, 255, .3);
+  }
+  .uni-pg .uni-pg__card .uni-pg__btn--disabled,
+  .uni-pg .uni-pg__card .uni-pg__btn--disabled:hover {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+  /* Text size/weight above are tuned to match the live Shopify site, which loads its own
+     copy of Avenir Next that renders a little smaller and lighter than the built-in one. */
+  /* Outline ring, as on the Shopify theme: a 1px square #e3fc02 ring just inside the
+     gold border (thicker on hover). Faded with the button when it's sold out. */
+  .uni-pg .uni-pg__card .uni-pg__btn::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    z-index: 1;
+    border-radius: 0;
+    box-shadow: 0 0 0 1px #e3fc02, 0 0 0 1px #0e0e10;
+    pointer-events: none;
+    transition: box-shadow .1s ease;
+  }
+  @media (hover: hover) {
+    .uni-pg .uni-pg__card .uni-pg__btn:not(.uni-pg__btn--disabled):hover::after {
+      box-shadow: 0 0 0 2.3px #e3fc02, 0 0 0 2px #0e0e10;
+    }
+  }
+  .uni-pg .uni-pg__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+  }
+  .uni-pg .uni-pg__card .uni-pg__btn.loading {
+    color: transparent;
+    cursor: progress;
+  }
+  .uni-pg .uni-pg__card .uni-pg__btn.loading .uni-pg__spinner {
+    display: block;
+    color: #ffffff;
+    animation: uni-pg-spin .7s linear infinite;
+  }
+  @keyframes uni-pg-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* View all */
+  .uni-pg .uni-pg__viewall {
+    text-align: center;
+  }
+  .uni-pg .uni-pg__viewall .uni-pg__va,
+  .uni-pg .uni-pg__viewall .uni-pg__va:visited,
+  .uni-pg .uni-pg__viewall .uni-pg__va:hover,
+  .uni-pg .uni-pg__viewall .uni-pg__va:focus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 122px;
+    min-height: 47px;
+    margin: 10px 0 0;
+    padding: 0 30px;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(186, 153, 48, .25);
+    font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: none;
+    transition: box-shadow .1s ease;
+  }
+  .uni-pg .uni-pg__viewall .uni-pg__va--solid,
+  .uni-pg .uni-pg__viewall .uni-pg__va--solid:visited,
+  .uni-pg .uni-pg__viewall .uni-pg__va--solid:hover,
+  .uni-pg .uni-pg__viewall .uni-pg__va--solid:focus {
+    background: linear-gradient(180deg, #E8C766, #BA9930);
+    color: #111111;
+  }
+  .uni-pg .uni-pg__viewall .uni-pg__va--outline,
+  .uni-pg .uni-pg__viewall .uni-pg__va--outline:visited,
+  .uni-pg .uni-pg__viewall .uni-pg__va--outline:hover,
+  .uni-pg .uni-pg__viewall .uni-pg__va--outline:focus {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, .55);
+    color: #ffffff;
+  }
+  .uni-pg .uni-pg__viewall .uni-pg__va--link,
+  .uni-pg .uni-pg__viewall .uni-pg__va--link:visited,
+  .uni-pg .uni-pg__viewall .uni-pg__va--link:hover,
+  .uni-pg .uni-pg__viewall .uni-pg__va--link:focus {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #D4AF37;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .uni-pg .uni-pg__viewall .uni-pg__va:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, .5);
+    outline-offset: 3px;
+  }
+
+  /* Screen-reader-only text */
+  .uni-pg .uni-pg__sr {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    word-wrap: normal !important;
+  }
+
+  /* Tablet and up */
+  @media screen and (min-width: 750px) {
+    .uni-pg {
+      padding: var(--uni-pg-pt) 0 var(--uni-pg-pb);
+      font-size: 16px;
+    }
+    .uni-pg .uni-pg__page { padding: 0 50px; }
+    .uni-pg .uni-pg__title--h0 { font-size: 72.8px; }
+    .uni-pg .uni-pg__title--h1 { font-size: 56px; }
+    .uni-pg .uni-pg__title--h2 { font-size: 33.6px; }
+    .uni-pg .uni-pg__grid { gap: 22px; }
+    .uni-pg .uni-pg__info { padding: 17px 10px; }
+    .uni-pg .uni-pg__name { font-size: 18.2px; }
+  }
+
+  /* Desktop */
+  @media screen and (min-width: 990px) {
+    .uni-pg .uni-pg__grid { grid-template-columns: repeat(var(--uni-pg-cols), minmax(0, 1fr)); }
+    .uni-pg .uni-pg__head--plain { margin-bottom: 30px; }
+
+    /* No fade, no zoom on the card image — hover only underlines the title */
+    .uni-pg .uni-pg__card:hover .uni-pg__link {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  /* Subtle entrance motion: cards stay fully opaque the whole time
+     (opacity never dips below 1), so hover can never read as "black".
+     Only a small 8px rise animates in once on first paint. */
+  .uni-pg .uni-reveal {
+    opacity: 1 !important;
+    animation: uni-pg-rise 500ms cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: calc(var(--animation-order, 0) * 60ms);
+  }
+  .uni-pg .uni-reveal.uni-reveal--offscreen {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  @keyframes uni-pg-rise {
+    from { transform: translateY(8px); }
+    to   { transform: translateY(0); }
+  }
+
+  /* ===== Section headers + card extras ===== */
+  .hm-kicker{display:inline-block;font-size:12px;line-height:1.6;letter-spacing:.16em;text-transform:uppercase;color:#FFD976;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.32);border-radius:999px;padding:6px 11px;margin:0 0 14px;font-weight:700}
+  .hm-kicker,.nx-wrap .nx-kicker{display:inline-flex;align-items:center;gap:10px;background:none;border:0;border-radius:0;padding:0;color:#D4AF37;font-size:12.5px !important;letter-spacing:.22em;font-weight:700}
+  .hm-kicker::before,.nx-wrap .nx-kicker::before{content:"";width:24px;height:1px;background:currentColor;flex:0 0 24px}
+  .hm-sec{font-family:"Figtree",sans-serif;color:#F7F7F7;letter-spacing:.4px;line-height:1.7}
+  .hm-sec *,.hm-sec *::before,.hm-sec *::after{box-sizing:border-box}
+  .hm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px 32px;flex-wrap:wrap;margin:0 0 28px}
+  .hm-head__copy{max-width:760px}
+  .hm-h2{margin:0;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(30px,3.2vw,46px);line-height:1.08;letter-spacing:-.2px;color:#fff;-webkit-text-stroke:.4px #fff;paint-order:stroke fill}
+  .hm-h2 em{font-style:normal;background:linear-gradient(180deg,#F3D77A,#C9A43A);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.4px rgba(232,199,102,.9)}
+  .hm-lead{margin:10px 0 0;color:#A5A7AC;font-size:16px;font-weight:600;line-height:1.65}
+  .hm-link{display:inline-flex;align-items:center;gap:8px;color:#FFD976 !important;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;padding:8px 0;border-bottom:1px solid rgba(255,217,118,.35);transition:border-color .2s ease,gap .2s ease}
+  .hm-link:hover{border-color:#FFD976;gap:12px}
+  .hm-link svg{width:16px;height:16px}
+  .hm-stars{display:inline-flex;gap:2px;color:#FFD976;vertical-align:middle}
+  .hm-stars svg{width:15px;height:15px;display:block}
+  .hm-stars .is-off{color:rgba(255,217,118,.22)}
+  .uni-pg .hm-head{margin-bottom:26px}
+  .uni-pg .uni-pg__rating{display:flex;align-items:center;gap:6px;margin:2px 0 4px;font-size:13px;font-weight:600;color:#A5A7AC;letter-spacing:.2px;line-height:1.4}
+  .uni-pg .uni-pg__rating .hm-stars svg{width:13px;height:13px}
+  .uni-pg .uni-pg__rating > span:last-child{white-space:nowrap}
+  @media(max-width:749px){.uni-pg .uni-pg__rating{font-size:12px;gap:4px}.uni-pg .uni-pg__rating .hm-stars svg:nth-child(n+2){display:none}}
+  .uni-pg .uni-pg__note{margin:6px 0 0;color:#E8A54F;font-size:13px;font-weight:600;line-height:1.45;letter-spacing:.2px}
+  .uni-pg .uni-pg__unit{display:block;width:max-content;margin-top:6px;padding:2px 9px;border-radius:999px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);color:#FFD976;font-size:12.5px;font-weight:700;letter-spacing:.3px;line-height:1.6}
+  .uni-pg .uni-pg__unit{padding:0;background:none;border:0;border-radius:0;color:#FFD976;font-size:13.5px;letter-spacing:.2px}

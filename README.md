@@ -29,7 +29,7 @@ changed without touching the shared stylesheet.
 
 ## Products
 
-Product cards are written directly into `index.html` and `catalog.html`.
+Products on the homepage and the catalog page come from one file, `js/store.js` (names, prices, stock, order, ratings). Edit it once and both pages update. The grid itself is drawn by `js/grid.js` and styled by `css/grid.css`. Product detail pages read `js/products.js`.
 Images are served from the original Shopify CDN.
 
 Add-to-cart doesn't post anywhere — it fires a browser event for a checkout to
