@@ -11,24 +11,16 @@
 <link rel="stylesheet" href="css/style.css">
 <style>
   .pd-wrap { max-width: 1200px; margin: 0 auto; padding: 36px 20px 80px; }
-  .pd-crumbs {
-    display: flex; gap: 10px; align-items: center;
-    font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
-    color: #A5A7AC; margin-bottom: 22px;
-  }
-  .pd-crumbs a { color: #D4AF37; text-decoration: none; }
-  .pd-crumbs a:hover { color: #FFD976; }
-  .pd-crumbs .sep { opacity: .5; }
 
   .pd { display: grid; grid-template-columns: 1fr; gap: 32px; }
   @media(min-width: 860px) { .pd { grid-template-columns: 1.1fr 1fr; gap: 56px; } }
 
-  /* Gallery */
+  /* Gallery — flat, no card frame (matches unidispo.com) */
   .pd-gallery { display: flex; flex-direction: column; gap: 14px; }
   .pd-hero {
     position: relative; width: 100%; aspect-ratio: 1 / 1;
-    background: #161718; border: 1px solid rgba(255,255,255,.06);
-    border-radius: 16px; overflow: hidden;
+    background: transparent; border: 0; border-radius: 0;
+    overflow: hidden;
   }
   .pd-hero img {
     width: 100%; height: 100%; object-fit: contain; display: block;
@@ -214,17 +206,18 @@
   /* Highlights / spec lines — mixed-weight statements under the buy block.
      Base text is muted; inline <strong> (from **bold** markers) prints
      pure white and bold. A line with no bold markers reads as a whole-
-     white bold statement (handled by wrapping it in <strong> at render). */
+     white bold statement (handled by wrapping it in <strong> at render).
+     Font switched from Figtree to Avenir Next to match the live site. */
   .pd-highlights {
     margin: 36px 0 24px;
-    font-family: inherit;
-    font-size: clamp(18px, 1.5vw, 22px);
+    font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(16px, 1.3vw, 19px);
     font-weight: 500;
     color: #B9BBC0;
-    line-height: 1.4;
-    letter-spacing: .1px;
+    line-height: 1.5;
+    letter-spacing: 0;
   }
-  .pd-highlights p { margin: 0 0 22px; }
+  .pd-highlights p { margin: 0 0 20px; }
   .pd-highlights p:last-child { margin-bottom: 0; }
   .pd-highlights strong { color: #ffffff; font-weight: 700; }
 
@@ -605,11 +598,6 @@
   }
 
   root.innerHTML =
-    '<div class="pd-crumbs">' +
-      '<a href="index.html">Home</a><span class="sep">/</span>' +
-      '<a href="catalog.html">Catalog</a><span class="sep">/</span>' +
-      '<span>' + esc(p.title) + '</span>' +
-    '</div>' +
     '<div class="pd">' +
       '<div class="pd-gallery">' +
         '<div class="pd-hero">' +
