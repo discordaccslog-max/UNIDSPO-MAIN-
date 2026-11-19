@@ -220,16 +220,16 @@
   .pd-highlights p:last-child { margin-bottom: 0; }
   .pd-highlights strong { color: #ffffff; font-weight: 700; }
 
-  /* Share */
+  /* Share — subtle, matches live reference (muted white, no accent color) */
   .pd-share {
     display: inline-flex; align-items: center; gap: 10px;
     margin: 20px 0 0; padding: 0;
     background: transparent; border: 0;
-    color: #E3D07A; font-family: inherit;
-    font-size: 16px; font-weight: 500; cursor: pointer;
+    color: #ffffff; font-family: inherit;
+    font-size: 14px; font-weight: 500; cursor: pointer;
   }
-  .pd-share:hover { color: #FFD976; }
-  .pd-share svg { flex: 0 0 18px; }
+  .pd-share:hover { color: #B9BBC0; }
+  .pd-share svg { flex: 0 0 16px; }
 
   /* You may also like */
   .pd-related {
@@ -507,9 +507,12 @@
     });
   }
 
+  /* Hero image no longer renders a sold-out / sale badge overlay —
+     the "Sold out" pill next to the price + the "Out of stock"
+     indicator already communicate status, and the live reference
+     doesn't paint a badge on the hero image. */
   var badge = '';
-  if (!p.available) badge = '<span class="pd-hero__badge">Sold out</span>';
-  else if (p.compareAt && Number(p.compareAt) > Number(p.price)) badge = '<span class="pd-hero__badge">Sale</span>';
+  if (p.compareAt && Number(p.compareAt) > Number(p.price)) badge = '<span class="pd-hero__badge">Sale</span>';
 
   var variantLabel = p.variantLabel || 'Variant';
   var variantsBlock = '';
