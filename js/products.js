@@ -77,7 +77,7 @@ window.UNI_CATALOG = {
     variants: [],
     available: false,
     images: [
-      "images/geek-pulse-x.webp"
+      "images/geek-pulse.webp"
     ],
     description: "Geek Bar Pulse disposable. Smart display, dual-mode output, authentic sealed packaging."
   },
@@ -100,7 +100,7 @@ window.UNI_CATALOG = {
     variantLabel: "Flavor",
     available: true,
     images: [
-      "images/geek-pulse.webp"
+      "images/geek-pulse-x.webp"
     ],
     description: "Geek Bar Pulse X — refreshed design, 25,000+ puffs, adjustable airflow, verified authentic from authorized distributor.",
     highlights: [
