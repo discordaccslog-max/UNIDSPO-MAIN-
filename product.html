@@ -265,7 +265,10 @@
   }
   .pd-related__img--hover { opacity: 0; }
   .pd-related__card:hover .pd-related__media img { transform: scale(1.05); }
-  .pd-related__card:hover .pd-related__img--primary { opacity: 0; }
+  /* Only cross-fade the primary image when a secondary image exists
+     (media container carries the --has-hover modifier). Otherwise the
+     primary stays visible on hover. */
+  .pd-related__card:hover .pd-related__media--has-hover .pd-related__img--primary { opacity: 0; }
   .pd-related__card:hover .pd-related__img--hover { opacity: 1; }
   @media (prefers-reduced-motion: reduce) {
     .pd-related__media img { transition: opacity .2s linear; }
@@ -593,7 +596,7 @@
       var imgs = it.p.images || [];
       var primary = imgs[0] || '';
       var hoverImg = imgs[1] || '';
-      var media = '<div class="pd-related__media">' +
+      var media = '<div class="pd-related__media' + (hoverImg ? ' pd-related__media--has-hover' : '') + '">' +
         '<img class="pd-related__img pd-related__img--primary" src="' + esc(primary) + '" alt="' + esc(it.p.title) + '" loading="lazy">' +
         (hoverImg ? '<img class="pd-related__img pd-related__img--hover" src="' + esc(hoverImg) + '" alt="" loading="lazy" aria-hidden="true">' : '') +
       '</div>';
