@@ -325,6 +325,9 @@
   .hm-what__points{margin:28px 0 0;padding:22px 0 0;list-style:none;border-top:1px solid rgba(255,255,255,.08);display:grid;gap:14px;max-width:520px}
   .hm-what__points li{display:flex;align-items:flex-start;gap:12px;color:#E6E6E8;font-size:15px;font-weight:600;line-height:1.5}
   .hm-what__points svg{width:20px;height:20px;flex:0 0 20px;margin-top:1px;color:#D4AF37}
+  .hm-what__cta{margin-top:30px}
+  .hm-what__cta svg{transition:transform .2s ease}
+  .hm-what__cta:hover svg{transform:translateX(3px)}
   .hm-what__sub{margin:0 0 6px;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(24px,2.2vw,30px);line-height:1.15;letter-spacing:.2px;color:#fff}
   .hm-what__subnote{margin:0 0 26px;color:#8E9096;font-size:14.5px;font-weight:600}
   .hm-flow{position:relative;margin:0;padding:0;list-style:none}
@@ -798,6 +801,7 @@ var UNI_CARD_RATINGS = {
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Checked by hand before it ships: seals, batch and lot numbers</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Anything that fails is re-ordered, never sent to you</li>
         </ul>
+        <a href="#products" class="hm-btn hm-btn--gold hm-what__cta">Explore Products<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <div class="hm-what__how hm-rv" style="--d:1">
         <span class="hm-kicker">How does it work?</span>
