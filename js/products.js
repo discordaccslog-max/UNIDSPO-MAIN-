@@ -65,10 +65,16 @@ window.UNI_CATALOG = {
     price: 31.99,
     compareAt: null,
     variants: [
-      "Watermelon Ice", "Blueberry Ice", "Mango Peach", "Strawberry Mango",
-      "Rainbow Candy", "Mint", "Grape Ice", "Pineapple Ice",
-      "Raspberry Lemonade", "Fuji Apple", "Strawberry Kiwi", "Peach Ice"
+      "Strawberry Watermelon", "Blue Rancher", "Blackberry B-Pop",
+      "Cool Mint", "Grapefrtuit Refresher", "Miami Mint",
+      "Raspberry Peach Lime", "Sour Mango Pineapple",
+      "Sour Fcuking Fab", "Banana Taffy Freeze", "Blue Razz Ice",
+      "Lemon Heads", "Lime Berry Orange", "Orange Fcuking Fab",
+      "Sour Apple Ice", "Sour Straws", "Strawberry B-Pop",
+      "Watermelon Ice", "White Peach Raspberry", "Strawberry Colada",
+      "ATL Mint", "Orange Dragon", "Pink & Blue", "Strawberry Kiwi Ice"
     ],
+    variantLabel: "Flavor",
     available: true,
     images: [
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/14e38133-5113-4d44-b627-64c50bad81de2_2bde79dd-e0fd-44b0-b0bf-734e1b2dcf23.png?v=1784768205"
