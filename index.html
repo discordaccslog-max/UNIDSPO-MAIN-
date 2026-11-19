@@ -864,11 +864,11 @@ var UNI_GRIDS = {
     color: #ffffff;
     cursor: pointer;
     font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: 1px;
+    letter-spacing: 1.35px;
     text-align: center;
     text-decoration: none;
     text-transform: none;
@@ -883,6 +883,28 @@ var UNI_GRIDS = {
   .uni-pg .uni-pg__card .uni-pg__btn--disabled:hover {
     cursor: not-allowed;
     opacity: .5;
+  }
+  /* Text size/weight above are tuned to match the live Shopify site, which loads its own
+     copy of Avenir Next that renders a little smaller and lighter than the built-in one. */
+  /* Outline ring, as on the Shopify theme: a 1px square #e3fc02 ring just inside the
+     gold border (thicker on hover). Faded with the button when it's sold out. */
+  .uni-pg .uni-pg__card .uni-pg__btn::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    z-index: 1;
+    border-radius: 0;
+    box-shadow: 0 0 0 1px #e3fc02, 0 0 0 1px #0e0e10;
+    pointer-events: none;
+    transition: box-shadow .1s ease;
+  }
+  @media (hover: hover) {
+    .uni-pg .uni-pg__card .uni-pg__btn:not(.uni-pg__btn--disabled):hover::after {
+      box-shadow: 0 0 0 2.3px #e3fc02, 0 0 0 2px #0e0e10;
+    }
   }
   .uni-pg .uni-pg__spinner {
     position: absolute;
@@ -904,10 +926,6 @@ var UNI_GRIDS = {
     display: block;
     color: #ffffff;
     animation: uni-pg-spin .7s linear infinite;
-  }
-  .uni-pg .uni-pg__card .uni-pg__btn.loading::after,
-  .uni-pg .uni-pg__card .uni-pg__btn.added::after {
-    content: none;
   }
   @keyframes uni-pg-spin {
     to { transform: rotate(360deg); }
