@@ -244,10 +244,10 @@
     line-height: 1.1;
   }
   .pd-related__grid {
-    display: grid; gap: 24px;
+    display: grid; gap: 14px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  @media(min-width: 750px) { .pd-related__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; } }
+  @media(min-width: 750px) { .pd-related__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
   .pd-related__card {
     display: flex; flex-direction: column; gap: 10px;
     text-decoration: none; color: inherit;
@@ -312,69 +312,34 @@
     border-radius: 10px; text-decoration: none; font-weight: 800;
   }
 
-  /* ============ Animations (matches unidispo.com Dawn theme) ============ */
-  /* Scroll-reveal fade+rise, 600ms cubic-bezier, staggered by 75ms per order */
+  /* ============ Animations — subtle, not heavy ============ */
+  /* Scroll-reveal: gentle 350ms fade, tiny 6px rise, 40ms stagger */
   @media (prefers-reduced-motion: no-preference) {
     .pd-reveal {
-      opacity: .01;
-      transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(6px);
     }
     .pd-reveal.is-visible {
-      animation: pd-slide-in 600ms cubic-bezier(0, 0, .3, 1) forwards;
-      animation-delay: calc(var(--pd-order, 0) * 75ms);
+      animation: pd-fade-in 350ms ease-out forwards;
+      animation-delay: calc(var(--pd-order, 0) * 40ms);
     }
   }
-  @keyframes pd-slide-in {
-    from { opacity: .01; transform: translateY(20px); }
-    to   { opacity: 1;   transform: translateY(0); }
+  @keyframes pd-fade-in {
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Hero image: soft zoom-in on load */
-  @media (prefers-reduced-motion: no-preference) {
-    .pd-hero img {
-      animation: pd-hero-in 900ms cubic-bezier(.22, 1, .36, 1) both;
-    }
-  }
-  @keyframes pd-hero-in {
-    from { opacity: 0; transform: scale(1.04); }
-    to   { opacity: 1; transform: scale(1); }
-  }
+  /* Variant pill press feedback — subtle */
+  .pd-variant:active { transform: scale(.98); }
 
-  /* Variant pill tap/press feedback */
-  .pd-variant { transform: scale(1); }
-  .pd-variant:active { transform: scale(.96); }
-  @media (prefers-reduced-motion: no-preference) {
-    .pd-variant.is-just-selected {
-      animation: pd-pill-pop 350ms cubic-bezier(.34, 1.56, .64, 1);
-    }
-  }
-  @keyframes pd-pill-pop {
-    0%   { transform: scale(1); }
-    40%  { transform: scale(1.06); }
-    100% { transform: scale(1); }
-  }
+  /* Quantity stepper button press — subtle */
+  .pd-qty__btn { transition: background .15s ease; }
+  .pd-qty__btn:active { opacity: .7; }
 
-  /* Quantity stepper button press */
-  .pd-qty__btn { transition: background .15s ease, transform .1s ease; }
-  .pd-qty__btn:active { transform: scale(.9); }
-
-  /* Share button underline grow */
-  .pd-share {
-    position: relative;
-  }
-  .pd-share::after {
-    content: ""; position: absolute; left: 28px; right: 0; bottom: -2px;
-    height: 1px; background: currentColor;
-    transform: scaleX(0); transform-origin: left center;
-    transition: transform .3s cubic-bezier(.25, .46, .45, .94);
-  }
-  .pd-share:hover::after { transform: scaleX(1); }
-
-  /* Related card lift on hover */
+  /* Related card lift on hover — subtle */
   .pd-related__card {
-    transition: transform .35s cubic-bezier(.25, .46, .45, .94);
+    transition: transform .3s ease-out;
   }
-  .pd-related__card:hover { transform: translateY(-4px); }
+  .pd-related__card:hover { transform: translateY(-2px); }
 
   /* Toast */
   .pd-toast {
@@ -516,30 +481,9 @@
 <!-- ============ TOAST ============ -->
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
-<!-- ============ FOOTER ============ -->
-<style>
-  .footer-section, .footer-section * { box-sizing: border-box; }
-  .footer-section {
-    background: #0f0f10; border-top: 1px solid rgba(212,175,55,0.15);
-    padding: 40px 20px; color: #ccc; text-align: center; font-size: 14px;
-  }
-  .footer-section .branding { font-size: 20px; font-weight: 800; color: #FFD976; letter-spacing: 1px; margin-bottom: 12px; }
-  .footer-section .legal { font-size: 12px; color: #777; margin-top: 20px; line-height: 1.5; }
-</style>
-<div class="footer-section">
-  <div class="branding">UNI</div>
-  <div class="legal">
-    © <span class="uni-year">2026</span> UNI. All rights reserved.<br>
-    Licensed vendor. Based in California.
-  </div>
-</div>
-
 <script src="js/products.js"></script>
 <script>
 (function () {
-  var yearEl = document.querySelector('.uni-year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
   var slug = new URLSearchParams(window.location.search).get('id') || '';
   var p = window.UNI_CATALOG[slug];
   var root = document.getElementById('pd-root');
