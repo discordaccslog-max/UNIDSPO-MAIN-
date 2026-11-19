@@ -739,10 +739,9 @@ var UNI_GRIDS = {
     box-shadow: none;
     object-fit: cover;
     object-position: center;
-    transition: opacity .4s cubic-bezier(.25, .46, .45, .94);
   }
   .uni-pg .uni-pg__media .uni-pg__img--hover {
-    opacity: 0;
+    display: none;
   }
   .uni-pg .uni-pg__badge {
     position: absolute;
@@ -1002,23 +1001,7 @@ var UNI_GRIDS = {
     .uni-pg .uni-pg__grid { grid-template-columns: repeat(var(--uni-pg-cols), minmax(0, 1fr)); }
     .uni-pg .uni-pg__head--plain { margin-bottom: 30px; }
 
-    /* Single-image cards: never fade the primary image on hover, just a small zoom */
-    .uni-pg .uni-pg__media:not(.uni-pg__media--has-hover) .uni-pg__img {
-      transition: transform .5s ease;
-    }
-    .uni-pg .uni-pg__card:hover .uni-pg__media:not(.uni-pg__media--has-hover) .uni-pg__img {
-      transform: scale(1.03);
-      opacity: 1;
-    }
-    /* Two-image cards: cross-fade on hover */
-    .uni-pg .uni-pg__card:hover .uni-pg__media--has-hover .uni-pg__img:not(.uni-pg__img--hover) {
-      opacity: 0;
-    }
-    .uni-pg .uni-pg__card:hover .uni-pg__media--has-hover .uni-pg__img--hover {
-      opacity: 1;
-      transform: scale(1.03);
-      transition: transform .5s ease;
-    }
+    /* No fade, no zoom on the card image — hover only underlines the title */
     .uni-pg .uni-pg__card:hover .uni-pg__link {
       text-decoration: underline;
       text-underline-offset: 3px;
