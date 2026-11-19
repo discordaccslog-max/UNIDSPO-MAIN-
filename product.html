@@ -10,10 +10,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=Oswald:ital,wght@0,400;0,500;0,700;0,800;1,500;1,700;1,800&amp;display=swap">
 <link rel="stylesheet" href="css/style.css">
 <style>
-  .pd-wrap { max-width: 1400px; margin: 0 auto; padding: 36px 20px 80px; }
+  .pd-wrap { max-width: 1440px; margin: 0 auto; padding: 36px 50px 80px; }
 
   .pd { display: grid; grid-template-columns: 1fr; gap: 32px; }
-  @media(min-width: 860px) { .pd { grid-template-columns: 1.15fr 1fr; gap: 56px; } }
+  @media(min-width: 860px) {
+    .pd { grid-template-columns: 55% 45%; gap: 0; }
+    .pd-info { padding-left: 50px; }
+  }
 
   /* Gallery — flat, image takes its natural portrait height */
   .pd-gallery { display: flex; flex-direction: column; gap: 14px; align-self: start; }
