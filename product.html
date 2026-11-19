@@ -153,12 +153,17 @@
     margin: 0 0 10px; letter-spacing: .3px;
   }
 
-  /* Highlights block */
+  /* Highlights / spec lines — bold white statements under the buy block */
   .pd-highlights {
-    margin: 32px 0 24px;
-    font-size: 16px; color: #B9BBC0; line-height: 1.8;
+    margin: 36px 0 24px;
+    font-family: inherit;
+    font-size: clamp(18px, 1.5vw, 22px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.4;
+    letter-spacing: .1px;
   }
-  .pd-highlights p { margin: 0 0 14px; }
+  .pd-highlights p { margin: 0 0 22px; }
   .pd-highlights p:last-child { margin-bottom: 0; }
 
   /* Share */
@@ -516,8 +521,12 @@
       '<div class="pd-info">' +
         '<h1>' + esc(p.title) + '</h1>' +
         priceHtml +
-        '<p class="pd-desc">' + esc(p.description) + '</p>' +
         variantsBlock +
+        '<button type="button" class="pd-buy" id="pd-buy" ' + buyDisabled + '>' + esc(buyLabel) + '</button>' +
+        '<div class="pd-secure">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' +
+          '<span>Checkout secured by <strong style="color:#48BB78">Shopify</strong> / <strong style="color:#48BB78">Whop</strong></span>' +
+        '</div>' +
         '<div class="pd-qty-wrap">' +
           '<label class="pd-qty-label" for="pd-qty">Quantity</label>' +
           '<div class="pd-qty">' +
@@ -525,16 +534,6 @@
             '<input class="pd-qty__num" id="pd-qty" type="number" min="1" value="1" aria-label="Quantity">' +
             '<button type="button" class="pd-qty__btn" id="pd-inc" aria-label="Increase quantity">+</button>' +
           '</div>' +
-        '</div>' +
-        '<button type="button" class="pd-buy" id="pd-buy" ' + buyDisabled + '>' + esc(buyLabel) + '</button>' +
-        '<div class="pd-secure">' +
-          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' +
-          '<span>Checkout secured by <strong style="color:#D4D4D4">Shopify</strong> / <strong style="color:#D4D4D4">Whop</strong></span>' +
-        '</div>' +
-        '<div class="pd-assure">' +
-          '<div class="pd-assure__row"><span class="pd-assure__ic">🔒</span><div><strong>Secure checkout.</strong> Payment details encrypted and never stored on our servers.</div></div>' +
-          '<div class="pd-assure__row"><span class="pd-assure__ic">🚚</span><div><strong>Ships from California.</strong> Standard USPS shipping in 2–4 business days with tracking.</div></div>' +
-          '<div class="pd-assure__row"><span class="pd-assure__ic">↩️</span><div><strong>30-day returns.</strong> Sealed and unused items only. See policy for details.</div></div>' +
         '</div>' +
         highlightsBlock +
         '<button type="button" class="pd-share" id="pd-share" aria-label="Share this product">' +

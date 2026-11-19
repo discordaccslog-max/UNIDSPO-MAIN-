@@ -12,12 +12,20 @@ window.UNI_CATALOG = {
     group: "singles",
     price: 35.99,
     compareAt: null,
-    variants: ["Mint", "Watermelon", "Blue Dream"],
+    variants: ["Hybrid", "Sativa", "Indica"],
+    variantLabel: "Options",
     available: true,
     images: [
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/2025-08-16-15.41.09_303a935e-3bf7-46c5-ba43-0a8ac9ec2e3f.jpg?v=1784768210"
     ],
-    description: "Dispensary-sourced ACE Ultra Premium 2G cartridge. Full-spectrum live resin with lab-verified batch and tamper-evident seal."
+    description: "Dispensary-sourced ACE Ultra Premium 2G cartridge. Full-spectrum live resin with lab-verified batch and tamper-evident seal.",
+    highlights: [
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Each Ace Ultra Premium cartridge is lab tested, batch verified and tamper-sealed to ensure authenticity, safety, and potency.",
+      "Ultra-refined premium distillate"
+    ],
+    related: ["20pc-ace-ultra-premium", "10pc-ace-ultra-premium", "muha-meds-limited-edition", "muha-meds-x-cookies-limited-edition"]
   },
 
   "muha-meds-sumer-edition": {
