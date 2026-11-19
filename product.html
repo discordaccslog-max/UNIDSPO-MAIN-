@@ -14,8 +14,9 @@
 
   .pd { display: grid; grid-template-columns: 1fr; gap: 32px; }
   @media(min-width: 750px) {
-    .pd { grid-template-columns: 60% 40%; gap: 0; }
+    .pd { grid-template-columns: 53% 47%; gap: 0; }
     .pd-info { padding-left: 40px; }
+    .pd-hero img { max-height: 820px; }
   }
 
   /* Gallery — flat, image takes its natural portrait height */
@@ -87,7 +88,7 @@
   /* Info */
   .pd-info h1 {
     font-family: "Oswald", sans-serif; font-weight: 500;
-    font-size: clamp(28px, 2.8vw, 44px); line-height: 1.12;
+    font-size: clamp(32px, 3.9vw, 56px); line-height: 1.1;
     letter-spacing: .84px; margin: 0 0 12px; color: #fff;
   }
   .pd-kicker {
@@ -365,17 +366,16 @@
        --ease-out-slow: cubic-bezier(0, 0, .3, 1)   ← slide-in easing
      Used on: .scroll-trigger.animate--slide-in and .animate--fade-in */
 
-  @media (prefers-reduced-motion: no-preference) {
-    .pd-reveal {
-      opacity: 0;
-      transform: translateY(1.5rem);
-    }
-    .pd-reveal.is-visible {
-      animation: pd-slide-in .6s cubic-bezier(0, 0, .3, 1) forwards;
-    }
+  /* Subtle rise-in. Opacity stays at 1 the whole time so no element can
+     ever read as blank or black; only a small 10px vertical shift. */
+  .pd-reveal {
+    opacity: 1;
+    animation: pd-rise .55s cubic-bezier(0, 0, .3, 1) both;
+    animation-delay: calc(var(--pd-order, 0) * 70ms);
   }
-  @keyframes pd-slide-in {
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes pd-rise {
+    from { transform: translateY(10px); }
+    to   { transform: translateY(0); }
   }
 
   /* Media opacity transition matches live site's .media > img */
