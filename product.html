@@ -25,9 +25,7 @@
   .pd-hero img {
     width: 100%; height: auto;
     object-fit: contain; display: block;
-    transition: transform .4s ease;
   }
-  .pd-hero:hover img { transform: scale(1.03); }
   .pd-hero__badge {
     position: absolute; top: 14px; left: 14px;
     padding: 6px 12px; background: rgba(0,0,0,.55);
@@ -260,20 +258,14 @@
   .pd-related__media img {
     position: absolute; inset: 0;
     width: 100%; height: 100%; object-fit: cover;
-    transition: transform .5s cubic-bezier(.25, .46, .45, .94),
-                opacity .45s cubic-bezier(.25, .46, .45, .94);
+    transition: opacity .35s ease;
   }
   .pd-related__img--hover { opacity: 0; }
-  .pd-related__card:hover .pd-related__media img { transform: scale(1.05); }
   /* Only cross-fade the primary image when a secondary image exists
      (media container carries the --has-hover modifier). Otherwise the
-     primary stays visible on hover. */
+     primary stays visible on hover and nothing goes black. */
   .pd-related__card:hover .pd-related__media--has-hover .pd-related__img--primary { opacity: 0; }
-  .pd-related__card:hover .pd-related__img--hover { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) {
-    .pd-related__media img { transition: opacity .2s linear; }
-    .pd-related__card:hover .pd-related__media img { transform: none; }
-  }
+  .pd-related__card:hover .pd-related__media--has-hover .pd-related__img--hover { opacity: 1; }
   .pd-related__title {
     margin: 2px 0 0;
     font-family: "Oswald", sans-serif; font-weight: 500;
@@ -316,32 +308,15 @@
     border-radius: 10px; text-decoration: none; font-weight: 800;
   }
 
-  /* ============ Animations — subtle, not heavy ============ */
-  /* Scroll-reveal: gentle 350ms fade, tiny 6px rise, 40ms stagger */
-  @media (prefers-reduced-motion: no-preference) {
-    .pd-reveal {
-      opacity: 0;
-      transform: translateY(6px);
-    }
-    .pd-reveal.is-visible {
-      animation: pd-fade-in 350ms ease-out forwards;
-      animation-delay: calc(var(--pd-order, 0) * 40ms);
-    }
+  /* ============ Animations — minimal, matches live site ============ */
+  /* All scroll-reveal/fade animations removed. Keep only:
+     - related card: subtle lift on hover
+     - button/pill hover states (defined on each component) */
+  .pd-reveal, .pd-reveal.is-visible {
+    opacity: 1; transform: none; animation: none;
   }
-  @keyframes pd-fade-in {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Variant pill press feedback — subtle */
-  .pd-variant:active { transform: scale(.98); }
-
-  /* Quantity stepper button press — subtle */
-  .pd-qty__btn { transition: background .15s ease; }
-  .pd-qty__btn:active { opacity: .7; }
-
-  /* Related card lift on hover — subtle */
   .pd-related__card {
-    transition: transform .3s ease-out;
+    transition: transform .25s ease-out;
   }
   .pd-related__card:hover { transform: translateY(-2px); }
 
