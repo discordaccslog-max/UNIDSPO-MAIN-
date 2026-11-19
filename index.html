@@ -316,6 +316,33 @@
   .hm-foot{border-top-color:rgba(255,255,255,.07)}
   .hm-foot__age b{border-color:rgba(255,255,255,.2);color:#E6E6E8}
 
+
+  /* ===== What is UNI Dispo? / How does it work? ===== */
+  .hm-what{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:72px;align-items:start}
+  @media(max-width:990px){.hm-what{grid-template-columns:1fr;gap:40px}}
+  .hm-what__intro .hm-lead{max-width:520px}
+  .hm-what__intro p.hm-what__body{margin:18px 0 0;max-width:520px;color:#C9CACE;font-size:16px;font-weight:500;line-height:1.75}
+  .hm-what__points{margin:28px 0 0;padding:22px 0 0;list-style:none;border-top:1px solid rgba(255,255,255,.08);display:grid;gap:14px;max-width:520px}
+  .hm-what__points li{display:flex;align-items:flex-start;gap:12px;color:#E6E6E8;font-size:15px;font-weight:600;line-height:1.5}
+  .hm-what__points svg{width:20px;height:20px;flex:0 0 20px;margin-top:1px;color:#D4AF37}
+  .hm-what__sub{margin:0 0 6px;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(24px,2.2vw,30px);line-height:1.15;letter-spacing:.2px;color:#fff}
+  .hm-what__subnote{margin:0 0 26px;color:#8E9096;font-size:14.5px;font-weight:600}
+  .hm-flow{position:relative;margin:0;padding:0;list-style:none}
+  .hm-flow__step{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:20px;padding:0 0 30px}
+  .hm-flow__step:last-child{padding-bottom:0}
+  .hm-flow__step:not(:last-child)::before{content:"";position:absolute;left:21.5px;top:46px;bottom:4px;width:1px;background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06))}
+  .hm-flow__node{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);background:#0F0F10;color:#fff;font-family:"Oswald",sans-serif;font-weight:700;font-size:17px;letter-spacing:0;line-height:1}
+  .hm-flow__step--done .hm-flow__node{background:linear-gradient(180deg,#E8C766,#BA9930);border-color:transparent;color:#111}
+  .hm-flow__body{padding-top:7px}
+  .hm-flow__body h3{margin:0 0 4px;display:flex;align-items:center;gap:10px;font-family:"Oswald",sans-serif;font-weight:700;font-size:20px;line-height:1.3;letter-spacing:.3px;color:#fff}
+  .hm-flow__body h3 svg{width:20px;height:20px;color:#8E9096;stroke-width:1.6}
+  .hm-flow__body p{margin:0;color:#A5A7AC;font-size:15px;font-weight:600;line-height:1.7}
+  .hm-flow__loop{display:flex;gap:12px;align-items:flex-start;margin:16px 0 0;padding:4px 0 4px 16px;border-left:1px dashed rgba(212,175,55,.6)}
+  .hm-flow__loop svg{width:20px;height:20px;flex:0 0 20px;margin-top:2px;color:#D4AF37}
+  .hm-flow__loop p{color:#D5D6D9;font-size:14.5px}
+  .hm-flow__loop b{color:#FFD976;font-weight:700}
+  .hm-flow__eta{color:#FFD976;font-weight:700;white-space:nowrap}
+  @media(max-width:560px){.hm-flow__step{grid-template-columns:38px minmax(0,1fr);gap:14px}.hm-flow__node{width:38px;height:38px;font-size:15px}.hm-flow__step:not(:last-child)::before{left:18.5px;top:40px}.hm-flow__body{padding-top:5px}.hm-flow__body h3{font-size:18px}}
   /* Bulk: per-unit price as plain gold text */
   .uni-pg .uni-pg__unit{padding:0;background:none;border:0;border-radius:0;color:#FFD976;font-size:13.5px;letter-spacing:.2px}
 </style>
@@ -755,6 +782,65 @@ var UNI_CARD_RATINGS = {
     </li>
   </ul>
 </div>
+</div>
+
+<!-- ============ WHAT IS UNI DISPO? / HOW DOES IT WORK? ============ -->
+<div class="uni-section hm-gap" id="how">
+<section class="hm-sec" aria-labelledby="hm-what-title">
+  <div class="hm-page">
+    <div class="hm-what">
+      <div class="hm-what__intro hm-rv">
+        <span class="hm-kicker">What is UNI Dispo?</span>
+        <h2 class="hm-h2" id="hm-what-title">Your trusted middleman for <em>authentic products.</em></h2>
+        <p class="hm-what__body">UNI Dispo is a middleman service. When you order, we buy your product directly from a licensed, authorized dispensary, then authenticate and verify it by hand before it ships to you. You get the real thing, without the guesswork or the trip.</p>
+        <ul class="hm-what__points">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Every product comes from a licensed, authorized dispensary</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Checked by hand before it ships: seals, batch and lot numbers</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Anything that fails is re-ordered, never sent to you</li>
+        </ul>
+      </div>
+      <div class="hm-what__how hm-rv" style="--d:1">
+        <span class="hm-kicker">How does it work?</span>
+        <p class="hm-what__sub">From your order to your door</p>
+        <p class="hm-what__subnote">Four steps, and nothing ships until it passes.</p>
+        <ol class="hm-flow">
+          <li class="hm-flow__step">
+            <span class="hm-flow__node" aria-hidden="true">1</span>
+            <div class="hm-flow__body">
+              <h3>You place your order</h3>
+              <p>Pick your products and check out. Your order goes straight to the UNI team.</p>
+            </div>
+          </li>
+          <li class="hm-flow__step">
+            <span class="hm-flow__node" aria-hidden="true">2</span>
+            <div class="hm-flow__body">
+              <h3>UNI buys it from a licensed dispensary</h3>
+              <p>We purchase your product directly from a licensed, authorized dispensary. Never from the grey market.</p>
+            </div>
+          </li>
+          <li class="hm-flow__step">
+            <span class="hm-flow__node" aria-hidden="true">3</span>
+            <div class="hm-flow__body">
+              <h3>We authenticate &amp; verify it</h3>
+              <p>Every item is inspected by hand: tamper-evident seals, batch and lot numbers, and supplier records.</p>
+              <div class="hm-flow__loop">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>
+                <p><b>Didn’t pass?</b> We re-order it from the dispensary and run every check again. It only ships once it’s fully authenticated.</p>
+              </div>
+            </div>
+          </li>
+          <li class="hm-flow__step hm-flow__step--done">
+            <span class="hm-flow__node" aria-hidden="true">4</span>
+            <div class="hm-flow__body">
+              <h3>Shipped to your door</h3>
+              <p>Packed in plain, discreet packaging and sent with tracking. Order today and it arrives <span class="hm-flow__eta" data-hm-eta>in 3–5 business days</span>.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
 </div>
 
 <!-- ============ PRODUCTS (built from UNI_PRODUCTS at the top of this file) ============ -->
@@ -1363,43 +1449,6 @@ var UNI_CARD_RATINGS = {
 </script>
 </div>
 
-<!-- ============ HOW IT WORKS ============ -->
-<div class="uni-section hm-gap" id="how">
-<section class="hm-sec" aria-labelledby="hm-how-title">
-  <div class="hm-page">
-    <div class="hm-head hm-rv">
-      <div class="hm-head__copy">
-        <span class="hm-kicker">How it works</span>
-        <h2 class="hm-h2" id="hm-how-title">From the dispensary <em>to your door.</em></h2>
-        <p class="hm-lead">Four steps, zero guesswork. Every order is checked by hand before it leaves California.</p>
-      </div>
-    </div>
-    <ol class="hm-steps">
-      <li class="hm-step hm-rv" style="--d:0">
-        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><span class="hm-step__num" aria-hidden="true">01</span></div>
-        <h3>Browse</h3>
-        <p>Choose verified products curated from trusted dispensaries.</p>
-      </li>
-      <li class="hm-step hm-rv" style="--d:1">
-        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="hm-step__num" aria-hidden="true">02</span></div>
-        <h3>Verify</h3>
-        <p>We confirm authenticity, seal integrity, and batch details on every item.</p>
-      </li>
-      <li class="hm-step hm-rv" style="--d:2">
-        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><span class="hm-step__num" aria-hidden="true">03</span></div>
-        <h3>Deliver</h3>
-        <p>Your order ships quickly in discreet, protective packaging with tracking.</p>
-      </li>
-      <li class="hm-step hm-rv" style="--d:3">
-        <div class="hm-step__top"><span class="hm-step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M8.5 12.5l2.5 2.5 4.5-4.5"/></svg></span><span class="hm-step__num" aria-hidden="true">04</span></div>
-        <h3>Enjoy</h3>
-        <p>Open-box confidence: what you ordered is exactly what arrives — verified.</p>
-      </li>
-    </ol>
-  </div>
-</section>
-</div>
-
 <!-- ============ REVIEWS ============ -->
 <div class="uni-section hm-gap" id="reviews">
 <section class="hm-sec" aria-labelledby="hm-rev-title">
@@ -1500,7 +1549,7 @@ var UNI_CARD_RATINGS = {
         </details>
         <details>
           <summary>How do you verify authenticity?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
-          <div class="hm-acc__body"><p>We inspect tamper-evident seals, confirm batch/lot info, and cross-check with supplier data. If an item doesn’t pass, it doesn’t ship.</p></div>
+          <div class="hm-acc__body"><p>We inspect tamper-evident seals, confirm batch/lot info, and cross-check with supplier data. If an item doesn’t pass, it’s re-ordered from the dispensary and checked again. Nothing ships until it’s fully authenticated.</p></div>
         </details>
         <details>
           <summary>How fast will my order arrive?<span class="hm-acc__plus" aria-hidden="true"></span></summary>
