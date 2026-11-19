@@ -405,7 +405,9 @@ var UNI_GRIDS = {
   .nx-step{display:flex;gap:16px;align-items:flex-start}
   .nx-step .num{min-width:38px;height:38px;border-radius:999px;background:rgba(212,175,55,.14);border:1px solid var(--stroke);display:grid;place-items:center;font-weight:800;color:#FFD976;font-size:15px}
   .nx-step h3{margin-top:0}
-  .nx-strip{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;background:linear-gradient(180deg,#171719,#141416);border:1px solid var(--stroke);border-radius:14px;padding:14px;margin:18px 0}
+  .nx-afq{display:grid;gap:20px;grid-template-columns:1fr 1.4fr;align-items:start}
+  @media(max-width:860px){.nx-afq{grid-template-columns:1fr}}
+  .nx-strip{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;background:linear-gradient(180deg,#171719,#141416);border:1px solid var(--stroke);border-radius:14px;padding:18px;margin:0}
   .nx-pill{border:1px solid var(--stroke);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:6px 10px;font-size:12px}
   .nx-faq{border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
   .nx-faq details{border-top:1px solid rgba(255,255,255,.06)}
@@ -483,34 +485,37 @@ var UNI_GRIDS = {
     </div>
   </div>
 
-  <!-- VERIFICATION STRIP -->
-  <div class="nx-strip" aria-label="Assurances">
-    <span class="nx-pill">Licensed sourcing</span>
-    <span class="nx-pill">Tamper-evident seals</span>
-    <span class="nx-pill">Batch / lot checks</span>
-    <span class="nx-pill">Discreet packaging</span>
-  </div>
-
-  <!-- FAQs -->
-  <div style="margin-top:28px">
-    <span class="nx-kicker">FAQs</span>
-    <div class="nx-faq" style="margin-top:14px">
-      <details>
-        <summary>Where do you source products?</summary>
-        <div class="ans">Exclusively from licensed dispensaries and authorized suppliers. We do not purchase from grey-market sources.</div>
-      </details>
-      <details>
-        <summary>How do you verify authenticity?</summary>
-        <div class="ans">We inspect tamper-evident seals, confirm batch/lot info, and cross-check with supplier data. If an item doesn’t pass, it doesn’t ship.</div>
-      </details>
-      <details>
-        <summary>What does delivery look like?</summary>
-        <div class="ans">Your order ships quickly in plain packaging with full tracking. Delivery timelines are shown at checkout based on your address.</div>
-      </details>
+  <!-- ASSURANCES + FAQs (side-by-side on desktop, stacked on mobile) -->
+  <div class="nx-afq" style="margin-top:28px">
+    <!-- VERIFICATION STRIP (left) -->
+    <div class="nx-strip" aria-label="Assurances">
+      <span class="nx-pill">Licensed sourcing</span>
+      <span class="nx-pill">Tamper-evident seals</span>
+      <span class="nx-pill">Batch / lot checks</span>
+      <span class="nx-pill">Discreet packaging</span>
     </div>
-    <p class="nx-note" style="margin-top:14px">
-      <strong>Important:</strong> By ordering you confirm you are 21+ and agree to abide by all local regulations. Availability may vary by region.
-    </p>
+
+    <!-- FAQs (right) -->
+    <div>
+      <span class="nx-kicker">FAQs</span>
+      <div class="nx-faq" style="margin-top:14px">
+        <details>
+          <summary>Where do you source products?</summary>
+          <div class="ans">Exclusively from licensed dispensaries and authorized suppliers. We do not purchase from grey-market sources.</div>
+        </details>
+        <details>
+          <summary>How do you verify authenticity?</summary>
+          <div class="ans">We inspect tamper-evident seals, confirm batch/lot info, and cross-check with supplier data. If an item doesn’t pass, it doesn’t ship.</div>
+        </details>
+        <details>
+          <summary>What does delivery look like?</summary>
+          <div class="ans">Your order ships quickly in plain packaging with full tracking. Delivery timelines are shown at checkout based on your address.</div>
+        </details>
+      </div>
+      <p class="nx-note" style="margin-top:14px">
+        <strong>Important:</strong> By ordering you confirm you are 21+ and agree to abide by all local regulations. Availability may vary by region.
+      </p>
+    </div>
   </div>
 </section>
 </div>
