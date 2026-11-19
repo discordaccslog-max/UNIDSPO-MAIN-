@@ -36,6 +36,34 @@
     color: #fff; font-size: 13px; font-weight: 500;
     letter-spacing: .02em; line-height: 1;
   }
+  .pd-hero__zoom {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    width: 40px; height: 40px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.55); color: #fff;
+    border: 0; border-radius: 999px; cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background .15s ease;
+  }
+  .pd-hero__zoom:hover { background: rgba(0,0,0,.8); }
+  .pd-hero__zoom svg { width: 18px; height: 18px; }
+  .pd-lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,.92);
+    display: grid; place-items: center;
+    padding: 40px;
+  }
+  .pd-lightbox img {
+    max-width: 92vw; max-height: 92vh;
+    object-fit: contain; display: block;
+    background: transparent;
+  }
+  .pd-lightbox__close {
+    position: absolute; top: 18px; right: 22px;
+    background: transparent; border: 0; color: #fff;
+    font-size: 36px; line-height: 1; cursor: pointer;
+    padding: 4px 10px;
+  }
   .pd-thumbs { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
   .pd-thumb {
     width: 118px; height: 118px; padding: 0; background: #161718;
@@ -643,6 +671,9 @@
       '<div class="pd-gallery pd-reveal" style="--pd-order:0">' +
         '<div class="pd-hero">' +
           badge +
+          '<button type="button" class="pd-hero__zoom" id="pd-zoom" aria-label="Zoom image">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+          '</button>' +
           '<img id="pd-heroimg" src="' + esc(p.images[0]) + '" alt="' + esc(p.title) + '">' +
         '</div>' +
         thumbsBlock +
@@ -720,6 +751,24 @@
       heroImg.src = t.getAttribute('data-src');
     });
   });
+
+  /* Zoom lightbox */
+  var zoomBtn = document.getElementById('pd-zoom');
+  if (zoomBtn) {
+    zoomBtn.addEventListener('click', function () {
+      var ov = document.createElement('div');
+      ov.className = 'pd-lightbox';
+      ov.innerHTML = '<button class="pd-lightbox__close" aria-label="Close">&times;</button><img src="' + heroImg.src + '" alt="">';
+      document.body.appendChild(ov);
+      function close() { ov.remove(); document.removeEventListener('keydown', esc); }
+      function esc(e) { if (e.key === 'Escape') close(); }
+      ov.addEventListener('click', function (e) { if (e.target === ov || e.target.classList.contains('pd-lightbox__close')) close(); });
+      document.addEventListener('keydown', esc);
+    });
+  }
+  // Also allow clicking the hero image itself to zoom
+  heroImg.style.cursor = 'zoom-in';
+  heroImg.addEventListener('click', function () { zoomBtn && zoomBtn.click(); });
 
   /* Quantity */
   var qtyInput = document.getElementById('pd-qty');
