@@ -65,8 +65,8 @@
   /* Info */
   .pd-info h1 {
     font-family: "Oswald", sans-serif; font-weight: 500;
-    font-size: clamp(28px, 3vw, 40px); line-height: 1.15;
-    letter-spacing: .84px; margin: 0 0 10px; color: #fff;
+    font-size: clamp(32px, 3.6vw, 52px); line-height: 1.12;
+    letter-spacing: .84px; margin: 0 0 14px; color: #fff;
   }
   .pd-kicker {
     display: inline-block; padding: 5px 10px;
@@ -79,7 +79,7 @@
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     margin: 10px 0 14px;
     font-family: "Oswald", sans-serif;
-    font-size: 30px; color: #FFD976; letter-spacing: .5px;
+    font-size: 30px; color: #ffffff; letter-spacing: .5px;
   }
   .pd-price .compare {
     font-size: 18px; color: #777; text-decoration: line-through;
@@ -121,8 +121,8 @@
   .pd-desc { color: #B9BBC0; line-height: 1.75; font-size: 15px; margin: 0 0 24px; }
 
   .pd-sec-label {
-    display: block; font-size: 12px; letter-spacing: .14em;
-    text-transform: uppercase; color: #A5A7AC; margin: 18px 0 10px;
+    display: block; font-size: 15px; letter-spacing: .1px;
+    color: #B9BBC0; margin: 18px 0 10px;
   }
 
   /* Variants (unidispo.com-style pills: dark outline → white when selected) */
@@ -247,12 +247,12 @@
     text-decoration: none; color: inherit;
   }
   .pd-related__media {
-    position: relative; width: 100%; aspect-ratio: 1 / 1;
-    background: #161718; border-radius: 10px; overflow: hidden;
+    position: relative; width: 100%; aspect-ratio: 4 / 5;
+    background: #161718; border-radius: 4px; overflow: hidden;
   }
   .pd-related__media img {
     position: absolute; inset: 0;
-    width: 100%; height: 100%; object-fit: contain;
+    width: 100%; height: 100%; object-fit: cover;
     transition: transform .5s cubic-bezier(.25, .46, .45, .94),
                 opacity .45s cubic-bezier(.25, .46, .45, .94);
   }
