@@ -613,16 +613,22 @@ var UNI_CARD_RATINGS = {
   /* Trust bar (sits right under the hero) */
   .hm-trust{max-width:1600px;margin:0 auto;padding:0 15px}
   @media(min-width:750px){.hm-trust{padding:0 50px}}
-  .hm-trust__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:0;list-style:none;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:#141416}
-  .hm-trust__list li{display:flex;align-items:center;gap:14px;padding:18px 22px;font-family:"Figtree",sans-serif;line-height:1.35;letter-spacing:.3px}
-  .hm-trust__list li + li{border-left:1px solid rgba(255,255,255,.07)}
-  .hm-trust__icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;display:grid;place-items:center;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.32);color:#FFD976}
-  .hm-trust__icon svg{width:21px;height:21px}
-  .hm-trust__list b{display:block;color:#fff;font-size:15px;font-weight:800}
-  .hm-trust__list span{display:block;color:#A5A7AC;font-size:13.5px;font-weight:600;margin-top:2px}
-  .hm-trust__list b .hm-live{display:inline;margin:0;font-size:inherit;font-weight:800;color:#FFD976}
-  @media(max-width:1100px){.hm-trust__list{grid-template-columns:repeat(2,minmax(0,1fr))}.hm-trust__list li:nth-child(3){border-left:0}.hm-trust__list li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.07)}}
-  @media(max-width:560px){.hm-trust__list{grid-template-columns:1fr}.hm-trust__list li{padding:14px 16px}.hm-trust__list li + li{border-left:0;border-top:1px solid rgba(255,255,255,.07)}}
+  /* Slim, open strip: hairline rules, plain line icons, no boxes */
+  .hm-trust__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:0;list-style:none;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+  .hm-trust__list li{position:relative;display:flex;align-items:center;justify-content:center;gap:14px;padding:26px 20px;font-family:"Figtree",sans-serif;line-height:1.35;letter-spacing:.2px}
+  .hm-trust__list li + li::before{content:"";position:absolute;left:0;top:50%;height:36px;width:1px;transform:translateY(-50%);background:rgba(255,255,255,.08)}
+  .hm-trust__icon{flex:0 0 26px;width:26px;height:26px;display:grid;place-items:center;color:#E6E6E8}
+  .hm-trust__icon svg{width:26px;height:26px}
+  .hm-trust__list b{display:block;color:#fff;font-size:15px;font-weight:700;white-space:nowrap}
+  .hm-trust__list span{display:block;color:#8E9096;font-size:13.5px;font-weight:500;margin-top:3px}
+  .hm-trust__list b .hm-live{display:inline;margin:0;font-size:inherit;font-weight:700;color:#FFD976}
+  .hm-trust__dot{position:relative;display:inline-block;vertical-align:1px;width:8px;height:8px;margin-right:8px;border-radius:50%;background:#3DDC84}
+  .hm-trust__dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(61,220,132,.45);animation:hm-pulse 1.8s ease-out infinite}
+  @keyframes hm-pulse{from{transform:scale(.6);opacity:1}to{transform:scale(1.6);opacity:0}}
+  @media (prefers-reduced-motion: reduce){.hm-trust__dot::after{animation:none;opacity:0}}
+  @media(max-width:1180px){.hm-trust__list li{justify-content:flex-start;padding:22px 16px}}
+  @media(max-width:990px){.hm-trust__list{grid-template-columns:repeat(2,minmax(0,1fr))}.hm-trust__list li:nth-child(3)::before{display:none}.hm-trust__list li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.06)}}
+  @media(max-width:560px){.hm-trust__list li{gap:10px;padding:16px 10px;align-items:flex-start}.hm-trust__list li:nth-child(odd){padding-left:0}.hm-trust__icon,.hm-trust__icon svg{width:22px;height:22px;flex-basis:22px}.hm-trust__list b{font-size:14px;white-space:normal}.hm-trust__list span{font-size:12.5px}.hm-trust__list li + li::before{height:28px}}
 </style>
 
 <section class="nx-wrap" aria-labelledby="nx-title">
@@ -670,19 +676,19 @@ var UNI_CARD_RATINGS = {
 <div class="hm-trust">
   <ul class="hm-trust__list" aria-label="Why shop with UNI">
     <li>
-      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9 2h6"/></svg></span>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span>
       <div><b data-hm-cutoff>Fast dispatch</b><span>Standard USPS · 2–4 business days, tracked</span></div>
     </li>
     <li>
-      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
       <div><b>100% Authentic</b><span>Sealed, batch-checked and verified</span></div>
     </li>
     <li>
-      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
       <div><b>Discreet Packaging</b><span>Plain box, no logos or product names</span></div>
     </li>
     <li>
-      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+      <span class="hm-trust__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
       <div><b>4.7/5 on Trustpilot</b><span>35,000+ customers nationwide</span></div>
     </li>
   </ul>
@@ -2249,7 +2255,7 @@ var UNI_CARD_RATINGS = {
       var e = D.estimate(now), r = D.format(e.earliest) + ' – ' + D.format(e.latest);
       if (D.isBusinessDay(today) && mins > 0) {
         var h = Math.floor(mins / 60), m = mins % 60;
-        cut.innerHTML = 'Order within <span class="hm-live">' + (h ? h + 'h ' : '') + m + 'm</span>';
+        cut.innerHTML = '<i class="hm-trust__dot" aria-hidden="true"></i>Order within <span class="hm-live">' + (h ? h + 'h ' : '') + m + 'm</span>';
         cut.nextElementSibling.textContent = 'Arrives ' + r + ' · USPS tracked';
       } else {
         cut.innerHTML = 'Arrives <span class="hm-live">' + r + '</span>';
