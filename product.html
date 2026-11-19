@@ -569,15 +569,14 @@
 </div>
 
 <!-- ============ HEADER ============ -->
-<div class="uni-masthead" data-masthead>
 <header class="uni-header">
   <div class="uni-header__bar">
     <div class="uni-header__side uni-header__side--left">
-      <a href="catalog.html" aria-label="Search products">
+      <button type="button" aria-label="Search">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      </a>
+      </button>
     </div>
-    <a href="index.html" class="uni-logo" aria-label="United Dispo home"><img class="uni-logo__mark" src="images/united-dispo-logo.webp" alt="" width="42" height="42"><span class="uni-logo__word">UNITED <b>DISPO</b></span></a>
+    <a href="index.html" class="uni-logo">UNITED DISPO</a>
     <div class="uni-header__side uni-header__side--right">
       <a href="account.html" aria-label="Account">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -592,7 +591,6 @@
 <nav class="uni-nav">
   <ul><li><a href="index.html">Home</a></li><li class="current_page_item"><a href="catalog.html">Catalog</a></li><li><a href="contact.html">Contact</a></li></ul>
 </nav>
-</div>
 
 <script>
 (function () {
@@ -618,7 +616,7 @@
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
 <script src="js/products.js?v=20261119c"></script>
-<script src="js/cart.js?v=20261119e"></script>
+<script src="js/cart.js?v=20261119d"></script>
 <script>
 (function () {
   var slug = new URLSearchParams(window.location.search).get('id') || '';
@@ -970,6 +968,5 @@
   }
 })();
 </script>
-<script src="js/site.js?v=20261119a" defer></script>
 </body>
 </html>
