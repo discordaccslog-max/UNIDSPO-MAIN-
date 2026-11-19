@@ -131,7 +131,7 @@ var UNI_PRODUCTS = {
     {"title": "BIG CHIEF CARTRIDGE (2G)", "url": "product.html?id=big-chief", "price": 36.99, "compareAt": null, "priceMax": 36.99, "variants": 1, "available": false, "image": {"src": "images/big-chief.webp", "width": 1024, "height": 1536}, "buyUrl": ""},
     {"title": "WHOLEMELTS V7", "url": "product.html?id=wholemelts-v7-copy", "price": 32.99, "compareAt": null, "priceMax": 32.99, "variants": 1, "available": false, "image": {"src": "images/wholemelts.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
     {"title": "MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=muha-meds-x-cookies-limited-edition", "price": 38.99, "compareAt": null, "priceMax": 38.99, "variants": 3, "available": true, "image": {"src": "images/muha-cookies.webp", "width": 1200, "height": 1501}, "buyUrl": ""},
-    {"title": "MUHA MEDS 3RD GEN (NEW)", "url": "product.html?id=muha-meds-limited-edition", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 3, "available": true, "image": {"src": "images/muha-3rd-gen-box.webp", "width": 571, "height": 724}, "image2": {"src": "images/muha-3rd-gen-logo.webp", "width": 1024, "height": 1024}, "buyUrl": ""}
+    {"title": "MUHA MEDS 3RD GEN (NEW)", "url": "product.html?id=muha-meds-limited-edition", "price": 35.99, "compareAt": null, "priceMax": 35.99, "variants": 3, "available": true, "image": {"src": "images/muha-3rd-gen-logo.webp", "width": 1024, "height": 1024}, "image2": {"src": "images/muha-3rd-gen-box.webp", "width": 571, "height": 724}, "buyUrl": ""}
   ],
   bulk: [
     {"title": "20PC ACE ULTRA PREMIUM", "url": "product.html?id=20pc-ace-ultra-premium", "price": 205.99, "compareAt": null, "priceMax": 205.99, "variants": 3, "available": true, "image": {"src": "images/20pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
@@ -2132,6 +2132,63 @@ var UNI_GRIDS = {
       start();
     }
   })();
+</script>
+<script src="js/cart.js"></script>
+<script>
+/* Wire the homepage product-grid "Add to cart" buttons to the shared
+   cart. For multi-variant products the button says "Choose options"
+   and links to the detail page, so nothing to intercept there. Only
+   the single-variant "Add to cart" entries need a handler. */
+(function () {
+  function toastOnce(msg) {
+    var t = document.getElementById('home-cart-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'home-cart-toast';
+      t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translate(-50%,24px);background:#141416;border:1px solid rgba(212,175,55,.5);border-left:3px solid #D4AF37;border-radius:10px;padding:14px 20px;color:#fff;font:600 14px/1.2 "Avenir Next","Helvetica Neue",Arial,sans-serif;opacity:0;pointer-events:none;z-index:9999;transition:opacity .25s ease,transform .35s cubic-bezier(.22,1,.36,1);box-shadow:0 18px 40px rgba(0,0,0,.45);';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    requestAnimationFrame(function () { t.style.opacity = '1'; t.style.transform = 'translate(-50%,0)'; });
+    clearTimeout(toastOnce._t);
+    toastOnce._t = setTimeout(function () { t.style.opacity = '0'; t.style.transform = 'translate(-50%,24px)'; }, 1800);
+  }
+  /* Look up product data by its product.html?id=<slug> link to pull
+     price/title/image from UNI_PRODUCTS. */
+  function byUrl(url) {
+    var m = String(url || '').match(/[?&]id=([^&]+)/);
+    if (!m) return null;
+    var slug = decodeURIComponent(m[1]);
+    var all = (window.UNI_PRODUCTS && (window.UNI_PRODUCTS.singles || []).concat(window.UNI_PRODUCTS.bulk || []));
+    if (!all) return null;
+    for (var i = 0; i < all.length; i++) {
+      var u = String(all[i].url || '');
+      if (u.indexOf('id=' + slug) !== -1) return all[i];
+    }
+    return null;
+  }
+  document.querySelectorAll('.uni-pg__btn').forEach(function (btn) {
+    if (btn.classList.contains('uni-pg__btn--disabled')) return;
+    var label = (btn.querySelector('.uni-pg__btn-text') || {}).textContent || '';
+    if (label.trim() !== (window.UNI_SETTINGS && UNI_SETTINGS.addToCartLabel) && label.trim() !== 'Add to cart') return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var p = byUrl(btn.getAttribute('href'));
+      if (!p) return;
+      var slugMatch = String(p.url || '').match(/[?&]id=([^&]+)/);
+      var slug = slugMatch ? decodeURIComponent(slugMatch[1]) : '';
+      window.UNI_CART.add({
+        slug: slug,
+        title: p.title,
+        price: p.price,
+        variant: '',
+        qty: 1,
+        image: (p.image && p.image.src) || ''
+      });
+      toastOnce('Added ' + p.title + ' to cart');
+    });
+  });
+})();
 </script>
 </body>
 </html>

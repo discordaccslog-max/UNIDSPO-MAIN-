@@ -1007,6 +1007,8 @@
   .cat-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 </style>
 <div id="cat-toast" class="cat-toast" role="status" aria-live="polite"></div>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
 <script>
 (function () {
   var toast = document.getElementById('cat-toast');
@@ -1017,15 +1019,26 @@
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () {
       toast.classList.remove('is-visible');
-    }, 2500);
+    }, 2200);
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-uni-add]'), function (btn) {
     btn.addEventListener('click', function () {
       var title = btn.getAttribute('data-title') || 'Item';
       var sku = btn.getAttribute('data-sku') || '';
+      var price = Number(btn.getAttribute('data-price')) || 0;
       var variantSel = btn.parentElement.querySelector('[data-uni-variant]');
       var variant = variantSel ? variantSel.value : '';
+      var slug = (window.UNI_SKU_TO_SLUG && window.UNI_SKU_TO_SLUG[sku]) || sku.toLowerCase();
+      var p = window.UNI_CATALOG && window.UNI_CATALOG[slug];
+      window.UNI_CART.add({
+        slug: slug,
+        title: title,
+        price: price || (p && p.price) || 0,
+        variant: variant,
+        qty: 1,
+        image: (p && p.images && p.images[0]) || ''
+      });
       show('Added ' + title + (variant ? ' (' + variant + ')' : '') + ' to cart');
       var original = btn.textContent;
       btn.textContent = '✓ Added';
@@ -1035,7 +1048,7 @@
         btn.textContent = original;
         btn.style.background = '';
         btn.style.color = '';
-      }, 1800);
+      }, 1500);
     });
   });
 })();
