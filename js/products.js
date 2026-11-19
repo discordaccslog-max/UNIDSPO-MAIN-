@@ -168,15 +168,22 @@ window.UNI_CATALOG = {
     group: "singles",
     price: 35.99,
     compareAt: null,
-    variants: ["Mango Kush", "Grape God", "OG Haze"],
+    variants: ["Hybrid", "Sativa", "Indica"],
+    variantLabel: "Options",
     available: true,
+    stockStatus: "low",
     images: [
       "images/muha-3rd-gen-logo.webp",
-      "images/muha-3rd-gen-box.webp",
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/IMG_1942.jpg?v=1784768192",
-      "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/fa9f46e0-ab92-4d26-a23f-c7de896c9bb0.png?v=1784768192"
+      "images/muha-3rd-gen-box.webp"
     ],
-    description: "Muha Meds 3rd Generation release. Updated hardware, improved airflow, same dispensary-verified sourcing."
+    description: "Muha Meds 3rd Generation release. Updated hardware, improved airflow, same dispensary-verified sourcing.",
+    highlights: [
+      "Strain-specific terpene profiles",
+      "Tamper-proof and batch-verified",
+      "Each cartridge is lab tested, batch verified and tamper-sealed before shipping to ensure authenticity, safety, and potency.",
+      "Ultra-refined premium distillate"
+    ],
+    related: ["ace-ultra-premium-2g", "muha-meds-x-cookies-limited-edition", "muha-meds-sumer-edition", "raw-garden-live-resin-1g"]
   },
 
   /* ---------- BULK ---------- */

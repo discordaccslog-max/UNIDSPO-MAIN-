@@ -42,14 +42,25 @@
     color: #fff; font-size: 11px; letter-spacing: .12em;
     text-transform: uppercase;
   }
-  .pd-thumbs { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pd-thumbs { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
   .pd-thumb {
-    width: 76px; height: 76px; padding: 0; background: #161718;
-    border: 1px solid rgba(255,255,255,.08); border-radius: 10px;
-    overflow: hidden; cursor: pointer; transition: border-color .15s ease;
+    width: 118px; height: 118px; padding: 0; background: #161718;
+    border: 2px solid rgba(255,255,255,.08); border-radius: 10px;
+    overflow: hidden; cursor: pointer;
+    transition: border-color .2s ease, transform .2s ease;
   }
-  .pd-thumb img { width: 100%; height: 100%; object-fit: contain; }
-  .pd-thumb.is-active { border-color: rgba(212,175,55,.6); }
+  @media (max-width: 749px) {
+    .pd-thumb { width: 84px; height: 84px; }
+  }
+  .pd-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .3s ease;
+  }
+  .pd-thumb:hover { border-color: rgba(255,255,255,.35); }
+  .pd-thumb.is-active {
+    border-color: #ffffff;
+    border-width: 2px;
+  }
 
   /* Info */
   .pd-info h1 {
@@ -102,6 +113,11 @@
     background: rgba(255,255,255,.6);
     transform: translate(-50%, -50%);
   }
+  .pd-stock--low .pd-stock__dot {
+    border-color: #E8A54F;
+    background: rgba(232,165,79,.18);
+  }
+  .pd-stock--low .pd-stock__dot::after { background: #E8A54F; }
   .pd-desc { color: #B9BBC0; line-height: 1.75; font-size: 15px; margin: 0 0 24px; }
 
   .pd-sec-label {
@@ -514,8 +530,12 @@
     priceHtml += '<span class="pd-price__soldout">Sold out</span>';
   }
   priceHtml += '</div>';
+
+  var stockHtml = '';
   if (!p.available) {
-    priceHtml += '<div class="pd-stock" role="status"><span class="pd-stock__dot" aria-hidden="true"></span><span>Out of stock</span></div>';
+    stockHtml = '<div class="pd-stock" role="status"><span class="pd-stock__dot" aria-hidden="true"></span><span>Out of stock</span></div>';
+  } else if (p.stockStatus === 'low') {
+    stockHtml = '<div class="pd-stock pd-stock--low" role="status"><span class="pd-stock__dot" aria-hidden="true"></span><span>Low stock</span></div>';
   }
 
   /* Buy-it-now stays visible even when sold out (matching the live site);
@@ -590,6 +610,7 @@
         '<h1>' + esc(p.title) + '</h1>' +
         priceHtml +
         variantsBlock +
+        stockHtml +
         '<button type="button" class="pd-buy" id="pd-buy" ' + buyDisabled + '>' + esc(buyLabel) + '</button>' +
         '<div class="pd-secure">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' +
