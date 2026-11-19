@@ -30,11 +30,11 @@
     object-fit: contain; display: block;
   }
   .pd-hero__badge {
-    position: absolute; top: 14px; left: 14px;
-    padding: 6px 12px; background: rgba(0,0,0,.55);
-    border: 1px solid rgba(255,255,255,.2); border-radius: 999px;
-    color: #fff; font-size: 11px; letter-spacing: .12em;
-    text-transform: uppercase;
+    position: absolute; bottom: 16px; left: 16px;
+    padding: 8px 16px; background: #000;
+    border: 0; border-radius: 999px;
+    color: #fff; font-size: 13px; font-weight: 500;
+    letter-spacing: .02em; line-height: 1;
   }
   .pd-thumbs { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
   .pd-thumb {
@@ -510,12 +510,11 @@
     });
   }
 
-  /* Hero image no longer renders a sold-out / sale badge overlay —
-     the "Sold out" pill next to the price + the "Out of stock"
-     indicator already communicate status, and the live reference
-     doesn't paint a badge on the hero image. */
+  /* Sold-out pill in the bottom-left of the hero image (matches the
+     live product card style). Sale badge wins over sold-out. */
   var badge = '';
   if (p.compareAt && Number(p.compareAt) > Number(p.price)) badge = '<span class="pd-hero__badge">Sale</span>';
+  else if (!p.available) badge = '<span class="pd-hero__badge">Sold out</span>';
 
   var variantLabel = p.variantLabel || 'Variant';
   var variantsBlock = '';

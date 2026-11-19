@@ -171,7 +171,14 @@ window.UNI_CATALOG = {
     images: [
       "images/wholemelts.webp"
     ],
-    description: "Wholemelts V7 live resin disposable. Terpene-forward, tamper-evident packaging."
+    description: "Wholemelts V7 live resin disposable. Terpene-forward, tamper-evident packaging.",
+    highlights: [
+      "**Dispensary-sourced & batch-verified**",
+      "**Lab-tested** for potency and safety",
+      "**No fillers, no additives**",
+      "**Premium Quality**"
+    ],
+    related: ["10pc-boutiq-switch-v5", "muha-meds-limited-edition", "muha-meds-x-cookies-limited-edition", "boutiq-switch-v5"]
   },
 
   "muha-meds-x-cookies-limited-edition": {
