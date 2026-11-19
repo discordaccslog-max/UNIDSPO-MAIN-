@@ -171,6 +171,7 @@ window.UNI_CATALOG = {
     variants: ["Mango Kush", "Grape God", "OG Haze"],
     available: true,
     images: [
+      "images/muha-3rd-gen-logo.webp",
       "images/muha-3rd-gen-box.webp",
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/IMG_1942.jpg?v=1784768192",
       "https://cdn.shopify.com/s/files/1/0733/6283/3595/files/fa9f46e0-ab92-4d26-a23f-c7de896c9bb0.png?v=1784768192"
