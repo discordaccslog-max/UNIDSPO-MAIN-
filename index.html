@@ -989,74 +989,87 @@
 
 <!-- ============ HIGH VOLUME NOTICE ============ -->
 <div class="uni-section">
-<div id="hv-notif" style="
-  box-sizing:border-box;
-  position:fixed;
-  bottom:28px;
-  right:24px;
-  z-index:9999;
-  background:#1a1a1a;
-  border:1px solid #c9a84c;
-  border-top:3px solid #c9a84c;
-  border-radius:8px;
-  padding:18px 44px 18px 18px;
-  max-width:360px;
-  width:calc(100vw - 48px);
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transform:translateY(30px);
-  transition:transform 0.55s cubic-bezier(.22,1,.36,1), opacity 0.5s ease, visibility 0s linear 0.55s;
-">
-  <button onclick="hvClose()"
-    style="position:absolute;top:10px;right:13px;background:none;border:none;color:#c9a84c;font-size:17px;cursor:pointer;line-height:1;padding:0;"
-    aria-label="Close">✕</button>
-
-  <div style="display:flex;align-items:center;gap:8px;">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    <span style="font-size:10px;letter-spacing:2.5px;color:#c9a84c;text-transform:uppercase;font-weight:600;">Site Notice</span>
+<style>
+  .hv{position:fixed;right:24px;bottom:24px;z-index:9999;width:min(380px,calc(100vw - 48px));box-sizing:border-box;
+      font-family:"Figtree",sans-serif;letter-spacing:.2px;color:#F7F7F7;
+      opacity:0;visibility:hidden;pointer-events:none;transform:translateY(24px) scale(.98);
+      transition:opacity .45s ease,transform .55s cubic-bezier(.22,1,.36,1),visibility 0s linear .55s}
+  .hv.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .45s ease,transform .55s cubic-bezier(.22,1,.36,1),visibility 0s}
+  .hv *,.hv *::before,.hv *::after{box-sizing:border-box}
+  .hv__card{position:relative;overflow:hidden;padding:20px 20px 18px;border-radius:16px;
+      background:radial-gradient(90% 70% at 0% 0%,rgba(212,175,55,.14),rgba(212,175,55,0) 60%),#131315;
+      border:1px solid rgba(255,255,255,.09);box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.4)}
+  .hv__card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#F3D77A,#BA9930)}
+  .hv__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+  .hv__label{display:inline-flex;align-items:center;gap:9px;color:#D4AF37;font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+  .hv__dot{position:relative;width:8px;height:8px;border-radius:50%;background:#F0B44C}
+  .hv__dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(240,180,76,.45);animation:hv-pulse 1.8s ease-out infinite}
+  @keyframes hv-pulse{from{transform:scale(.6);opacity:1}to{transform:scale(1.7);opacity:0}}
+  .hv__x{width:36px;height:36px;margin:-8px -8px -8px 0;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:#8E9096;cursor:pointer;transition:color .2s ease,background-color .2s ease}
+  .hv__x:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .hv__x svg{width:18px;height:18px}
+  .hv__title{margin:0 0 6px;font-family:"Oswald",sans-serif;font-weight:700;font-size:21px;line-height:1.2;letter-spacing:.3px;color:#fff}
+  .hv__text{margin:0;color:#B9BBC0;font-size:14.5px;font-weight:500;line-height:1.6}
+  .hv__ship{display:flex;align-items:center;gap:12px;margin:14px 0 0;padding:12px 0 0;border-top:1px solid rgba(255,255,255,.08)}
+  .hv__ship svg{width:22px;height:22px;flex:0 0 22px;color:#E6E6E8}
+  .hv__ship b{display:block;color:#fff;font-size:14px;font-weight:700;line-height:1.35}
+  .hv__ship span{display:block;color:#8E9096;font-size:13px;font-weight:600;line-height:1.4}
+  .hv__ship em{font-style:normal;color:#FFD976;font-weight:700;white-space:nowrap}
+  .hv__ok{margin-left:auto;flex:0 0 auto;min-height:38px;padding:0 16px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:none;color:#fff;font:inherit;font-size:13.5px;font-weight:700;letter-spacing:.3px;cursor:pointer;transition:border-color .2s ease,background-color .2s ease}
+  .hv__ok:hover{border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.08)}
+  .hv__x:focus-visible,.hv__ok:focus-visible{outline:2px solid #FFD976;outline-offset:2px}
+  .hv__bar{position:absolute;left:0;bottom:0;height:2px;width:100%;transform-origin:left;background:linear-gradient(90deg,#F3D77A,#BA9930)}
+  @media(max-width:560px){.hv{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));width:auto}.hv__card{padding:18px 16px 16px}.hv__title{font-size:19px}.hv__text{font-size:14px}}
+  @media (prefers-reduced-motion: reduce){.hv,.hv.is-open{transition:opacity .2s ease,visibility 0s}.hv__dot::after{animation:none;opacity:0}}
+</style>
+<div id="hv-notif" class="hv" role="status" aria-live="polite" aria-labelledby="hv-title">
+  <div class="hv__card">
+    <div class="hv__top">
+      <span class="hv__label"><i class="hv__dot" aria-hidden="true"></i>Site notice</span>
+      <button type="button" class="hv__x" onclick="hvClose()" aria-label="Close notice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <p class="hv__title" id="hv-title">We’re busier than usual</p>
+    <p class="hv__text">Orders are coming in fast, so pages may load a little slower right now. Thanks for your patience.</p>
+    <div class="hv__ship">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg>
+      <div><b>Shipping isn’t affected</b><span>Order today, arrives <em data-hm-eta>in 3–5 business days</em></span></div>
+      <button type="button" class="hv__ok" onclick="hvClose()">Got it</button>
+    </div>
+    <div class="hv__bar" id="hv-bar" aria-hidden="true"></div>
   </div>
-
-  <p style="font-size:13px;color:#dddddd;line-height:1.65;margin:0;">
-    We are currently experiencing a <span style="color:#c9a84c;font-weight:600;">high volume of orders</span> and increased traffic. You may notice slight delays while browsing the website; shipping times are the same as usual <span style="color:#ffffff;font-weight:600;">(2–4 business days)</span>. Thank you for your patience and cooperation.
-  </p>
-
-  <div id="hv-bar" style="position:absolute;bottom:0;left:0;height:2px;background:#c9a84c;width:100%;border-radius:0 0 6px 6px;"></div>
 </div>
-
 <script>
-  (function() {
-    try { if (sessionStorage.getItem('hv_notice_seen')) { document.getElementById('hv-notif').style.display = 'none'; return; } } catch (e) {}
-
-    var notif = document.getElementById('hv-notif');
-    var bar = document.getElementById('hv-bar');
-    var autoTimer;
-
-    setTimeout(function() {
-      notif.style.transition = 'transform 0.55s cubic-bezier(.22,1,.36,1), opacity 0.5s ease, visibility 0s';
-      notif.style.visibility = 'visible';
-      notif.style.pointerEvents = 'auto';
-      notif.style.opacity = '1';
-      notif.style.transform = 'translateY(0)';
-      bar.style.transition = 'width 10s linear';
-      setTimeout(function() { bar.style.width = '0%'; }, 50);
-      autoTimer = setTimeout(hvClose, 10500);
-    }, 3000);
-
-    window.hvClose = function() {
-      clearTimeout(autoTimer);
-      /* fully remove it from the page once it fades, so it can't block taps */
-      notif.style.transition = 'transform 0.55s cubic-bezier(.22,1,.36,1), opacity 0.5s ease, visibility 0s linear 0.55s';
-      notif.style.pointerEvents = 'none';
-      notif.style.opacity = '0';
-      notif.style.transform = 'translateY(30px)';
-      notif.style.visibility = 'hidden';
+  (function () {
+    var notif = document.getElementById('hv-notif'), bar = document.getElementById('hv-bar');
+    var seen = false; try { seen = !!sessionStorage.getItem('hv_notice_seen'); } catch (e) {}
+    if (seen) { notif.style.display = 'none'; window.hvClose = function () {}; return; }
+    var DURATION = 10000, remaining = DURATION, startedAt = 0, timer = null, anim = null;
+    function run() {
+      startedAt = Date.now();
+      timer = setTimeout(window.hvClose, remaining);
+      if (bar.animate) anim = anim || bar.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: DURATION, fill: 'forwards' });
+      if (anim) anim.play();
+    }
+    function pause() {
+      if (!timer) return;
+      clearTimeout(timer); timer = null;
+      remaining = Math.max(0, remaining - (Date.now() - startedAt));
+      if (anim) anim.pause();
+    }
+    window.hvClose = function () {
+      clearTimeout(timer); timer = null;
+      notif.classList.remove('is-open');
+      /* fully remove it once it fades, so it can never block taps */
       setTimeout(function () { notif.style.display = 'none'; }, 600);
       try { sessionStorage.setItem('hv_notice_seen', '1'); } catch (e) {}
     };
+    /* pause the countdown while the visitor is reading or using it */
+    notif.addEventListener('mouseenter', pause);
+    notif.addEventListener('mouseleave', function () { if (notif.classList.contains('is-open') && !notif.contains(document.activeElement)) run(); });
+    notif.addEventListener('focusin', pause);
+    notif.addEventListener('focusout', function (e) { if (!notif.contains(e.relatedTarget) && notif.classList.contains('is-open')) run(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && notif.classList.contains('is-open')) window.hvClose(); });
+    setTimeout(function () { notif.classList.add('is-open'); run(); }, 3000);
   })();
 </script>
 </div>
