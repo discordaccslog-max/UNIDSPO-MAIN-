@@ -497,23 +497,39 @@ ul { list-style: none; margin: 0; padding: 0; }
 .uni-announce__arrow { color: #9A9CA1; font-size: 20px; opacity: 1; padding: 6px 12px; }
 .uni-announce__arrow:hover { color: var(--uni-gold-soft); }
 
-/* Header band with a soft gold glow behind the logo */
-.uni-header {
-  position: relative;
-  padding: 22px 0 10px;
-  background: radial-gradient(38% 120% at 50% 40%, rgba(212,175,55,.10), rgba(212,175,55,0) 70%);
+/* Header: a wide stretched banner behind the title that fades into the page */
+.uni-header { position: relative; padding: 18px 0 8px; }
+.uni-header__bar { position: relative; z-index: 1; min-height: 88px; }
+.uni-header__banner {
+  position: absolute; left: 0; right: 0; top: 18px; height: 88px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.65) 24%, rgba(212,175,55,.65) 76%, rgba(212,175,55,0)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.28) 30%, rgba(212,175,55,.28) 70%, rgba(212,175,55,0)) 0 5px / 100% 1px no-repeat,
+    linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.28) 30%, rgba(212,175,55,.28) 70%, rgba(212,175,55,0)) 0 calc(100% - 5px) / 100% 1px no-repeat,
+    linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.65) 24%, rgba(212,175,55,.65) 76%, rgba(212,175,55,0)) 0 100% / 100% 1px no-repeat,
+    linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.07) 25%, rgba(212,175,55,.07) 75%, rgba(212,175,55,0));
 }
-.uni-header__bar { min-height: 64px; }
+.uni-header__banner::before {
+  content: ""; position: absolute; inset: 8px 0;
+  background: url(../images/united-dispo-leaves.webp) center / auto 100% no-repeat;
+  opacity: .22;
+}
 
-/* Logo banner: UNITED DISPO ribbon (images/united-dispo-banner.svg) */
-.uni-logo { display: inline-block; line-height: 0; }
-.uni-logo__banner {
-  display: block;
-  width: 340px; height: auto;
-  filter: drop-shadow(0 6px 18px rgba(212,175,55,.16));
-  transition: filter .3s ease, transform .3s ease;
+/* Title: plain UNITED DISPO text over the banner */
+.uni-logo {
+  position: relative;
+  font-family: var(--font-heading-family);
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  text-shadow: 0 2px 20px rgba(0,0,0,.75);
+  transition: color .2s ease;
 }
-.uni-logo:hover .uni-logo__banner { filter: drop-shadow(0 8px 22px rgba(212,175,55,.3)); transform: translateY(-1px); }
+.uni-logo:hover { color: var(--uni-gold-soft); }
 
 /* Icons: larger tap targets, gold on hover */
 .uni-header__side { gap: 4px; }
@@ -564,23 +580,26 @@ ul { list-style: none; margin: 0; padding: 0; }
 .uni-nav .current_page_item > a::after { transform: scaleX(1); height: 2px; background: linear-gradient(90deg, #E8C766, #BA9930); }
 
 @media (max-width: 989px) {
-  .uni-logo__banner { width: 300px; }
+  .uni-logo { font-size: 32px; }
 }
 @media (max-width: 749px) {
   .uni-announce { font-size: 11px; letter-spacing: .12em; padding: 0 40px; }
-  .uni-header { padding: 14px 0 6px; background: radial-gradient(60% 120% at 50% 40%, rgba(212,175,55,.10), rgba(212,175,55,0) 70%); }
-  .uni-header__bar { min-height: 52px; padding: 0 8px; }
+  .uni-header { padding: 14px 0 6px; }
+  .uni-header__bar { padding: 0 8px; }
   .uni-header__side--left { left: 8px; }
   .uni-header__side--right { right: 8px; }
   .uni-header__side { gap: 0; }
-  .uni-logo__banner { width: 186px; }
+  .uni-logo { font-size: 22px; letter-spacing: .1em; }
+  .uni-header__bar { min-height: 64px; }
+  .uni-header__banner { top: 14px; height: 64px; }
+  .uni-header__banner::before { inset: 6px 0; opacity: .2; }
   .uni-nav { padding: 2px 0 10px; }
   .uni-nav ul { gap: 26px; }
   .uni-nav a { font-size: 12px; letter-spacing: .14em; }
 }
 @media (max-width: 374px) {
-  .uni-logo__banner { width: 162px; }
+  .uni-logo { font-size: 20px; letter-spacing: .08em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .uni-logo__banner, .uni-nav a::after { transition: none; }
+  .uni-logo, .uni-nav a::after { transition: none; }
 }
