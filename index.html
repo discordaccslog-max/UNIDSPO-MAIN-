@@ -408,7 +408,7 @@ var UNI_GRIDS = {
   @media(max-width:860px){.nx-afq{grid-template-columns:1fr}}
   .nx-strip{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;background:linear-gradient(180deg,#171719,#141416);border:1px solid var(--stroke);border-radius:14px;padding:18px;margin:0}
   .nx-pill{border:1px solid var(--stroke);color:#FFD976;background:rgba(212,175,55,.08);border-radius:999px;padding:6px 10px;font-size:12px}
-  .nx-faq{border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+  .nx-faq{border:1px solid rgba(212,175,55,.28);border-radius:14px;overflow:hidden;background:#141416}
   .nx-faq details{border-top:1px solid rgba(255,255,255,.06)}
   .nx-faq details:first-of-type{border-top:0}
   .nx-faq summary{cursor:pointer;padding:14px 16px;background:var(--card);font-weight:700;list-style:none}
@@ -1007,6 +1007,7 @@ var UNI_GRIDS = {
     }
     .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img:only-child {
       transform: scale(1.03);
+      opacity: 1; /* keep single-image cards visible on hover */
     }
     .uni-pg .uni-pg__card:hover .uni-pg__media .uni-pg__img:first-child:not(:only-child) {
       opacity: 0;
