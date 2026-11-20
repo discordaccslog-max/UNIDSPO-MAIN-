@@ -293,19 +293,6 @@
   .hm-rcard__prod:hover span{color:#FFD976}
   .hm-rcard__prod img{width:40px;height:40px;flex-basis:40px;border-radius:6px}
   .hm-car__btn{background:none;border-color:rgba(255,255,255,.14)}
-  .hm-rev__month{color:#FFD976;font-weight:700}
-  /* End-of-month card */
-  .hm-rcard.hm-rend{align-items:center;justify-content:center;text-align:center;gap:10px;padding:30px 20px 24px;border-top-color:rgba(212,175,55,.55);background:radial-gradient(80% 70% at 50% 0%,rgba(212,175,55,.10),rgba(212,175,55,0) 70%)}
-  .hm-rend__icon{width:42px;height:42px;display:grid;place-items:center;color:#D4AF37;margin-bottom:4px}
-  .hm-rend__icon svg{width:34px;height:34px}
-  .hm-rend__lead{margin:0;color:#A5A7AC;font-size:14.5px;font-weight:600;line-height:1.5}
-  .hm-rend__month{margin:0;font-family:"Oswald",sans-serif;font-size:clamp(40px,4.4vw,56px);line-height:1;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#FFD976;text-shadow:0 0 28px rgba(212,175,55,.25)}
-  .hm-rend__month span{display:block;margin-top:8px;font-family:"Figtree",sans-serif;font-size:12.5px;letter-spacing:.32em;color:#8E9096;text-shadow:none}
-  .hm-rend__note{margin:6px 0 0;max-width:30ch;color:#8E9096;font-size:13.5px;line-height:1.6}
-  .hm-rend__back{display:inline-flex;align-items:center;gap:8px;flex-direction:row-reverse;min-height:44px;margin-top:6px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:none;color:#F2F2F3;font:700 13.5px "Figtree",sans-serif;letter-spacing:.04em;cursor:pointer;transition:border-color .2s ease,color .2s ease}
-  .hm-rend__back svg{width:15px;height:15px}
-  .hm-rend__back:hover{border-color:rgba(212,175,55,.6);color:#FFD976}
-  .hm-rend__back:focus-visible{outline:2px solid #FFD976;outline-offset:2px}
 
   /* Why United Dispo: hairline list, neutral panel, plain check list */
   .hm-why__list{gap:0;border-top:1px solid rgba(255,255,255,.08)}
@@ -1110,9 +1097,9 @@
   <div class="hm-page">
     <div class="hm-head hm-rv">
       <div class="hm-head__copy">
-        <span class="hm-kicker">Most recent reviews</span>
+        <span class="hm-kicker">Reviews</span>
         <h2 class="hm-h2" id="hm-rev-title">Rated 4.7/5 by <em>6,000+ customers.</em></h2>
-        <p class="hm-lead">Real orders, real people. Here’s what customers have said after their package arrived this <b class="hm-rev__month" data-hm-month>month</b>.</p>
+        <p class="hm-lead">Real orders, real people. Here’s what customers say after their package arrives.</p>
       </div>
       <div class="hm-rev__summary" role="img" aria-label="Excellent, 4.7 out of 5 on Trustpilot">
         <span class="hm-rev__tp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M17.227 16.67l2.19 6.742-7.413-5.388 5.223-1.354zM24 9.31h-9.165L12.005.589l-2.84 8.723L0 9.3l7.422 5.397-2.84 8.714 7.422-5.388 4.583-3.326L24 9.311z"/></svg>Trustpilot</span>
@@ -2102,7 +2089,7 @@
     tick(); setInterval(tick, 30000);
   }
 
-  /* ---- Reviews (sample demo content; dates always fall inside the current month) ---- */
+  /* ---- Reviews (sample demo content; dates are counted back from today) ---- */
   var REVIEWS = [
     { n: 'Jordan B.', st: 'CA', r: 3, d: 2, p: 'boutiq-switch-v5', pt: 'Boutiq Switch V5', img: 'images/boutiq-v5.webp', c: '#C9B48A',
       t: 'Shipping took 6 days when i selected express shipping but honestly its fine because they did tell me that they were receiving large amount of orders and shipping could be delayed, but quality is 10/10 shit smacks good af' },
@@ -2128,14 +2115,8 @@
   function reviews() {
     var track = document.getElementById('hm-rev-track'); if (!track) return;
     var today = new Date();
-    var monthName = today.toLocaleDateString('en-US', { month: 'long' });
-    var nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1).toLocaleDateString('en-US', { month: 'long' });
-    document.querySelectorAll('[data-hm-month]').forEach(function (el) { el.textContent = monthName; });
-    /* Keep every review inside the current month: spread them from the 1st up to today, newest first. */
-    var dom = today.getDate();
     track.innerHTML = REVIEWS.map(function (v, i) {
-      var day = Math.max(1, Math.min(dom, Math.round(dom - v.d * (dom - 1) / 30)));
-      var dt = new Date(today.getFullYear(), today.getMonth(), day, 12);
+      var dt = new Date(today.getTime() - v.d * 864e5);
       var date = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       var initials = v.n.replace(/[^A-Z]/g, '').slice(0, 2);
       return '<li class="hm-rcard" aria-roledescription="review" aria-label="Review ' + (i + 1) + ' of ' + REVIEWS.length + '">' +
@@ -2146,22 +2127,13 @@
           '<div class="hm-rcard__verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>Verified purchase</div></div></div>' +
         '<a class="hm-rcard__prod" href="product.html?id=' + encodeURIComponent(v.p) + '"><img src="' + esc(v.img) + '" alt="" width="44" height="44" loading="lazy"><span>' + esc(v.pt) + '<small>View product →</small></span></a>' +
       '</li>';
-    }).join('') +
-      '<li class="hm-rcard hm-rend" aria-label="End of reviews for ' + monthName + '">' +
-        '<span class="hm-rend__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg></span>' +
-        '<p class="hm-rend__lead">You’ve reached the end of the reviews for</p>' +
-        '<p class="hm-rend__month">' + esc(monthName) + '<span>' + today.getFullYear() + '</span></p>' +
-        '<p class="hm-rend__note">' + REVIEWS.length + ' reviews this month. New reviews are added as orders are delivered, so check back in ' + esc(nextMonth) + '.</p>' +
-        '<button type="button" class="hm-rend__back" data-hm-rev-back>Back to the latest<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>' +
-      '</li>';
-    var backBtn = track.querySelector('[data-hm-rev-back]');
-    if (backBtn) backBtn.addEventListener('click', function () { track.scrollTo({ left: 0 }); });
+    }).join('');
 
     var root = track.closest('[data-hm-carousel]');
     var dotsWrap = root.querySelector('.hm-car__dots');
     var prev = root.querySelector('[data-dir="-1"]'), next = root.querySelector('[data-dir="1"]');
     function perView() { var c = track.children[0]; if (!c) return 1; var gap = parseFloat(getComputedStyle(track).columnGap) || 0; return Math.max(1, Math.round((track.clientWidth + gap) / (c.getBoundingClientRect().width + gap))); }
-    function pages() { return Math.max(1, Math.ceil(track.children.length / perView())); }
+    function pages() { return Math.max(1, Math.ceil(REVIEWS.length / perView())); }
     function step() { var c = track.children[0]; var gap = parseFloat(getComputedStyle(track).columnGap) || 0; return (c.getBoundingClientRect().width + gap) * perView(); }
     function current() { var max = track.scrollWidth - track.clientWidth; if (track.scrollLeft >= max - 4) return pages() - 1; return Math.round(track.scrollLeft / step()); }
     function buildDots() {
