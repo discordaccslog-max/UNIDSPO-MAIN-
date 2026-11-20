@@ -314,6 +314,46 @@
     text-transform: uppercase;
   }
 
+  /* ---- About this product ---- */
+  .pd-about { margin: 34px 0 0; padding: 28px 0 0; border-top: 1px solid rgba(255,255,255,.08); font-family: "Figtree", sans-serif; }
+  .pd-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 14px; color: #D4AF37; font-size: 12.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+  .pd-eyebrow::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+  .pd-about__badge { margin: 0 0 10px; color: #E8A54F; font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .pd-about__summary { margin: 0; color: #D5D6D9; font-size: 16.5px; font-weight: 500; line-height: 1.7; letter-spacing: .2px; }
+  .pd-feats { display: grid; gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+  .pd-feats li { display: flex; gap: 12px; align-items: flex-start; color: #F2F2F3; font-size: 15px; font-weight: 600; line-height: 1.5; }
+  .pd-feats svg { width: 18px; height: 18px; flex: 0 0 18px; margin-top: 2px; color: #D4AF37; }
+  .pd-specs { margin: 26px 0 0; border-top: 1px solid rgba(255,255,255,.08); }
+  .pd-specs div { display: flex; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 14.5px; }
+  .pd-specs dt { color: #8E9096; font-weight: 600; }
+  .pd-specs dd { margin: 0; color: #fff; font-weight: 600; text-align: right; }
+  /* ---- Verified before it ships ---- */
+  .pd-verify { margin: 28px 0 0; padding: 22px 22px 18px; border-radius: 14px; background: radial-gradient(90% 80% at 0% 0%, rgba(212,175,55,.08), rgba(212,175,55,0) 60%), #141416; border: 1px solid rgba(255,255,255,.07); font-family: "Figtree", sans-serif; }
+  .pd-verify__title { margin: 0 0 14px; font-family: "Oswald", sans-serif; font-size: 20px; font-weight: 700; letter-spacing: .3px; color: #fff; }
+  .pd-verify ul { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .pd-verify li { display: flex; gap: 12px; align-items: flex-start; color: #A5A7AC; font-size: 14.5px; font-weight: 500; line-height: 1.55; }
+  .pd-verify li svg { width: 22px; height: 22px; flex: 0 0 22px; color: #D4AF37; }
+  .pd-verify li b { color: #fff; font-weight: 700; }
+  .pd-verify__foot { margin: 16px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(255,255,255,.07); color: #A5A7AC; font-size: 13.5px; font-weight: 600; }
+  .pd-verify__foot b { color: #FFD976; }
+  /* ---- Product FAQs ---- */
+  .pd-acc { margin: 22px 0 0; border-top: 1px solid rgba(255,255,255,.08); font-family: "Figtree", sans-serif; }
+  .pd-acc details { border-bottom: 1px solid rgba(255,255,255,.08); }
+  .pd-acc summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 56px; padding: 14px 0; cursor: pointer; list-style: none; color: #F2F2F3; font-size: 15.5px; font-weight: 700; letter-spacing: .2px; }
+  .pd-acc summary::-webkit-details-marker { display: none; }
+  .pd-acc summary:hover { color: #FFD976; }
+  .pd-acc summary:focus-visible { outline: 2px solid #FFD976; outline-offset: 2px; }
+  .pd-acc__plus { position: relative; width: 18px; height: 18px; flex: 0 0 18px; }
+  .pd-acc__plus::before, .pd-acc__plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 13px; height: 1.5px; background: #E6E6E8; transform: translate(-50%,-50%); transition: transform .25s ease; }
+  .pd-acc__plus::after { transform: translate(-50%,-50%) rotate(90deg); }
+  .pd-acc details[open] .pd-acc__plus::after { transform: translate(-50%,-50%) rotate(0); }
+  .pd-acc__body { padding: 0 30px 18px 0; color: #A5A7AC; font-size: 14.5px; line-height: 1.7; }
+  .pd-acc__body p { margin: 0; }
+  .pd-acc__body b { color: #fff; }
+  .pd-acc__body a { color: #FFD976; }
+  .pd-nw { white-space: nowrap; }
+  @media (max-width: 749px) { .pd-about__summary { font-size: 15.5px; } .pd-verify { padding: 18px 16px 14px; } }
+
   /* Share — subtle, matches live reference (muted white, no accent color) */
   .pd-share {
     display: inline-flex; align-items: center; gap: 10px;
@@ -634,6 +674,7 @@
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
 <script src="js/products.js?v=20261119c"></script>
+<script src="js/product-details.js?v=20261119a"></script>
 <script src="js/cart.js?v=20261119i"></script>
 <script>
 (function () {
@@ -828,6 +869,47 @@
         '<span class="pd-tl__label">Delivered</span><span class="pd-tl__date" title="Standard USPS shipping, 2–4 business days after your order is ready.">' + fmtDay(earliest) + ' – ' + fmtDay(latest) + '</span></li>' +
     '</ol>';
 
+  /* ---- About this product + verification + FAQs (data: js/product-details.js) ---- */
+  var D = (window.UNI_DETAILS || {})[slug];
+  var detailsBlock = '';
+  if (D) {
+    var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+    var specs = (D.specs || []).slice();
+    if (p.variants && p.variants.length > 1) {
+      var lbl = /flavor/i.test(p.variantLabel || '') ? 'Flavors' : (p.group === 'bulk' ? 'Strain (whole pack)' : 'Options');
+      var vals = p.variants.map(function (v) { return v.charAt(0) + v.slice(1).toLowerCase(); });
+      specs.push([lbl, vals.length > 6 ? vals.length + ' to choose from' : vals.join(' · ')]);
+    }
+    if (D.packOf) specs.push(['Price per unit', money(p.price / D.packOf).replace(' USD', '')]);
+    specs.push(['Order limit', '1 per order']);
+    var etaTxt = '<span class="pd-nw">' + fmtDay(earliest) + ' – ' + fmtDay(latest) + '</span>';
+    var fromLine = /^geek-bar/.test(slug) ? '<b>Sourced from an authorized distributor.</b> Never grey market.' : '<b>Bought from a licensed dispensary.</b> Never grey market.';
+    detailsBlock =
+      '<section class="pd-about" aria-labelledby="pd-about-title">' +
+        '<p class="pd-eyebrow" id="pd-about-title">About this product</p>' +
+        (D.badge ? '<p class="pd-about__badge">' + esc(D.badge) + '</p>' : '') +
+        '<p class="pd-about__summary">' + esc(D.summary) + '</p>' +
+        '<ul class="pd-feats">' + (D.features || []).map(function (f) { return '<li>' + CHECK + '<span>' + esc(f) + '</span></li>'; }).join('') + '</ul>' +
+        '<dl class="pd-specs">' + specs.map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('') + '</dl>' +
+      '</section>' +
+      '<section class="pd-verify" aria-labelledby="pd-verify-title">' +
+        '<p class="pd-verify__title" id="pd-verify-title">Verified before it ships</p>' +
+        '<ul>' +
+          '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg><span>' + fromLine + '</span></li>' +
+          '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><span><b>Checked by hand.</b> Tamper-evident seals, batch and lot numbers.</span></li>' +
+          '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg><span><b>Didn’t pass? Re-ordered.</b> It only ships once it’s fully authenticated.</span></li>' +
+          '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg><span><b>Discreet, tracked delivery.</b> Plain box, no logos' + (p.available ? '. Order today, arrives ' + etaTxt + '.' : ', tracking number included.') + '</span></li>' +
+        '</ul>' +
+        '<p class="pd-verify__foot">Covered by our <b>100% Satisfaction Guarantee</b></p>' +
+      '</section>' +
+      '<div class="pd-acc">' +
+        '<details><summary>Shipping &amp; delivery<span class="pd-acc__plus" aria-hidden="true"></span></summary><div class="pd-acc__body"><p>Orders placed before 2 PM Pacific on a business day are packed the next business day, then delivered by USPS in 2–4 business days with full tracking.' + (p.available ? ' Order today and it’s estimated to arrive <b>' + etaTxt + '</b>.' : '') + '</p></div></details>' +
+        '<details><summary>Ordering more than one item<span class="pd-acc__plus" aria-hidden="true"></span></summary><div class="pd-acc__body"><p>For your security and privacy, each checkout is limited to one item' + (p.group === 'bulk' ? ' (this pack counts as one item)' : '') + '. To get more, place a separate order for each item. Your orders are combined and shipped together in one package.</p></div></details>' +
+        '<details><summary>Satisfaction guarantee<span class="pd-acc__plus" aria-hidden="true"></span></summary><div class="pd-acc__body"><p>Every order is covered by our 100% Satisfaction Guarantee. If anything isn’t right, <a href="contact.html">contact us</a> and we’ll make it right.</p></div></details>' +
+      '</div>';
+    if (metaDesc) metaDesc.setAttribute('content', D.summary);
+  }
+
   root.innerHTML =
     '<div class="pd">' +
       '<div class="pd-gallery pd-reveal" style="--pd-order:0">' +
@@ -854,7 +936,7 @@
           trustBlock +
         '</div>' +
         '<div class="pd-reveal" style="--pd-order:6">' + timelineBlock + '</div>' +
-        (highlightsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + highlightsBlock + '</div>' : '') +
+        (detailsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + detailsBlock + '</div>' : (highlightsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + highlightsBlock + '</div>' : '')) +
         '<button type="button" class="pd-share pd-reveal" id="pd-share" style="--pd-order:8" aria-label="Share this product">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>' +
           '<span>Share</span>' +
