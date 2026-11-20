@@ -182,7 +182,7 @@
     logo: 'images/united-dispo-logo.webp',
     rating: 4.7,
     outOf: 5,
-    customers: 'Over 35,000 satisfied customers'
+    customers: 'Over 6,000 satisfied customers'
   };
 
   var CSS = '' +
