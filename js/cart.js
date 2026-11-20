@@ -197,7 +197,7 @@
     /* Shipping protection toggle card (cart drawer + cart page) */
     protectionHtml: function (id) {
       return '<label class="uni-prot" for="' + id + '">' +
-        '<span class="uni-prot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>' +
+        '<span class="uni-prot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></span>' +
         '<span class="uni-prot__copy"><span class="uni-prot__title">Shipping Protection <span class="uni-prot__price">$1.99</span></span>' +
         '<span class="uni-prot__sub">Covers loss, theft and damage in transit. If anything goes wrong, we reship it free.</span></span>' +
         '<input type="checkbox" class="uni-prot__input" id="' + id + '" role="switch" data-uni-protect>' +
