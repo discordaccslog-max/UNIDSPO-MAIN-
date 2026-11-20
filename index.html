@@ -1083,7 +1083,19 @@
     notif.addEventListener('focusin', pause);
     notif.addEventListener('focusout', function (e) { if (!notif.contains(e.relatedTarget) && notif.classList.contains('is-open')) run(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && notif.classList.contains('is-open')) window.hvClose(); });
-    setTimeout(function () { notif.classList.add('is-open'); run(); }, 3000);
+    var shown = false;
+    function show(delay) {
+      if (shown) return; shown = true;
+      setTimeout(function () { notif.classList.add('is-open'); run(); }, delay);
+    }
+    /* Appears right after the visitor taps "Continue shopping" on the
+       Proudly American popup (or closes it another way). If that popup
+       isn't shown on this visit, it appears a few seconds after load. */
+    document.addEventListener('uni:usa-popup-closed', function () { show(700); });
+    document.addEventListener('uni:usa-popup-skipped', function () { show(3000); });
+    /* (checked once the page has loaded, because the popup comes later in the page) */
+    function noPopupFallback() { if (!document.getElementById('uni-usa-popup')) show(3000); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', noPopupFallback); else noPopupFallback();
   })();
 </script>
 </div>
@@ -1650,7 +1662,13 @@
       card.focus({ preventScroll: true });
     }
 
-    function close() {
+    function announce(name, detail) {
+      try { document.dispatchEvent(new CustomEvent(name, { detail: detail || {} })); } catch (e) {}
+    }
+
+    function close(e) {
+      if (!pop.classList.contains("is-open")) return;
+      var viaButton = !!(e && e.currentTarget === btn);
       pop.classList.remove("is-open");
       document.documentElement.style.overflow = "";
       if (frame) cancelAnimationFrame(frame);
@@ -1658,6 +1676,8 @@
       endSweep();
       setTimeout(function () { pop.hidden = true; }, 420);
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+      /* the site notice waits for this (see HIGH VOLUME NOTICE) */
+      announce("uni:usa-popup-closed", { via: viaButton ? "continue-shopping" : "dismissed" });
     }
 
     pop.querySelectorAll("[data-uni-close]").forEach(function (el) {
@@ -1670,7 +1690,7 @@
           var hit = document.elementFromPoint(t.clientX, t.clientY);
           if (hit && (hit === el || el.contains(hit))) {
             e.preventDefault();
-            close();
+            close({ currentTarget: el });
           }
         }, { passive: false });
       }
@@ -1718,7 +1738,7 @@
     function start() {
       var seen = false;
       try { seen = ONCE_PER_SESSION && sessionStorage.getItem(SEEN_KEY) === "1"; } catch (e) {}
-      if (seen) return;
+      if (seen) { announce("uni:usa-popup-skipped"); return; }
       loadFonts();
       paintFoil(REST);
       afterAgeGate(function () { setTimeout(open, DELAY); });
