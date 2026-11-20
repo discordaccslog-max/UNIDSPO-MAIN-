@@ -132,13 +132,20 @@
   .opt__radio svg { display: none; }
   .opt__radio::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--gold); transform: scale(0); transition: transform .15s ease; }
   .opt__icon { display: none; }
-  .opt--ship { grid-template-columns: 20px 104px 1fr auto; grid-template-areas: "radio logo body price"; }
-  .opt--ship .opt__radio { grid-area: radio; margin-top: 10px; }
+  .opt--ship { grid-template-columns: 20px 1fr auto; grid-template-areas: "radio body logo" "radio body price"; grid-template-rows: auto 1fr; row-gap: 10px; }
+  .opt--ship .opt__radio { grid-area: radio; margin-top: 1px; }
   .opt--ship .opt__body { grid-area: body; }
-  .opt--ship > .pill, .opt--ship > .opt__price { grid-area: price; margin-top: 1px; }
-  .opt__logo { grid-area: logo; width: 104px; height: 42px; display: grid; place-items: center; padding: 6px 9px; border-radius: 8px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+  .opt--ship > .pill, .opt--ship > .opt__price { grid-area: price; justify-self: end; align-self: start; }
+  .opt__logo { grid-area: logo; justify-self: end; width: 84px; height: 34px; display: grid; place-items: center; padding: 5px 8px; border-radius: 7px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
   .opt__logo img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
-  .opt__logo--fedex { padding: 8px 14px; }
+  .opt__logo--fedex { padding: 7px 12px; }
+  /* smooth reveal of shipping methods */
+  .ship-wrap { position: relative; }
+  .ship-wrap.is-anim { overflow: hidden; transition: height .45s cubic-bezier(.22,1,.36,1); }
+  .ship-empty.ship-in { animation: shipIn .35s ease both; }
+  .opts.ship-in .opt { animation: shipIn .45s cubic-bezier(.22,1,.36,1) both; }
+  .opts.ship-in .opt + .opt { animation-delay: .08s; }
+  @keyframes shipIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .opt__body { min-width: 0; }
   .opt__name { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: #fff; font-weight: 700; font-size: 15px; line-height: 1.4; }
   .opt__lines { margin: 4px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; line-height: 1.65; }
@@ -166,10 +173,8 @@
   .co-paynote b { color: #e6e6e8; font-weight: 700; }
   @media (max-width: 560px) {
     .opt { padding: 16px 14px; gap: 12px; }
-    .opt--ship { grid-template-columns: 20px 1fr auto; grid-template-areas: "radio logo price" ". body body"; row-gap: 10px; }
-    .opt--ship .opt__radio { margin-top: 9px; }
-    .opt--ship .opt__logo { justify-self: start; width: 96px; height: 38px; }
-    .opt--ship > .pill, .opt--ship > .opt__price { align-self: center; margin-top: 0; }
+    .opt--ship .opt__logo { width: 72px; height: 30px; padding: 4px 7px; }
+    .opt--ship .opt__logo--fedex { padding: 6px 10px; }
     .opt--pay { grid-template-columns: 20px 1fr; }
     .opt--pay .opt__name { white-space: normal; }
     .opt--pay .uni-pay { grid-column: 2 / -1; justify-content: flex-start; flex-wrap: wrap; }
@@ -359,7 +364,7 @@
         '<div class="chk-wrap" data-f="age"><label class="chk"><input type="checkbox" id="age" aria-describedby="age-err"><span class="chk__box">' + TICK + '</span><span>I confirm I am <b style="color:#fff">21 or older</b>.</span></label><p class="f__err" id="age-err" aria-live="polite"></p></div>' +
       '</section>' +
       '<section class="co-sec" aria-labelledby="h-ship"><div class="co-sec__head"><h2 class="co-h" id="h-ship">Shipping method</h2></div>' +
-        '<div class="ship-empty" id="ship-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Enter your shipping address to view available shipping methods.</span></div>' +
+        '<div class="ship-wrap" id="ship-wrap"><div class="ship-empty" id="ship-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Enter your shipping address to view available shipping methods.</span></div>' +
         '<fieldset class="opts" id="ship-opts" hidden><legend class="sr-only">Shipping method</legend>' +
           '<label class="opt opt--ship"><input type="radio" name="ship" value="standard" checked><span class="opt__radio">' + TICK + '</span><span class="opt__logo"><img src="images/carrier-usps.webp" alt="USPS" width="431" height="72"></span>' +
             '<span class="opt__body"><span class="opt__name">Standard USPS Shipping</span><ul class="opt__lines"><li>3–4 business days</li><li>Estimated delivery ' + rangeHtml(std) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
@@ -367,7 +372,7 @@
           '<label class="opt opt--ship"><input type="radio" name="ship" value="express"><span class="opt__radio">' + TICK + '</span><span class="opt__logo opt__logo--fedex"><img src="images/carrier-fedex.webp" alt="FedEx" width="234" height="72"></span>' +
             '<span class="opt__body"><span class="opt__name">Express FedEx Shipping <span class="pill pill--fast">Fastest</span></span><ul class="opt__lines"><li>1–3 business days</li><li>Estimated delivery ' + rangeHtml(exp) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
             '<span class="opt__price">' + fmt.format(EXPRESS_PRICE) + '</span></label>' +
-        '</fieldset>' +
+        '</fieldset></div>' +
       '</section>' +
       '<section class="co-sec" aria-labelledby="h-pay"><div class="co-sec__head"><h2 class="co-h" id="h-pay">Payment</h2></div>' +
         '<p class="co-sec__note">All transactions are secure and encrypted.</p>' +
@@ -417,10 +422,28 @@
   /* Shipping methods appear once a full address is entered */
   var ADDR = ['address', 'city', 'state', 'zip'];
   function addrReady() { return ADDR.every(function (k) { var el = $('#' + k); return el && !RULES[k](el.value.trim()); }); }
+  var shipShown = null;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function updateShip() {
     var ok = addrReady();
-    $('#ship-opts').hidden = !ok;
-    $('#ship-empty').hidden = ok;
+    if (ok !== shipShown) {
+      var wrap = $('#ship-wrap'), opts = $('#ship-opts'), empty = $('#ship-empty');
+      var first = shipShown === null;
+      var from = wrap.offsetHeight;
+      opts.hidden = !ok; empty.hidden = ok;
+      shipShown = ok;
+      if (!first && !reduceMotion) {
+        var shown = ok ? opts : empty;
+        shown.classList.remove('ship-in'); void shown.offsetWidth; shown.classList.add('ship-in');
+        var to = wrap.offsetHeight;
+        wrap.style.height = from + 'px';
+        wrap.classList.add('is-anim');
+        void wrap.offsetHeight;
+        wrap.style.height = to + 'px';
+        clearTimeout(wrap._t);
+        wrap._t = setTimeout(function () { wrap.classList.remove('is-anim'); wrap.style.height = ''; }, 480);
+      }
+    }
     paint();
   }
   function totals() {
