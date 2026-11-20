@@ -49,10 +49,10 @@ var UNI_PRODUCTS = {
   bulk: [
     {"title": "10PC ACE ULTRA PREMIUM", "url": "product.html?id=10pc-ace-ultra-premium", "price": 125.99, "compareAt": null, "priceMax": 125.99, "variants": 4, "available": true, "image": {"src": "images/10pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
     {"title": "20PC ACE ULTRA PREMIUM", "url": "product.html?id=20pc-ace-ultra-premium", "price": 205.99, "compareAt": null, "priceMax": 205.99, "variants": 4, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/20pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
-    {"title": "10PC MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=10pc-muha-meds-x-cookies-limited-edition", "price": 145.99, "compareAt": null, "priceMax": 145.99, "variants": 4, "available": true, "image": {"src": "images/10pc-muha-cookies.webp", "width": 796, "height": 796}, "buyUrl": ""},
-    {"title": "10PC RAW GARDEN LIVE RESIN (1G)", "url": "product.html?id=10pc-raw-garden-live-resin-1g", "price": 195.99, "compareAt": null, "priceMax": 195.99, "variants": 4, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/10pc-raw-garden.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
     {"title": "10PC BOUTIQ SWITCH V5", "url": "product.html?id=10pc-boutiq-switch-v5", "price": 135.99, "compareAt": null, "priceMax": 135.99, "variants": 3, "available": true, "image": {"src": "images/10pc-boutiq-v5.webp", "width": 1201, "height": 1201}, "buyUrl": ""},
-    {"title": "10PC WHOLEMELTS V7", "url": "product.html?id=10pc-wholemelts-v7", "price": 120.99, "compareAt": null, "priceMax": 120.99, "variants": 1, "available": false, "image": {"src": "images/wholemelts.webp", "width": 1024, "height": 1024}, "buyUrl": ""}
+    {"title": "10PC RAW GARDEN LIVE RESIN (1G)", "url": "product.html?id=10pc-raw-garden-live-resin-1g", "price": 195.99, "compareAt": null, "priceMax": 195.99, "variants": 4, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/10pc-raw-garden.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
+    {"title": "10PC WHOLEMELTS V7", "url": "product.html?id=10pc-wholemelts-v7", "price": 120.99, "compareAt": null, "priceMax": 120.99, "variants": 1, "available": false, "image": {"src": "images/wholemelts.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
+    {"title": "10PC MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=10pc-muha-meds-x-cookies-limited-edition", "price": 145.99, "compareAt": null, "priceMax": 145.99, "variants": 4, "available": true, "image": {"src": "images/10pc-muha-cookies.webp", "width": 796, "height": 796}, "buyUrl": ""}
   ]
 };
 
