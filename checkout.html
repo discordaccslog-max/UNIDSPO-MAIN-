@@ -95,7 +95,7 @@
 
   /* ---------- Fields (floating labels) ---------- */
   .f { position: relative; }
-  .f__in { display: block; width: 100%; height: 54px; padding: 22px 14px 7px; background: var(--field); border: 1px solid var(--line-2); border-radius: 8px; color: var(--text); font-size: 15px; font-weight: 500; outline: none; appearance: none; -webkit-appearance: none; transition: border-color .15s ease, box-shadow .15s ease; }
+  .f__in { display: block; width: 100%; height: 54px; padding: 22px 14px 7px; background: var(--field); border: 1px solid var(--line-2); border-radius: 8px; color: var(--text); font-size: 16px; /* 16px+ stops iOS Safari zooming in on focus */ font-weight: 500; outline: none; appearance: none; -webkit-appearance: none; transition: border-color .15s ease, box-shadow .15s ease; }
   .f__in::placeholder { color: transparent; }
   .f__lab { position: absolute; left: 15px; top: 17px; color: var(--dim); font-size: 15px; font-weight: 500; pointer-events: none; transform-origin: left top; transition: top .15s ease, font-size .15s ease, color .15s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 30px); }
   .f__in:focus + .f__lab, .f__in:not(:placeholder-shown) + .f__lab, .f--select .f__lab { top: 8px; font-size: 11.5px; font-weight: 600; letter-spacing: .02em; }
