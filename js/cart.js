@@ -118,17 +118,16 @@
   };
 
   /* ---------- Delivery estimate (shared) ----------
-     Packed the next business day (one day later if ordered after the
-     cutoff on a business day; weekend/holiday orders are packed the next
-     business day), then 3-4 business days in transit by USPS (1-3 by FedEx
-     Express). Pacific time.
-     Weekends and USPS holidays are skipped. */
+     Delivery is counted in business days from the order date: USPS 3-4,
+     FedEx Express 1-3, packed ("Order Ready") on business day 1. Orders
+     placed after the 2 PM Eastern cutoff, or on a weekend/holiday, count
+     from the next business day. Weekends and holidays are skipped. */
   var UNI_DELIVERY = {
     settings: {
-      timeZone: 'America/Los_Angeles',
-      cutoffHour: 14,          /* 2 PM Pacific */
+      timeZone: 'America/New_York',
+      cutoffHour: 14,          /* 2 PM Eastern */
       packDays: 1,             /* business days from order to "Order Ready" */
-      transitDays: [3, 4],     /* USPS: business days from "Order Ready" to delivery */
+      transitDays: [3, 4],     /* USPS: business days from order to delivery */
       expressTransitDays: [1, 3], /* FedEx Express (checkout option) */
       holidays: ['2026-11-26', '2026-12-25', '2027-01-01', '2027-01-18', '2027-02-15', '2027-05-31',
                  '2027-06-18', '2027-07-05', '2027-09-06', '2027-10-11', '2027-11-11', '2027-11-25', '2027-12-24', '2027-12-31']
@@ -147,15 +146,16 @@
       var f = new Intl.DateTimeFormat('en-US', { timeZone: S.timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' });
       var o = {}; f.formatToParts(now || new Date()).forEach(function (x) { o[x.type] = x.value; });
       var order = new Date(Date.UTC(+o.year, +o.month - 1, +o.day));
-      var afterCutoff = UNI_DELIVERY.isBusinessDay(order) && +o.hour >= S.cutoffHour;
-      var ready = UNI_DELIVERY.addBusinessDays(order, S.packDays + (afterCutoff ? 1 : 0));
+      /* the day counting starts from: today, or the next business day if past the cutoff / not a business day */
+      var start = (UNI_DELIVERY.isBusinessDay(order) && +o.hour < S.cutoffHour) ? order : UNI_DELIVERY.addBusinessDays(order, 1);
       return {
         order: order,
-        ready: ready,
-        earliest: UNI_DELIVERY.addBusinessDays(ready, S.transitDays[0]),
-        latest: UNI_DELIVERY.addBusinessDays(ready, S.transitDays[1]),
-        expressEarliest: UNI_DELIVERY.addBusinessDays(ready, S.expressTransitDays[0]),
-        expressLatest: UNI_DELIVERY.addBusinessDays(ready, S.expressTransitDays[1])
+        start: start,
+        ready: UNI_DELIVERY.addBusinessDays(start, S.packDays),
+        earliest: UNI_DELIVERY.addBusinessDays(start, S.transitDays[0]),
+        latest: UNI_DELIVERY.addBusinessDays(start, S.transitDays[1]),
+        expressEarliest: UNI_DELIVERY.addBusinessDays(start, S.expressTransitDays[0]),
+        expressLatest: UNI_DELIVERY.addBusinessDays(start, S.expressTransitDays[1])
       };
     },
     format: function (dt) {
@@ -163,7 +163,7 @@
     },
     cutoffNote: function () {
       var h = UNI_DELIVERY.settings.cutoffHour;
-      return 'Orders placed before ' + (h > 12 ? (h - 12) + ' PM' : h + ' AM') + ' Pacific are packed the next business day.';
+      return 'Orders placed before ' + (h > 12 ? (h - 12) + ' PM' : h + ' AM') + ' Eastern are packed the next business day.';
     }
   };
 

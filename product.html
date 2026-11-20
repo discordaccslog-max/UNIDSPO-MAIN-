@@ -674,7 +674,7 @@
 
 <script src="js/products.js?v=20261120a"></script>
 <script src="js/product-details.js?v=20261120a"></script>
-<script src="js/cart.js?v=20261120d"></script>
+<script src="js/cart.js?v=20261120e"></script>
 <script>
 (function () {
   var slug = new URLSearchParams(window.location.search).get('id') || '';
@@ -851,7 +851,7 @@
     window.UNI_UI.paymentsHtml();
 
   /* ---- Delivery timeline ----
-     Dates come from UNI_DELIVERY in js/cart.js (Pacific time, 2 PM cutoff,
+     Dates come from UNI_DELIVERY in js/cart.js (Eastern time, 2 PM cutoff,
      packed next business day, 3-4 business days in transit, weekends and
      USPS holidays skipped), so they always match the cart drawer. */
   var est = window.UNI_DELIVERY.estimate();
@@ -865,7 +865,7 @@
       '<li class="pd-tl__step"><span class="pd-tl__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span>' +
         '<span class="pd-tl__label">Order Ready</span><span class="pd-tl__date" title="' + esc(cutoffNote) + '">' + fmtDay(readyDay) + '</span></li>' +
       '<li class="pd-tl__step"><span class="pd-tl__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>' +
-        '<span class="pd-tl__label">Delivered</span><span class="pd-tl__date" title="Standard USPS shipping, 3–4 business days after your order is ready.">' + fmtDay(earliest) + ' – ' + fmtDay(latest) + '</span></li>' +
+        '<span class="pd-tl__label">Delivered</span><span class="pd-tl__date" title="Standard USPS shipping, 3–4 business days from your order.">' + fmtDay(earliest) + ' – ' + fmtDay(latest) + '</span></li>' +
     '</ol>';
 
   /* ---- About this product + verification + FAQs (data: js/product-details.js) ---- */
