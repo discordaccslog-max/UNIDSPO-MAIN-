@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /cart.html
+Disallow: /account.html
+
+Sitemap: https://uniteddispo.com/sitemap.xml

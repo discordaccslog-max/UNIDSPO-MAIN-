@@ -1,7 +1,11 @@
 # United Dispo — Website
 
-Static site for **Uni Dispo**. Plain HTML, CSS and JavaScript — nothing to
-install, no build step, no server code.
+Static site for **United Dispo**, live at **https://uniteddispo.com** (hosted on Vercel,
+deployed automatically from the `main` branch). Plain HTML, CSS and JavaScript —
+nothing to install, no build step, no server code.
+
+`sitemap.xml` and `robots.txt` point search engines at uniteddispo.com, and every
+page has canonical + link-preview tags using `images/og-image.jpg`.
 
 ## Pages
 

@@ -1,6 +1,6 @@
 {
   "READ_ME_FIRST": [
-    "This is the complete product catalog of the United Dispo store (unidispo.com), exported from Shopify on 2026-11-18. All 20 products are included: 17 active and 3 archived.",
+    "This is the complete product catalog of the United Dispo store (now live at uniteddispo.com), exported on 2026-11-18 from the original Shopify store (unidispo.com). All 20 products are included: 17 active and 3 archived.",
     "Only products with status 'active' and a value in 'shown_on_homepage' appear on the homepage today. Archived products are hidden from shoppers on Shopify; don't show them.",
     "Prices are in USD. Every product has one price for all of its variants. No product is on sale (no compare-at prices).",
     "Strains: for most cartridges and disposables the variant option is literally named 'Options' in Shopify, and its values are the strain types (Hybrid / Sativa / Indica). Some products use upper case (HYBRID / SATIVA / INDICA). Display them consistently.",
@@ -14,7 +14,8 @@
   ],
   "store": {
     "name": "United Dispo",
-    "domain": "unidispo.com",
+    "domain": "uniteddispo.com",
+    "previous_shopify_domain": "unidispo.com",
     "currency": "USD",
     "exported": "2026-11-18",
     "source": "Shopify Admin API"
@@ -174,7 +175,8 @@
       "notes": [
         "The option called \"Options\" is the strain type.",
         "Every buy link on this product points to https://www.youtube.com/, which looks like a placeholder. Replace it with the real buy link."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=ace-ultra-premium-2g"
     },
     {
       "title": "MUHA MEDS (SUMMER EDITION)",
@@ -220,7 +222,8 @@
         "Sold out.",
         "The only photo is the Muha Meds logo, not the product.",
         "The handle has a typo (\"sumer\"). Keep it if old links must keep working."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=muha-meds-sumer-edition"
     },
     {
       "title": "RAW GARDEN LIVE RESIN (1G)",
@@ -296,7 +299,8 @@
       "buy_links": {},
       "notes": [
         "The option called \"Options\" is the strain type."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=raw-garden-live-resin-1g"
     },
     {
       "title": "GEEK BAR PULSE",
@@ -341,7 +345,8 @@
         "Sold out.",
         "The description says \"Geek Bar Pulse X\" and \"Over 10 Flavors\", but this is the regular Pulse and it has no flavor options.",
         "Its handle is geek-bar-pulse-x, while GEEK BAR PULSE X uses geek-bar-pulse. The two handles are swapped."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=geek-bar-pulse-x"
     },
     {
       "title": "GEEK BAR PULSE X",
@@ -649,7 +654,8 @@
         "24 flavors.",
         "Flavor \"Grapefrtuit Refresher\" is misspelled. Flavor names are otherwise copied exactly as entered in Shopify.",
         "Its handle is geek-bar-pulse, while GEEK BAR PULSE uses geek-bar-pulse-x. The two handles are swapped."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=geek-bar-pulse"
     },
     {
       "title": "Boutiq Switch V5",
@@ -721,7 +727,8 @@
         "What the \"Custom\" variant is isn't explained anywhere.",
         "Shopify shows -2 in stock for the Switch variant (oversold), but inventory isn't tracked, so it still shows as available.",
         "Every buy link on this product points to https://www.youtube.com/, which looks like a placeholder. Replace it with the real buy link."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=boutiq-switch-v5"
     },
     {
       "title": "BIG CHIEF CARTRIDGE (2G)",
@@ -767,7 +774,8 @@
       "notes": [
         "Sold out.",
         "The description ends with \"Includes Indica + Sativa (Switch)\", copied from Boutiq Switch V5. Check it applies to this product."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=big-chief"
     },
     {
       "title": "WHOLEMELTS V7",
@@ -823,7 +831,8 @@
         "Sold out.",
         "One variant named SWITCH.",
         "The handle ends in \"-copy\" because it was duplicated in Shopify."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=wholemelts-v7-copy"
     },
     {
       "title": "MUHA MEDS X COOKIES (LIMITED EDITION)",
@@ -901,7 +910,8 @@
       "notes": [
         "The option called \"Options\" is the strain type.",
         "Only Hybrid is in stock (5 left). Sativa and Indica are sold out."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=muha-meds-x-cookies-limited-edition"
     },
     {
       "title": "MUHA MEDS 3RD GEN (NEW)",
@@ -985,7 +995,8 @@
         "The option called \"Options\" is the strain type.",
         "Has a second photo, shown on hover in the product grid.",
         "The handle says \"limited-edition\" though the title says 3rd Gen."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=muha-meds-limited-edition"
     },
     {
       "title": "20PC ACE ULTRA PREMIUM",
@@ -1062,7 +1073,8 @@
       "notes": [
         "The option called \"Options\" is the strain type.",
         "Bulk pack of 20."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=20pc-ace-ultra-premium"
     },
     {
       "title": "10PC RAW GARDEN LIVE RESIN (1G)",
@@ -1139,7 +1151,8 @@
       "notes": [
         "The option called \"Options\" is the strain type.",
         "Bulk pack of 10."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=10pc-raw-garden-live-resin-1g"
     },
     {
       "title": "10PC ACE ULTRA PREMIUM",
@@ -1216,7 +1229,8 @@
       "notes": [
         "The option called \"Options\" is the strain type.",
         "Bulk pack of 10."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=10pc-ace-ultra-premium"
     },
     {
       "title": "10PC MUHA MEDS X COOKIES (LIMITED EDITION)",
@@ -1295,7 +1309,8 @@
         "The option called \"Options\" is the strain type.",
         "Bulk pack of 10.",
         "Only Hybrid is in stock (5 packs). Sativa and Indica are sold out."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=10pc-muha-meds-x-cookies-limited-edition"
     },
     {
       "title": "10PC BOUTIQ SWITCH V5",
@@ -1363,7 +1378,8 @@
         "Bulk pack of 10.",
         "Variants differ from the single Boutiq Switch V5 (Switch / Custom).",
         "The description uses small h5 headings, unlike the h3 used elsewhere."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=10pc-boutiq-switch-v5"
     },
     {
       "title": "10PC WHOLEMELTS V7",
@@ -1417,7 +1433,8 @@
         "Active on Shopify but in no collection, so it isn't on the homepage.",
         "Sold out.",
         "Bulk pack of 10."
-      ]
+      ],
+      "site_url": "https://uniteddispo.com/product.html?id=10pc-wholemelts-v7"
     },
     {
       "title": "Afterlife FC Maroon Away Jersey",

@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product — United Dispo</title>
 <meta name="description" content="Dispensary-sourced, authenticated vape product detail.">
+<link rel="canonical" href="https://uniteddispo.com/product.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="United Dispo">
+<meta property="og:title" content="Product — United Dispo">
+<meta property="og:description" content="Dispensary-sourced, authenticated vape product detail.">
+<meta property="og:url" content="https://uniteddispo.com/product.html">
+<meta property="og:image" content="https://uniteddispo.com/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="United Dispo — dispensary-sourced, delivered">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=Oswald:ital,wght@0,400;0,500;0,700;0,800;1,500;1,700;1,800&amp;display=swap">
@@ -153,7 +167,7 @@
     color: #B9BBC0; margin: 18px 0 10px;
   }
 
-  /* Variants (unidispo.com-style pills: dark outline → white when selected) */
+  /* Variants (original Shopify site style pills: dark outline → white when selected) */
   .pd-variants { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px; }
   .pd-variant {
     padding: 10px 18px; background: transparent;
@@ -176,7 +190,7 @@
   }
   .pd-variant.is-out:hover { border-color: rgba(255,255,255,.14); }
 
-  /* Buy it now — matches unidispo.com spec (Shopify Dawn custom block):
+  /* Buy it now — matches the original Shopify site spec (Shopify Dawn custom block):
        linear-gradient(180deg,#E8C766,#BA9930), 1px #FFD700 border,
        4px radius, 14px vertical padding, 20px top margin, shadow
        0 2px 4px rgba(0,0,0,.2); hover gradient #FFD976→#C8A732 with
@@ -385,7 +399,7 @@
     border-radius: 10px; text-decoration: none; font-weight: 800;
   }
 
-  /* ============ Animations — copied from unidispo.com ============
+  /* ============ Animations — copied from the original Shopify site ============
      Dawn theme tokens:
        --duration-long: .5s
        --duration-extra-long: .6s
@@ -636,6 +650,16 @@
   }
 
   document.title = p.title + ' — United Dispo';
+  (function () {
+    var url = 'https://uniteddispo.com/product.html?id=' + encodeURIComponent(slug);
+    var img = (p.images && p.images[0]) ? new URL(p.images[0], 'https://uniteddispo.com/').href : 'https://uniteddispo.com/images/og-image.jpg';
+    function set(sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); }
+    set('link[rel="canonical"]', 'href', url);
+    set('meta[property="og:url"]', 'content', url);
+    set('meta[property="og:title"]', 'content', p.title + ' — United Dispo');
+    set('meta[property="og:image"]', 'content', img);
+    set('meta[property="og:type"]', 'content', 'product');
+  })();
   var metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute('content', p.description);
 
