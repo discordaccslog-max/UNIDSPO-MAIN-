@@ -164,6 +164,11 @@
     .opt--pay .uni-pay { grid-column: 2 / -1; justify-content: flex-start; flex-wrap: wrap; }
   }
   .opts.is-bad { border-color: var(--err); }
+  .opts[hidden] { display: none; }
+  .ship-empty { display: flex; align-items: center; gap: 12px; padding: 18px; border: 1px dashed var(--line-2); border-radius: 12px; background: rgba(255,255,255,.02); color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .ship-empty[hidden] { display: none; }
+  .ship-empty svg { width: 20px; height: 20px; flex: 0 0 20px; color: var(--dim); }
+  .tot__wait { color: var(--dim); font-weight: 500; font-size: 13px; }
   .opts-err { display: none; margin: 8px 2px 0; color: var(--err); font-size: 12.5px; font-weight: 600; }
   .opts-err.is-on { display: flex; align-items: center; gap: 6px; }
   .opts-err svg { width: 14px; height: 14px; }
@@ -269,7 +274,7 @@
 </main>
 
 <script src="js/products.js?v=20261120a"></script>
-<script src="js/cart.js?v=20261120c"></script>
+<script src="js/cart.js?v=20261120d"></script>
 <script>
 (function () {
   'use strict';
@@ -309,7 +314,7 @@
   /* ---------- Delivery dates (same rule as product pages and cart) ---------- */
   var est = DLV.estimate();
   var std = { a: est.earliest, b: est.latest };
-  var exp = { a: DLV.addBusinessDays(est.ready, 1), b: DLV.addBusinessDays(est.ready, 2) };
+  var exp = { a: est.expressEarliest, b: est.expressLatest };
   function range(r) { return DLV.format(r.a) + ' – ' + DLV.format(r.b); }
   function rangeHtml(r) { return '<span class="nw">' + range(r) + '</span>'; }
 
@@ -343,12 +348,13 @@
         '<div class="chk-wrap" data-f="age"><label class="chk"><input type="checkbox" id="age" aria-describedby="age-err"><span class="chk__box">' + TICK + '</span><span>I confirm I am <b style="color:#fff">21 or older</b>.</span></label><p class="f__err" id="age-err" aria-live="polite"></p></div>' +
       '</section>' +
       '<section class="co-sec" aria-labelledby="h-ship"><div class="co-sec__head"><h2 class="co-h" id="h-ship">Shipping method</h2></div>' +
-        '<fieldset class="opts"><legend class="sr-only">Shipping method</legend>' +
+        '<div class="ship-empty" id="ship-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Enter your shipping address to view available shipping methods.</span></div>' +
+        '<fieldset class="opts" id="ship-opts" hidden><legend class="sr-only">Shipping method</legend>' +
           '<label class="opt"><input type="radio" name="ship" value="standard" checked><span class="opt__radio">' + TICK + '</span><span class="opt__icon">' + truck + '</span>' +
-            '<span class="opt__body"><span class="opt__name">Standard USPS Shipping</span><ul class="opt__lines"><li>2–4 business days</li><li>Estimated delivery ' + rangeHtml(std) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
+            '<span class="opt__body"><span class="opt__name">Standard USPS Shipping</span><ul class="opt__lines"><li>3–4 business days</li><li>Estimated delivery ' + rangeHtml(std) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
             '<span class="pill pill--free">Free</span></label>' +
           '<label class="opt"><input type="radio" name="ship" value="express"><span class="opt__radio">' + TICK + '</span><span class="opt__icon">' + bolt + '</span>' +
-            '<span class="opt__body"><span class="opt__name">Express FedEx Shipping <span class="pill pill--fast">Fastest</span></span><ul class="opt__lines"><li>1–2 business days</li><li>Estimated delivery ' + rangeHtml(exp) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
+            '<span class="opt__body"><span class="opt__name">Express FedEx Shipping <span class="pill pill--fast">Fastest</span></span><ul class="opt__lines"><li>1–3 business days</li><li>Estimated delivery ' + rangeHtml(exp) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
             '<span class="opt__price">' + fmt.format(EXPRESS_PRICE) + '</span></label>' +
         '</fieldset>' +
       '</section>' +
@@ -397,21 +403,31 @@
   barPanel.innerHTML = summaryHtml('-m');
 
   function shipChoice() { var r = document.querySelector('input[name="ship"]:checked'); return r ? r.value : 'standard'; }
+  /* Shipping methods appear once a full address is entered */
+  var ADDR = ['address', 'city', 'state', 'zip'];
+  function addrReady() { return ADDR.every(function (k) { var el = $('#' + k); return el && !RULES[k](el.value.trim()); }); }
+  function updateShip() {
+    var ok = addrReady();
+    $('#ship-opts').hidden = !ok;
+    $('#ship-empty').hidden = ok;
+    paint();
+  }
   function totals() {
-    var sub = Number(line.price) || 0, ship = shipChoice() === 'express' ? EXPRESS_PRICE : 0, prot = C.protection() ? C.protectionPrice : 0;
+    var ready = addrReady();
+    var sub = Number(line.price) || 0, ship = ready && shipChoice() === 'express' ? EXPRESS_PRICE : 0, prot = C.protection() ? C.protectionPrice : 0;
     return { sub: sub, ship: ship, prot: prot, total: sub + ship + prot };
   }
   function paint() {
     var t = totals();
     document.querySelectorAll('[data-total]').forEach(function (el) { el.textContent = fmt.format(t.total); });
-    document.querySelectorAll('[data-ship]').forEach(function (el) { el.innerHTML = t.ship ? fmt.format(t.ship) : '<span class="tot__free">Free</span>'; });
+    var ready = addrReady();
+    document.querySelectorAll('[data-ship]').forEach(function (el) { el.innerHTML = !ready ? '<span class="tot__wait">Enter shipping address</span>' : (t.ship ? fmt.format(t.ship) : '<span class="tot__free">Free</span>'); });
     document.querySelectorAll('[data-prot-row]').forEach(function (el) { el.style.display = t.prot ? '' : 'none'; });
     document.querySelectorAll('[data-uni-protect]').forEach(function (el) { el.checked = !!t.prot; });
   }
   document.querySelectorAll('[data-uni-protect]').forEach(function (el) { el.addEventListener('change', function () { C.setProtection(el.checked); }); });
   C.onChange(paint);
   document.querySelectorAll('input[name="ship"]').forEach(function (r) { r.addEventListener('change', paint); });
-  paint();
 
   /* discount codes: none are active yet */
   document.querySelectorAll('[data-disc]').forEach(function (btn) {
@@ -466,6 +482,8 @@
     el.addEventListener('input', function () { if (el.closest('.is-bad')) check(k); });
     el.addEventListener('change', function () { if (el.closest('.is-bad')) check(k); });
   });
+  ADDR.forEach(function (k) { var el = $('#' + k); el.addEventListener('input', updateShip); el.addEventListener('change', updateShip); });
+  updateShip();
   $('#age').addEventListener('change', function () { if (this.checked) setErr('age', ''); });
   document.querySelectorAll('input[name="pay"]').forEach(function (r) {
     r.addEventListener('change', function () { $('#pay-opts').classList.remove('is-bad'); var e = $('#pay-err'); e.classList.remove('is-on'); e.innerHTML = ''; });

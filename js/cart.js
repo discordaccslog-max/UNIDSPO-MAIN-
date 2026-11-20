@@ -120,14 +120,16 @@
   /* ---------- Delivery estimate (shared) ----------
      Packed the next business day (one day later if ordered after the
      cutoff on a business day; weekend/holiday orders are packed the next
-     business day), then 2-4 business days in transit. Pacific time.
+     business day), then 3-4 business days in transit by USPS (1-3 by FedEx
+     Express). Pacific time.
      Weekends and USPS holidays are skipped. */
   var UNI_DELIVERY = {
     settings: {
       timeZone: 'America/Los_Angeles',
       cutoffHour: 14,          /* 2 PM Pacific */
       packDays: 1,             /* business days from order to "Order Ready" */
-      transitDays: [2, 4],     /* business days from "Order Ready" to delivery */
+      transitDays: [3, 4],     /* USPS: business days from "Order Ready" to delivery */
+      expressTransitDays: [1, 3], /* FedEx Express (checkout option) */
       holidays: ['2026-11-26', '2026-12-25', '2027-01-01', '2027-01-18', '2027-02-15', '2027-05-31',
                  '2027-06-18', '2027-07-05', '2027-09-06', '2027-10-11', '2027-11-11', '2027-11-25', '2027-12-24', '2027-12-31']
     },
@@ -151,7 +153,9 @@
         order: order,
         ready: ready,
         earliest: UNI_DELIVERY.addBusinessDays(ready, S.transitDays[0]),
-        latest: UNI_DELIVERY.addBusinessDays(ready, S.transitDays[1])
+        latest: UNI_DELIVERY.addBusinessDays(ready, S.transitDays[1]),
+        expressEarliest: UNI_DELIVERY.addBusinessDays(ready, S.expressTransitDays[0]),
+        expressLatest: UNI_DELIVERY.addBusinessDays(ready, S.expressTransitDays[1])
       };
     },
     format: function (dt) {
