@@ -51,7 +51,8 @@ var UNI_PRODUCTS = {
     {"title": "20PC ACE ULTRA PREMIUM", "url": "product.html?id=20pc-ace-ultra-premium", "price": 205.99, "compareAt": null, "priceMax": 205.99, "variants": 4, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/20pc-ace-ultra.webp", "width": 640, "height": 640}, "buyUrl": ""},
     {"title": "10PC MUHA MEDS X COOKIES (LIMITED EDITION)", "url": "product.html?id=10pc-muha-meds-x-cookies-limited-edition", "price": 145.99, "compareAt": null, "priceMax": 145.99, "variants": 4, "available": true, "image": {"src": "images/10pc-muha-cookies.webp", "width": 796, "height": 796}, "buyUrl": ""},
     {"title": "10PC RAW GARDEN LIVE RESIN (1G)", "url": "product.html?id=10pc-raw-garden-live-resin-1g", "price": 195.99, "compareAt": null, "priceMax": 195.99, "variants": 4, "available": false, "soldOutNote": "Temporarily unavailable due to low stock", "image": {"src": "images/10pc-raw-garden.webp", "width": 1024, "height": 1024}, "buyUrl": ""},
-    {"title": "10PC BOUTIQ SWITCH V5", "url": "product.html?id=10pc-boutiq-switch-v5", "price": 135.99, "compareAt": null, "priceMax": 135.99, "variants": 3, "available": true, "image": {"src": "images/10pc-boutiq-v5.webp", "width": 1201, "height": 1201}, "buyUrl": ""}
+    {"title": "10PC BOUTIQ SWITCH V5", "url": "product.html?id=10pc-boutiq-switch-v5", "price": 135.99, "compareAt": null, "priceMax": 135.99, "variants": 3, "available": true, "image": {"src": "images/10pc-boutiq-v5.webp", "width": 1201, "height": 1201}, "buyUrl": ""},
+    {"title": "10PC WHOLEMELTS V7", "url": "product.html?id=10pc-wholemelts-v7", "price": 120.99, "compareAt": null, "priceMax": 120.99, "variants": 1, "available": false, "image": {"src": "images/wholemelts.webp", "width": 1024, "height": 1024}, "buyUrl": ""}
   ]
 };
 
@@ -80,7 +81,7 @@ var UNI_GRIDS = {
     headerHtml: '<div class="hm-head hm-sec"><div class="hm-head__copy"><span class="hm-kicker">Bulk &amp; Save</span><h2 class="hm-h2" id="uni-pg-2-title">Buy in bulk. <em>Pay less per unit.</em></h2><p class="hm-lead">10 and 20-packs with every unit sealed and verified. Need a larger order? Contact us for a quote.</p></div><a class="hm-link" href="contact.html">Request a bulk quote<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>',
     soldOutLast: false,        // false = keep the order of UNI_PRODUCTS.bulk above
     perUnit: true,             // "$12.60 / unit" pill from the "10PC" / "20PC" in the title
-    columnsDesktop: 5,
+    columnsDesktop: 6,
     columnsMobile: 2,
     imageRatio: "square",
     secondaryImage: false,

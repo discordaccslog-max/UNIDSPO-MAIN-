@@ -479,3 +479,8 @@
   .uni-pg .uni-pg__note{margin:6px 0 0;color:#E8A54F;font-size:13px;font-weight:600;line-height:1.45;letter-spacing:.2px}
   .uni-pg .uni-pg__unit{display:block;width:max-content;margin-top:6px;padding:2px 9px;border-radius:999px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);color:#FFD976;font-size:12.5px;font-weight:700;letter-spacing:.3px;line-height:1.6}
   .uni-pg .uni-pg__unit{padding:0;background:none;border:0;border-radius:0;color:#FFD976;font-size:13.5px;letter-spacing:.2px}
+
+/* Bulk: 6 across on wide screens, 3 across on tablets/small laptops */
+@media screen and (min-width: 750px) and (max-width: 1199px) {
+  .uni-pg[data-uni-grid="bulk"] .uni-pg__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

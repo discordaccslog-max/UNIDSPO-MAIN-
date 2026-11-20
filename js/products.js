@@ -316,12 +316,20 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 120.99,
     compareAt: null,
-    variants: [],
+    variants: ["SWITCH"],
+    variantLabel: "Options",
     available: false,
     images: [
       "images/wholemelts.webp"
     ],
-    description: "10-pack Wholemelts V7 live resin disposables. Sold out — restock pending."
+    description: "10-pack Wholemelts V7 live resin disposables. Terpene-forward, tamper-evident packaging.",
+    highlights: [
+      "**Dispensary-sourced & batch-verified**",
+      "**Lab-tested** for potency and safety",
+      "**No fillers, no additives**",
+      "**Premium Quality**"
+    ],
+    related: ["wholemelts-v7-copy", "10pc-boutiq-switch-v5", "10pc-ace-ultra-premium", "10pc-muha-meds-x-cookies-limited-edition"]
   }
 };
 
