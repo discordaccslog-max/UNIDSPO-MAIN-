@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — United Dispo</title>
+<meta name="description" content="Secure checkout — United Dispo.">
+<link rel="canonical" href="https://uniteddispo.com/checkout.html">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=Oswald:wght@400;500;600;700&amp;display=swap">
+<style>
+  :root {
+    --bg: #0e0e10;
+    --side: #151517;
+    --field: #17181a;
+    --line: rgba(255,255,255,.10);
+    --line-2: rgba(255,255,255,.16);
+    --text: #f2f2f3;
+    --muted: #9ea0a6;
+    --dim: #8e9096;
+    --gold: #d4af37;
+    --gold-hi: #ffd976;
+    --err: #ff8a80;
+    --ok: #7fd3a8;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 500 15px/1.5 "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  button, input, select { font: inherit; color: inherit; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* ---------- Header ---------- */
+  .co-head { background: #000; border-bottom: 1px solid var(--line); }
+  .co-head__in { max-width: 1180px; margin: 0 auto; padding: 22px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .co-logo { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 30px; letter-spacing: .16em; text-decoration: none; color: #fff; white-space: nowrap; }
+  .co-tp { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-decoration: none; }
+  .co-tp__row { display: flex; align-items: center; gap: 8px; }
+  .co-tp__brand { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-size: 15px; color: #fff; }
+  .co-tp__brand svg { width: 18px; height: 18px; }
+  .co-tp__boxes { display: inline-flex; gap: 2px; }
+  .co-tp__boxes i { width: 19px; height: 19px; display: grid; place-items: center; background: #00b67a; }
+  .co-tp__boxes i.is-part { background: linear-gradient(90deg, #00b67a 70%, #dcdce6 70%); }
+  .co-tp__boxes svg { width: 13px; height: 13px; color: #fff; }
+  .co-tp__score { font-weight: 700; font-size: 14px; color: #fff; }
+  .co-tp__sub { font-size: 12.5px; color: var(--muted); }
+  .co-tp__sub b { color: #fff; }
+
+  /* ---------- Layout ---------- */
+  .co { display: grid; grid-template-columns: minmax(0, 55fr) minmax(0, 45fr); min-height: calc(100vh - 90px); }
+  .co-main { padding: 44px 56px 72px 32px; display: flex; justify-content: flex-end; }
+  .co-main__in { width: 100%; max-width: 560px; }
+  .co-side { background: var(--side); border-left: 1px solid var(--line); padding: 44px 32px 72px 48px; }
+  .co-side__in { width: 100%; max-width: 420px; position: sticky; top: 28px; }
+
+  /* Mobile summary bar */
+  .co-bar { display: none; }
+
+  @media (max-width: 999px) {
+    .co { grid-template-columns: 1fr; }
+    .co-main { padding: 28px 20px 56px; justify-content: center; }
+    .co-side { display: none; }
+    .co-bar { display: block; background: var(--side); border-bottom: 1px solid var(--line); }
+    .co-bar__btn { width: 100%; min-height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 20px; background: none; border: 0; cursor: pointer; }
+    .co-bar__label { display: inline-flex; align-items: center; gap: 8px; color: var(--gold-hi); font-weight: 700; font-size: 14.5px; }
+    .co-bar__label svg { width: 18px; height: 18px; transition: transform .2s ease; }
+    .co-bar__btn[aria-expanded="true"] .co-bar__label svg.co-bar__chev { transform: rotate(180deg); }
+    .co-bar__total { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 20px; letter-spacing: .3px; color: #fff; }
+    .co-bar__panel { padding: 20px 20px 22px; border-top: 1px solid var(--line); }
+    .co-bar__panel[hidden] { display: none; }
+    .co-head__in { padding: 16px 20px; }
+    .co-logo { font-size: 22px; }
+  }
+  @media (max-width: 560px) {
+    .co-head__in { flex-direction: column; gap: 10px; }
+    .co-tp { align-items: center; }
+  }
+
+  /* ---------- Sections ---------- */
+  .co-sec + .co-sec { margin-top: 38px; }
+  .co-sec__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 14px; }
+  .co-h { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: .1px; color: #fff; }
+  .co-sec__note { margin: -6px 0 14px; color: var(--muted); font-size: 13.5px; }
+  .co-row { display: grid; gap: 12px; }
+  .co-row + .co-row, .co-row + .f, .f + .co-row, .f + .f { margin-top: 12px; }
+  .co-row > .f { margin-top: 0 !important; }
+  .co-row--2 { grid-template-columns: 1fr 1fr; }
+  .co-row--3 { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 480px) { .co-row--3 { grid-template-columns: 1fr 1fr; } .co-row--3 .f:first-child { grid-column: 1 / -1; } }
+
+  /* ---------- Fields (floating labels) ---------- */
+  .f { position: relative; }
+  .f__in { display: block; width: 100%; height: 54px; padding: 22px 14px 7px; background: var(--field); border: 1px solid var(--line-2); border-radius: 8px; color: var(--text); font-size: 15px; font-weight: 500; outline: none; appearance: none; -webkit-appearance: none; transition: border-color .15s ease, box-shadow .15s ease; }
+  .f__in::placeholder { color: transparent; }
+  .f__lab { position: absolute; left: 15px; top: 17px; color: var(--dim); font-size: 15px; font-weight: 500; pointer-events: none; transform-origin: left top; transition: top .15s ease, font-size .15s ease, color .15s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 30px); }
+  .f__in:focus + .f__lab, .f__in:not(:placeholder-shown) + .f__lab, .f--select .f__lab { top: 8px; font-size: 11.5px; font-weight: 600; letter-spacing: .02em; }
+  .f__in:hover { border-color: rgba(255,255,255,.26); }
+  .f__in:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,.22); }
+  .f__in:focus + .f__lab { color: var(--gold-hi); }
+  .f--select .f__in { padding-right: 40px; cursor: pointer; }
+  .f--select::after { content: ""; position: absolute; right: 16px; top: 23px; width: 8px; height: 8px; border-right: 1.6px solid var(--muted); border-bottom: 1.6px solid var(--muted); transform: rotate(45deg); pointer-events: none; }
+  .f--select select option { background: #17181a; color: #f2f2f3; }
+  .f.is-bad .f__in { border-color: var(--err); box-shadow: 0 0 0 3px rgba(255,138,128,.14); }
+  .f__err { display: none; margin: 6px 2px 0; color: var(--err); font-size: 12.5px; font-weight: 600; }
+  .f.is-bad .f__err { display: flex; align-items: center; gap: 6px; }
+  .f__err svg { width: 14px; height: 14px; flex: 0 0 14px; }
+
+  /* Checkboxes */
+  .chk { display: flex; align-items: flex-start; gap: 11px; margin-top: 14px; color: #d5d6d9; font-size: 14px; cursor: pointer; line-height: 1.45; }
+  .chk input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chk__box { width: 20px; height: 20px; flex: 0 0 20px; margin-top: 0; border: 1.5px solid rgba(255,255,255,.3); border-radius: 5px; display: grid; place-items: center; background: var(--field); transition: background .15s ease, border-color .15s ease; }
+  .chk__box svg { width: 13px; height: 13px; color: #111; opacity: 0; transition: opacity .15s ease; }
+  .chk input:checked + .chk__box { background: linear-gradient(180deg, #e8c766, #ba9930); border-color: #e8c766; }
+  .chk input:checked + .chk__box svg { opacity: 1; }
+  .chk input:focus-visible + .chk__box { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+  .chk-wrap.is-bad .chk__box { border-color: var(--err); }
+  .chk-wrap .f__err { margin-left: 31px; }
+  .chk-wrap.is-bad .f__err { display: flex; align-items: center; gap: 6px; }
+
+  /* ---------- Option cards (shipping + payment) ---------- */
+  .opts { display: grid; gap: 12px; margin: 0; padding: 0; border: 0; }
+  .opt { position: relative; display: grid; grid-template-columns: 22px 42px 1fr auto; align-items: start; gap: 14px; padding: 18px; background: var(--field); border: 1px solid var(--line-2); border-radius: 12px; cursor: pointer; transition: border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease; }
+  .opt:hover { border-color: rgba(255,255,255,.3); transform: translateY(-1px); }
+  .opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .opt__radio { width: 22px; height: 22px; margin-top: 10px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); display: grid; place-items: center; transition: background .15s ease, border-color .15s ease; }
+  .opt__radio svg { width: 12px; height: 12px; color: #111; opacity: 0; }
+  .opt__icon { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; background: #202124; color: #e6e6e8; }
+  .opt__icon svg { width: 21px; height: 21px; }
+  .opt__body { min-width: 0; }
+  .opt__name { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: #fff; font-weight: 700; font-size: 15.5px; line-height: 1.35; padding-top: 2px; }
+  .opt__lines { margin: 6px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+  .opt__lines .ok { display: inline-flex; align-items: center; gap: 6px; color: #c9cbd0; }
+  .opt__lines .ok svg { width: 13px; height: 13px; color: var(--ok); }
+  .opt__price { color: #fff; font-weight: 800; font-size: 15.5px; padding-top: 2px; white-space: nowrap; }
+  .pill { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .pill--free { background: rgba(127,211,168,.14); color: var(--ok); }
+  .pill--fast { background: linear-gradient(180deg, #e8c766, #ba9930); color: #111; }
+  .opt:has(input:checked) { border: 1.5px solid var(--gold); background: linear-gradient(180deg, rgba(212,175,55,.08), rgba(212,175,55,.02)), var(--field); box-shadow: 0 10px 26px rgba(0,0,0,.28); }
+  .opt:has(input:checked) .opt__radio { background: linear-gradient(180deg, #e8c766, #ba9930); border-color: #e8c766; }
+  .opt:has(input:checked) .opt__radio svg { opacity: 1; }
+  .opt:has(input:checked) .opt__icon { background: rgba(212,175,55,.12); color: var(--gold-hi); }
+  .opt:has(input:focus-visible) { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+  .opt--pay { grid-template-columns: 22px 1fr auto; align-items: center; }
+  .opt--pay .opt__radio { margin-top: 0; }
+  .opt--pay .opt__name { padding-top: 0; }
+  .opt--pay .opt__name { white-space: nowrap; }
+  .opt--pay .uni-pay { justify-content: flex-end; flex-wrap: nowrap; }
+  .nw { white-space: nowrap; }
+  .opt__more { grid-column: 2 / -1; display: none; margin: 2px 0 0; color: var(--muted); font-size: 13.5px; }
+  .opt--pay:has(input:checked) .opt__more { display: flex; align-items: center; gap: 8px; }
+  .opt__more svg { width: 15px; height: 15px; color: var(--gold); flex: 0 0 15px; }
+  @media (max-width: 560px) {
+    .opt { grid-template-columns: 22px 1fr auto; padding: 16px 14px; gap: 12px; }
+    .opt__icon { display: none; }
+    .opt__radio { margin-top: 2px; }
+    .opt--pay { grid-template-columns: 22px 1fr; }
+    .opt--pay .opt__name { white-space: normal; }
+    .opt--pay .uni-pay { grid-column: 2 / -1; justify-content: flex-start; flex-wrap: wrap; }
+  }
+  .opts.is-bad .opt { border-color: var(--err); }
+  .opts-err { display: none; margin: 8px 2px 0; color: var(--err); font-size: 12.5px; font-weight: 600; }
+  .opts-err.is-on { display: flex; align-items: center; gap: 6px; }
+  .opts-err svg { width: 14px; height: 14px; }
+
+  /* ---------- Pay ---------- */
+  .co-pay { width: 100%; min-height: 60px; margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 12px; border: 1px solid #ffd700; border-radius: 999px; background: linear-gradient(180deg, #e8c766, #ba9930); color: #111; font-family: "Oswald", sans-serif; font-weight: 500; font-size: 21px; letter-spacing: 1.6px; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 30px rgba(186,153,48,.3); transition: background .15s ease, box-shadow .15s ease, transform .1s ease; }
+  .co-pay:hover { background: linear-gradient(180deg, #ffd976, #c8a732); box-shadow: 0 16px 34px rgba(212,175,55,.4); }
+  .co-pay:active { transform: translateY(1px); }
+  .co-pay:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .co-pay svg { width: 20px; height: 20px; }
+  .co-pay[disabled] { opacity: .7; cursor: progress; }
+  .co-pay__spin { width: 20px; height: 20px; border: 2.5px solid rgba(17,17,17,.3); border-top-color: #111; border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .co-secure { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 14px 0 0; color: var(--muted); font-size: 13px; }
+  .co-secure svg { width: 14px; height: 14px; color: var(--gold); }
+  .co-foot { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; font-size: 13.5px; }
+  .co-foot a { color: var(--gold-hi); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
+  .co-foot a:hover { text-decoration: underline; }
+  .co-foot a svg { width: 15px; height: 15px; }
+  .co-foot span { color: var(--dim); display: inline-flex; align-items: center; }
+
+  /* ---------- Summary ---------- */
+  .sum-line { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 14px; }
+  .sum-thumb { position: relative; width: 64px; height: 64px; border-radius: 10px; background: #0f0f10; border: 1px solid var(--line); }
+  .sum-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; display: block; }
+  .sum-thumb__q { position: absolute; top: -8px; right: -8px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: #e8c766; color: #111; font-size: 12px; font-weight: 800; display: grid; place-items: center; border: 2px solid var(--side); }
+  .sum-title { margin: 0; color: #fff; font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+  .sum-var { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .sum-price { color: #fff; font-weight: 700; font-size: 14.5px; white-space: nowrap; }
+  .sum-rest { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; background: rgba(255,255,255,.04); color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+  .sum-rest b { color: #d5d6d9; }
+  .disc { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 22px; }
+  .disc .f__in { height: 50px; padding-top: 20px; }
+  .disc .f__lab { top: 15px; }
+  .disc .f__in:focus + .f__lab, .disc .f__in:not(:placeholder-shown) + .f__lab { top: 7px; }
+  .disc__btn { min-width: 92px; min-height: 50px; padding: 0 18px; border-radius: 8px; border: 1px solid var(--line-2); background: #232427; color: #e6e6e8; font-weight: 800; font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: background .15s ease, border-color .15s ease; }
+  .disc__btn:hover { border-color: rgba(212,175,55,.6); color: var(--gold-hi); }
+  .disc__msg { grid-column: 1 / -1; margin: 0; font-size: 12.5px; font-weight: 600; color: var(--err); }
+  .disc__msg[hidden] { display: none; }
+  .sum-prot { margin-top: 18px; }
+  .sum-prot .uni-prot { margin: 0; background: #1b1c1e; }
+  .tot { margin: 20px 0 0; padding: 0; }
+  .tot div { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; color: #d5d6d9; font-size: 14px; }
+  .tot dt { margin: 0; } .tot dd { margin: 0; color: #fff; font-weight: 600; }
+  .tot .tot__free { color: var(--ok); font-weight: 700; }
+  .tot .tot__grand { align-items: baseline; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .tot .tot__grand dt { color: #fff; font-size: 17px; font-weight: 800; }
+  .tot .tot__grand dd { font-family: "Oswald", sans-serif; font-size: 26px; font-weight: 500; letter-spacing: .3px; }
+  .tot .tot__grand dd small { margin-right: 6px; font-family: "Figtree", sans-serif; font-size: 12px; font-weight: 600; color: var(--dim); letter-spacing: .04em; }
+  .trust { list-style: none; margin: 24px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: grid; gap: 16px; }
+  .trust li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; }
+  .trust svg { width: 20px; height: 20px; color: var(--gold); margin-top: 1px; }
+  .trust b { display: block; color: #fff; font-size: 14px; font-weight: 700; line-height: 1.35; }
+  .trust span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+  /* ---------- Confirmation + empty ---------- */
+  .done { text-align: left; }
+  .done__icon { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: rgba(212,175,55,.12); color: var(--gold-hi); margin-bottom: 18px; }
+  .done__icon svg { width: 30px; height: 30px; }
+  .done__kicker { margin: 0; color: var(--gold-hi); font-size: 12.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .done__h { margin: 6px 0 10px; font-family: "Oswald", sans-serif; font-weight: 500; font-size: 36px; line-height: 1.15; color: #fff; }
+  .done__p { margin: 0; color: #c9cbd0; font-size: 15.5px; line-height: 1.65; }
+  .done__p b { color: #fff; }
+  .done__card { margin-top: 24px; padding: 18px 20px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--field); display: grid; gap: 12px; }
+  .done__card div { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--muted); }
+  .done__card div b { color: #fff; text-align: right; }
+  .done__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; margin-top: 26px; padding: 0 30px; border-radius: 999px; border: 1px solid #ffd700; background: linear-gradient(180deg, #e8c766, #ba9930); color: #111; font-family: "Oswald", sans-serif; font-size: 17px; letter-spacing: 1.2px; text-transform: uppercase; text-decoration: none; }
+  .done__btn:hover { background: linear-gradient(180deg, #ffd976, #c8a732); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    .opt:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="co-head">
+  <div class="co-head__in">
+    <a class="co-logo" href="index.html" aria-label="United Dispo home">UNITED DISPO</a>
+    <a class="co-tp" href="index.html#reviews" aria-label="Rated Excellent, 4.7 out of 5 on Trustpilot">
+      <span class="co-tp__row">
+        <span class="co-tp__brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M17.227 16.67l2.19 6.742-7.413-5.388 5.223-1.354zM24 9.31h-9.165L12.005.589l-2.84 8.723L0 9.3l7.422 5.397-2.84 8.714 7.422-5.388 4.583-3.326L24 9.311z"/></svg>Trustpilot</span>
+        <span class="co-tp__boxes" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i class="is-part"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i></span>
+        <span class="co-tp__score">4.7</span>
+      </span>
+      <span class="co-tp__sub">Rated Excellent by <b>6,000+</b> customers</span>
+    </a>
+  </div>
+</header>
+
+<div class="co-bar" id="co-bar">
+  <button type="button" class="co-bar__btn" aria-expanded="false" aria-controls="co-bar-panel">
+    <span class="co-bar__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="co-bar__text">Show order summary</span><svg class="co-bar__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+    <span class="co-bar__total" data-total></span>
+  </button>
+  <div class="co-bar__panel" id="co-bar-panel" hidden></div>
+</div>
+
+<main class="co" id="co">
+  <div class="co-main"><div class="co-main__in" id="co-main"></div></div>
+  <aside class="co-side" aria-label="Order summary"><div class="co-side__in" id="co-side"></div></aside>
+</main>
+
+<script src="js/products.js?v=20261120a"></script>
+<script src="js/cart.js?v=20261120c"></script>
+<script>
+(function () {
+  'use strict';
+  var C = window.UNI_CART, DLV = window.UNI_DELIVERY, CAT = window.UNI_CATALOG || {};
+  var EXPRESS_PRICE = 5.99, INFO_KEY = 'uni_checkout_info_v1';
+  var fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+  function $(s, r) { return (r || document).querySelector(s); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var ERR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v5.5M12 16.5v.5"/></svg>';
+  var TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var SMALL_TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  /* ---------- Which item is being checked out (one product per order) ---------- */
+  var q = new URLSearchParams(location.search);
+  var slug = q.get('id') || '', variant = q.get('v') || '';
+  var cart = C.get();
+  function same(it) { return it.slug === slug && (it.variant || '') === variant; }
+  var line = slug ? cart.filter(same)[0] : (cart.length === 1 ? cart[0] : null);
+  if (!line && slug && CAT[slug]) {
+    var P = CAT[slug];
+    line = { slug: slug, title: P.title, price: P.price, variant: variant, qty: 1, image: (P.images || [])[0] || '' };
+  }
+  var main = $('#co-main'), side = $('#co-side');
+
+  if (!line) {
+    $('#co-bar').style.display = 'none';
+    $('#co').style.gridTemplateColumns = '1fr';
+    document.querySelector('.co-side').style.display = 'none';
+    main.parentNode.style.justifyContent = 'center';
+    main.innerHTML = '<div class="done"><p class="done__kicker">Checkout</p><h1 class="done__h">Nothing to check out yet</h1>' +
+      '<p class="done__p">' + (cart.length > 1 ? 'Each order holds one item. Open your cart and choose <b>Check out this item</b> on the one you want first.' : 'Your cart is empty. Find something you like and come back here to check out.') + '</p>' +
+      '<a class="done__btn" href="' + (cart.length > 1 ? 'cart.html' : 'catalog.html') + '">' + (cart.length > 1 ? 'Go to cart' : 'Shop all products') + '</a></div>';
+    return;
+  }
+  var others = cart.filter(function (it) { return !(it.slug === line.slug && (it.variant || '') === (line.variant || '')); }).length;
+
+  /* ---------- Delivery dates (same rule as product pages and cart) ---------- */
+  var est = DLV.estimate();
+  var std = { a: est.earliest, b: est.latest };
+  var exp = { a: DLV.addBusinessDays(est.ready, 1), b: DLV.addBusinessDays(est.ready, 2) };
+  function range(r) { return DLV.format(r.a) + ' – ' + DLV.format(r.b); }
+  function rangeHtml(r) { return '<span class="nw">' + range(r) + '</span>'; }
+
+  /* ---------- Form ---------- */
+  var STATES = [['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['DC','District of Columbia'],['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']];
+  function field(id, label, type, ac, extra) {
+    return '<div class="f" data-f="' + id + '"><input class="f__in" id="' + id + '" name="' + id + '" type="' + type + '" autocomplete="' + ac + '" placeholder=" " aria-describedby="' + id + '-err"' + (extra || '') + '>' +
+      '<label class="f__lab" for="' + id + '">' + label + '</label><p class="f__err" id="' + id + '-err" aria-live="polite"></p></div>';
+  }
+  var stateOpts = '<option value="" disabled selected hidden></option>' + STATES.map(function (s) { return '<option value="' + s[0] + '">' + s[1] + '</option>'; }).join('');
+  var truck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg>';
+  var bolt = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>';
+  var lock = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="11" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>';
+
+  main.innerHTML =
+    '<form id="co-form" novalidate>' +
+      '<section class="co-sec" aria-labelledby="h-contact"><div class="co-sec__head"><h2 class="co-h" id="h-contact">Contact</h2></div>' +
+        field('email', 'Email', 'email', 'email', ' inputmode="email" required') +
+        '<p class="co-sec__note" style="margin:8px 2px 0">Your order confirmation and tracking number go here.</p>' +
+      '</section>' +
+      '<section class="co-sec" aria-labelledby="h-delivery"><div class="co-sec__head"><h2 class="co-h" id="h-delivery">Delivery</h2></div>' +
+        '<div class="f f--select"><select class="f__in" id="country" name="country" autocomplete="country"><option value="US" selected>United States</option></select><label class="f__lab" for="country">Country/Region</label></div>' +
+        '<div class="co-row co-row--2">' + field('first', 'First name', 'text', 'given-name', ' required') + field('last', 'Last name', 'text', 'family-name', ' required') + '</div>' +
+        field('address', 'Address', 'text', 'address-line1', ' required') +
+        field('apt', 'Apartment, suite, etc. (optional)', 'text', 'address-line2') +
+        '<div class="co-row co-row--3">' + field('city', 'City', 'text', 'address-level2', ' required') +
+          '<div class="f f--select" data-f="state"><select class="f__in" id="state" name="state" autocomplete="address-level1" required aria-describedby="state-err">' + stateOpts + '</select><label class="f__lab" for="state">State</label><p class="f__err" id="state-err" aria-live="polite"></p></div>' +
+          field('zip', 'ZIP code', 'text', 'postal-code', ' inputmode="numeric" maxlength="10" required') + '</div>' +
+        field('phone', 'Phone', 'tel', 'tel', ' inputmode="tel" required') +
+        '<label class="chk"><input type="checkbox" id="save"><span class="chk__box">' + TICK + '</span><span>Save this information for next time</span></label>' +
+        '<div class="chk-wrap" data-f="age"><label class="chk"><input type="checkbox" id="age" aria-describedby="age-err"><span class="chk__box">' + TICK + '</span><span>I confirm I am <b style="color:#fff">21 or older</b>. An adult signature may be required at delivery.</span></label><p class="f__err" id="age-err" aria-live="polite"></p></div>' +
+      '</section>' +
+      '<section class="co-sec" aria-labelledby="h-ship"><div class="co-sec__head"><h2 class="co-h" id="h-ship">Shipping method</h2></div>' +
+        '<fieldset class="opts"><legend class="sr-only">Shipping method</legend>' +
+          '<label class="opt"><input type="radio" name="ship" value="standard" checked><span class="opt__radio">' + TICK + '</span><span class="opt__icon">' + truck + '</span>' +
+            '<span class="opt__body"><span class="opt__name">Standard USPS Shipping</span><ul class="opt__lines"><li>2–4 business days</li><li>Estimated delivery ' + rangeHtml(std) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
+            '<span class="pill pill--free">Free</span></label>' +
+          '<label class="opt"><input type="radio" name="ship" value="express"><span class="opt__radio">' + TICK + '</span><span class="opt__icon">' + bolt + '</span>' +
+            '<span class="opt__body"><span class="opt__name">Express FedEx Shipping <span class="pill pill--fast">Fastest</span></span><ul class="opt__lines"><li>1–2 business days</li><li>Estimated delivery ' + rangeHtml(exp) + '</li><li class="ok">' + SMALL_TICK + 'Tracking number provided</li></ul></span>' +
+            '<span class="opt__price">' + fmt.format(EXPRESS_PRICE) + '</span></label>' +
+        '</fieldset>' +
+      '</section>' +
+      '<section class="co-sec" aria-labelledby="h-pay"><div class="co-sec__head"><h2 class="co-h" id="h-pay">Payment</h2></div>' +
+        '<p class="co-sec__note">All transactions are secure and encrypted.</p>' +
+        '<fieldset class="opts" id="pay-opts" aria-describedby="pay-err"><legend class="sr-only">Payment method</legend>' +
+          '<label class="opt opt--pay"><input type="radio" name="pay" value="card"><span class="opt__radio">' + TICK + '</span>' +
+            '<span class="opt__name">Credit / Debit Card / Apple Pay</span>' +
+          '</label>' +
+        '</fieldset>' +
+        '<p class="opts-err" id="pay-err" aria-live="polite"></p>' +
+      '</section>' +
+      '<button type="submit" class="co-pay" id="co-pay">' + lock + '<span class="co-pay__label">Pay now</span></button>' +
+      '<p class="co-secure">' + lock + '256-bit SSL encrypted checkout</p>' +
+      '<div class="co-foot"><a href="cart.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Return to cart</a><span>Questions? <a href="contact.html" style="min-height:0;margin-left:5px">Contact us</a></span></div>' +
+    '</form>';
+
+  /* payment option body (built separately so the logo row comes from the shared helper) */
+  var payOpt = $('.opt--pay');
+  payOpt.insertAdjacentHTML('beforeend', window.UNI_UI.paymentsHtml().replace(/<li[^>]*title="(Shop Pay|Google Pay)"[\s\S]*?<\/li>/g, '') +
+    '<span class="opt__more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>You’ll enter your card or Apple Pay details securely on the next step.</span>');
+
+  /* ---------- Summary (desktop column + mobile dropdown share the same markup) ---------- */
+  function summaryHtml(idSuffix) {
+    return '<div class="sum-line"><div class="sum-thumb">' + (line.image ? '<img src="' + esc(line.image) + '" alt="" width="64" height="64">' : '') + '<span class="sum-thumb__q" aria-label="Quantity 1">1</span></div>' +
+        '<div><p class="sum-title">' + esc(line.title) + '</p>' + (line.variant ? '<p class="sum-var">' + esc(line.variant) + '</p>' : '') + '</div>' +
+        '<div class="sum-price">' + fmt.format(Number(line.price) || 0) + '</div></div>' +
+      (others ? '<p class="sum-rest">One item per order. Your other <b>' + others + (others === 1 ? ' item stays' : ' items stay') + '</b> saved in your cart for your next order, and everything ships together.</p>' : '') +
+      '<div class="disc"><div class="f"><input class="f__in" id="disc' + idSuffix + '" type="text" autocomplete="off" placeholder=" " autocapitalize="characters"><label class="f__lab" for="disc' + idSuffix + '">Discount code</label></div>' +
+        '<button type="button" class="disc__btn" data-disc>Apply</button><p class="disc__msg" role="status" hidden></p></div>' +
+      '<div class="sum-prot">' + window.UNI_UI.protectionHtml('prot' + idSuffix) + '</div>' +
+      '<dl class="tot"><div><dt>Subtotal · 1 item</dt><dd>' + fmt.format(Number(line.price) || 0) + '</dd></div>' +
+        '<div><dt>Shipping</dt><dd data-ship></dd></div>' +
+        '<div data-prot-row><dt>Shipping protection</dt><dd>' + fmt.format(C.protectionPrice) + '</dd></div>' +
+        '<div class="tot__grand"><dt>Total</dt><dd><small>USD</small><span data-total></span></dd></div></dl>' +
+      '<ul class="trust">' +
+        '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><div><b>100% Satisfaction Guarantee</b><span>If anything isn’t right, we’ll make it right.</span></div></li>' +
+        '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="11" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg><div><b>Secure checkout</b><span>Encrypted and protected at every step.</span></div></li>' +
+        '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg><div><b>Packed next business day</b><span>Order before 2 PM PT. Tracking is sent as soon as it ships.</span></div></li>' +
+        '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg><div><b>Verified authentic</b><span>Dispensary-sourced and checked by hand. Plain, discreet box.</span></div></li>' +
+      '</ul>';
+  }
+  side.innerHTML = summaryHtml('');
+  var barPanel = $('#co-bar-panel');
+  barPanel.innerHTML = summaryHtml('-m');
+
+  function shipChoice() { var r = document.querySelector('input[name="ship"]:checked'); return r ? r.value : 'standard'; }
+  function totals() {
+    var sub = Number(line.price) || 0, ship = shipChoice() === 'express' ? EXPRESS_PRICE : 0, prot = C.protection() ? C.protectionPrice : 0;
+    return { sub: sub, ship: ship, prot: prot, total: sub + ship + prot };
+  }
+  function paint() {
+    var t = totals();
+    document.querySelectorAll('[data-total]').forEach(function (el) { el.textContent = fmt.format(t.total); });
+    document.querySelectorAll('[data-ship]').forEach(function (el) { el.innerHTML = t.ship ? fmt.format(t.ship) : '<span class="tot__free">Free</span>'; });
+    document.querySelectorAll('[data-prot-row]').forEach(function (el) { el.style.display = t.prot ? '' : 'none'; });
+    document.querySelectorAll('[data-uni-protect]').forEach(function (el) { el.checked = !!t.prot; });
+  }
+  document.querySelectorAll('[data-uni-protect]').forEach(function (el) { el.addEventListener('change', function () { C.setProtection(el.checked); }); });
+  C.onChange(paint);
+  document.querySelectorAll('input[name="ship"]').forEach(function (r) { r.addEventListener('change', paint); });
+  paint();
+
+  /* discount codes: none are active yet */
+  document.querySelectorAll('[data-disc]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var box = btn.closest('.disc'), inp = box.querySelector('input'), msg = box.querySelector('.disc__msg');
+      msg.hidden = false;
+      msg.textContent = inp.value.trim() ? 'This discount code isn’t valid or has expired.' : 'Enter a discount code.';
+    });
+  });
+  document.querySelectorAll('.disc input').forEach(function (inp) {
+    inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); inp.closest('.disc').querySelector('[data-disc]').click(); } });
+  });
+
+  /* mobile summary toggle */
+  var barBtn = $('.co-bar__btn');
+  barBtn.addEventListener('click', function () {
+    var open = barBtn.getAttribute('aria-expanded') !== 'true';
+    barBtn.setAttribute('aria-expanded', String(open));
+    barPanel.hidden = !open;
+    $('.co-bar__text').textContent = open ? 'Hide order summary' : 'Show order summary';
+  });
+
+  /* ---------- Saved details ---------- */
+  var FIELDS = ['email', 'first', 'last', 'address', 'apt', 'city', 'state', 'zip', 'phone'];
+  try {
+    var saved = JSON.parse(localStorage.getItem(INFO_KEY) || 'null');
+    if (saved) { FIELDS.forEach(function (k) { if (saved[k]) $('#' + k).value = saved[k]; }); $('#save').checked = true; }
+  } catch (e) {}
+
+  /* ---------- Validation ---------- */
+  var RULES = {
+    email: function (v) { return !v ? 'Enter an email' : (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Enter a valid email, like name@example.com'); },
+    first: function (v) { return v ? '' : 'Enter a first name'; },
+    last: function (v) { return v ? '' : 'Enter a last name'; },
+    address: function (v) { return v ? '' : 'Enter an address'; },
+    city: function (v) { return v ? '' : 'Enter a city'; },
+    state: function (v) { return v ? '' : 'Select a state'; },
+    zip: function (v) { return !v ? 'Enter a ZIP code' : (/^\d{5}(-\d{4})?$/.test(v) ? '' : 'Enter a valid 5-digit ZIP code'); },
+    phone: function (v) { var d = v.replace(/\D/g, ''); if (d.length === 11 && d[0] === '1') d = d.slice(1); return !v ? 'Enter a phone number' : (d.length === 10 ? '' : 'Enter a valid 10-digit phone number'); }
+  };
+  function setErr(key, msg) {
+    var wrap = document.querySelector('[data-f="' + key + '"]'); if (!wrap) return;
+    var p = wrap.querySelector('.f__err'), inp = wrap.querySelector('input, select');
+    wrap.classList.toggle('is-bad', !!msg);
+    p.innerHTML = msg ? ERR_ICON + esc(msg) : '';
+    if (inp) inp.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  }
+  function check(key) { var el = $('#' + key); var msg = RULES[key](el.value.trim()); setErr(key, msg); return !msg; }
+  Object.keys(RULES).forEach(function (k) {
+    var el = $('#' + k);
+    el.addEventListener('blur', function () { if (el.value.trim() || el.closest('.is-bad')) check(k); });
+    el.addEventListener('input', function () { if (el.closest('.is-bad')) check(k); });
+    el.addEventListener('change', function () { if (el.closest('.is-bad')) check(k); });
+  });
+  $('#age').addEventListener('change', function () { if (this.checked) setErr('age', ''); });
+  document.querySelectorAll('input[name="pay"]').forEach(function (r) {
+    r.addEventListener('change', function () { $('#pay-opts').classList.remove('is-bad'); var e = $('#pay-err'); e.classList.remove('is-on'); e.innerHTML = ''; });
+  });
+
+  var form = $('#co-form');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var firstBad = null;
+    Object.keys(RULES).forEach(function (k) { if (!check(k) && !firstBad) firstBad = $('#' + k); });
+    if (!$('#age').checked) { setErr('age', 'Please confirm you are 21 or older'); if (!firstBad) firstBad = $('#age'); }
+    var pay = document.querySelector('input[name="pay"]:checked');
+    if (!pay) {
+      $('#pay-opts').classList.add('is-bad');
+      var pe = $('#pay-err'); pe.classList.add('is-on'); pe.innerHTML = ERR_ICON + 'Select a payment method';
+      if (!firstBad) firstBad = document.querySelector('input[name="pay"]');
+    }
+    if (firstBad) {
+      var target = firstBad.closest('.f, .chk-wrap, .opts') || firstBad;
+      target.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      firstBad.focus({ preventScroll: true });
+      return;
+    }
+    placeOrder();
+  });
+
+  /* ---------- Place order ----------
+     Fires a cancelable "uni:place-order" event with everything a payment
+     processor needs. Until one is connected, the demo shows the confirmation. */
+  function placeOrder() {
+    var t = totals(), ship = shipChoice();
+    var data = {};
+    FIELDS.forEach(function (k) { data[k] = $('#' + k).value.trim(); });
+    if ($('#save').checked) { try { localStorage.setItem(INFO_KEY, JSON.stringify(data)); } catch (e) {} }
+    else { try { localStorage.removeItem(INFO_KEY); } catch (e) {} }
+    var order = {
+      item: line, customer: data,
+      shipping: { method: ship, price: t.ship, estimate: range(ship === 'express' ? exp : std) },
+      shippingProtection: !!t.prot, protectionPrice: t.prot,
+      payment: 'card', subtotal: t.sub, total: t.total
+    };
+    var ev; try { ev = new CustomEvent('uni:place-order', { cancelable: true, detail: order }); } catch (err) { ev = null; }
+    if (ev && !document.dispatchEvent(ev)) return;
+
+    var btn = $('#co-pay');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="co-pay__spin" aria-hidden="true"></span><span>Processing…</span>';
+    setTimeout(function () { confirmation(order); }, 1100);
+  }
+
+  function confirmation(order) {
+    C.remove(line.slug, line.variant || '');
+    var num = 'UD-' + String(Math.floor(10000 + Math.random() * 90000));
+    var d = order.customer;
+    main.innerHTML =
+      '<div class="done" tabindex="-1" id="done">' +
+        '<span class="done__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>' +
+        '<p class="done__kicker">Order ' + num + '</p>' +
+        '<h1 class="done__h">Thank you, ' + esc(d.first) + '!</h1>' +
+        '<p class="done__p">Your order is confirmed. We’ve sent a confirmation to <b>' + esc(d.email) + '</b>, and your tracking number will follow as soon as it ships.</p>' +
+        '<div class="done__card">' +
+          '<div><span>Estimated delivery</span><b>' + esc(order.shipping.estimate) + '</b></div>' +
+          '<div><span>Shipping</span><b>' + (order.shipping.method === 'express' ? 'Express FedEx' : 'Standard USPS') + '</b></div>' +
+          '<div><span>Ship to</span><b>' + esc(d.address) + (d.apt ? ', ' + esc(d.apt) : '') + '<br>' + esc(d.city) + ', ' + esc(d.state) + ' ' + esc(d.zip) + '</b></div>' +
+          '<div><span>Total paid</span><b>' + fmt.format(order.total) + ' USD</b></div>' +
+        '</div>' +
+        (others ? '<p class="done__p" style="margin-top:20px">You still have <b>' + others + (others === 1 ? ' item' : ' items') + '</b> in your cart. Check out the next one whenever you’re ready, and everything ships together.</p>' : '') +
+        '<a class="done__btn" href="' + (others ? 'cart.html' : 'catalog.html') + '">' + (others ? 'Check out next item' : 'Continue shopping') + '</a>' +
+      '</div>';
+    document.querySelectorAll('.disc, .sum-prot').forEach(function (el) { el.style.display = 'none'; });
+    window.scrollTo(0, 0);
+    $('#done').focus({ preventScroll: true });
+  }
+})();
+</script>
+</body>
+</html>

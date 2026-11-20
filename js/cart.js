@@ -25,7 +25,7 @@
    Checkout is a demo: the Secure Checkout button fires a cancelable
    "uni:checkout" event (detail = { items, subtotal, shippingProtection,
    protectionPrice, total }) for a real checkout
-   to handle later; if nothing handles it, it shows the demo message.
+   to handle later; if nothing handles it, it opens checkout.html.
 --------------------------------------------------------------- */
 (function () {
   var KEY = 'uni_cart_v1';
@@ -106,6 +106,11 @@
     total: function () {
       var sub = UNI_CART.subtotal();
       return sub > 0 && UNI_CART.protection() ? sub + UNI_CART.protectionPrice : sub;
+    },
+    /* Opens the checkout page for one cart line */
+    goCheckout: function (line) {
+      if (!line) return;
+      window.location.href = 'checkout.html?id=' + encodeURIComponent(line.slug) + (line.variant ? '&v=' + encodeURIComponent(line.variant) : '');
     },
     onChange: function (fn) { if (typeof fn === 'function') listeners.push(fn); },
     open: function () { drawer.open(); },
@@ -396,7 +401,7 @@
           '<p class="uc-hint" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5M12 7.5v.5"/></svg>' + UNI_CHECKOUT.hint + '</p>' +
           '<button type="button" class="uc-checkout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="11" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>Secure Checkout</button>' +
           '<p class="uc-guarantee">100% Satisfaction Guarantee</p>' +
-          '<p class="uc-note">Shipping and taxes calculated at checkout.</p>' +
+          '<p class="uc-note">Free standard shipping · Express available at checkout</p>' +
           UNI_UI.paymentsHtml() +
         '</div>';
 
@@ -457,7 +462,7 @@
     }
 
     /* Checks out exactly the given lines (one product). Fires the cancelable
-       "uni:checkout" event for a real checkout; otherwise shows a demo message. */
+       "uni:checkout" event for a real checkout; otherwise opens checkout.html. */
     function checkout(items) {
       var subtotal = items.reduce(function (t, it) { return t + (Number(it.price) || 0) * (it.qty || 1); }, 0);
       var prot = UNI_CART.protection(), total = subtotal + (prot ? UNI_CART.protectionPrice : 0);
@@ -465,11 +470,7 @@
       try { ev = new CustomEvent('uni:checkout', { cancelable: true, detail: { items: items, subtotal: subtotal, shippingProtection: prot, protectionPrice: prot ? UNI_CART.protectionPrice : 0, total: total } }); }
       catch (err) { ev = null; }
       var handled = ev ? !document.dispatchEvent(ev) : false;
-      if (!handled) {
-        var rest = read().length - items.length;
-        alert('Demo checkout — your order of ' + items[0].title + (prot ? ' with shipping protection' : '') + ' (' + money(total) + ') would be placed.' +
-          (rest > 0 ? '\n\nYour other ' + (rest === 1 ? 'item stays' : rest + ' items stay') + ' in your cart for your next order. All your orders ship together in one package.' : ''));
-      }
+      if (!handled) UNI_CART.goCheckout(items[0]);
     }
 
     function CSS_ESC(s) { return (window.CSS && window.CSS.escape) ? window.CSS.escape(s) : String(s).replace(/["\\]/g, '\\$&'); }

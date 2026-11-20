@@ -302,7 +302,7 @@
   <div id="cart-root"></div>
 </main>
 
-<script src="js/cart.js?v=20261120b"></script>
+<script src="js/cart.js?v=20261120c"></script>
 <script>
 (function () {
   var root = document.getElementById('cart-root');
@@ -391,9 +391,7 @@
     var C = window.UNI_CART, prot = C.protection(), total = subtotal + (prot ? C.protectionPrice : 0);
     var ev; try { ev = new CustomEvent('uni:checkout', { cancelable: true, detail: { items: lines, subtotal: subtotal, shippingProtection: prot, protectionPrice: prot ? C.protectionPrice : 0, total: total } }); } catch (e) { ev = null; }
     if (ev && !document.dispatchEvent(ev)) return;
-    var rest = window.UNI_CART.get().length - lines.length;
-    alert('Demo checkout — your order of ' + lines[0].title + (prot ? ' with shipping protection' : '') + ' (' + money(total) + ') would be placed.' +
-      (rest > 0 ? '\n\nYour other ' + (rest === 1 ? 'item stays' : rest + ' items stay') + ' in your cart for your next order. All your orders ship together in one package.' : ''));
+    C.goCheckout(lines[0]);
   }
 
   window.UNI_CART.onChange(render);
