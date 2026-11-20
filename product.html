@@ -211,9 +211,6 @@
   }
   .pd-buy:active { transform: translateY(1px); }
   .pd-atc { display: flex; gap: 10px; align-items: stretch; margin-top: 22px; }
-  .pd-limit { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0 0; color: #9EA0A6; font-size: 13.5px; line-height: 1.5; }
-  .pd-limit svg { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 1px; color: #D4AF37; }
-  .pd-limit b { color: #E6E6E8; font-weight: 700; }
   .pd-atc .pd-qty { flex: 0 0 auto; }
   .pd-atc .pd-buy {
     flex: 1 1 auto; width: auto; min-width: 0; margin: 0;
@@ -315,6 +312,8 @@
   }
 
   /* ---- About this product ---- */
+  .pd-about--gallery { display: none; margin-top: 18px !important; }
+  @media (min-width: 750px) { .pd-about--gallery { display: block; } .pd-about--info { display: none; } }
   .pd-about { margin: 34px 0 0; padding: 28px 0 0; border-top: 1px solid rgba(255,255,255,.08); font-family: "Figtree", sans-serif; }
   .pd-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 14px; color: #D4AF37; font-size: 12.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
   .pd-eyebrow::before { content: ""; width: 24px; height: 1px; background: currentColor; }
@@ -673,8 +672,8 @@
 <!-- ============ TOAST ============ -->
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
-<script src="js/products.js?v=20261119c"></script>
-<script src="js/product-details.js?v=20261119a"></script>
+<script src="js/products.js?v=20261120a"></script>
+<script src="js/product-details.js?v=20261120a"></script>
 <script src="js/cart.js?v=20261119i"></script>
 <script>
 (function () {
@@ -876,7 +875,7 @@
     var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
     var specs = (D.specs || []).slice();
     if (p.variants && p.variants.length > 1) {
-      var lbl = /flavor/i.test(p.variantLabel || '') ? 'Flavors' : (p.group === 'bulk' ? 'Strain (whole pack)' : 'Options');
+      var lbl = /flavor/i.test(p.variantLabel || '') ? 'Flavors' : (p.group === 'bulk' ? 'Strain' : 'Options');
       var vals = p.variants.map(function (v) { return v.charAt(0) + v.slice(1).toLowerCase(); });
       specs.push([lbl, vals.length > 6 ? vals.length + ' to choose from' : vals.join(' · ')]);
     }
@@ -902,6 +901,7 @@
           '<img id="pd-heroimg" src="' + esc(p.images[0]) + '" alt="' + esc(p.title) + '">' +
         '</div>' +
         thumbsBlock +
+        (detailsBlock ? detailsBlock.replace('class="pd-about"', 'class="pd-about pd-about--gallery"') : '') +
       '</div>' +
       '<div class="pd-info">' +
         '<div class="pd-reveal" style="--pd-order:1">' + ratingBlock + '</div>' +
@@ -913,11 +913,10 @@
           '<div class="pd-atc">' +
             '<button type="button" class="pd-buy" id="pd-buy" ' + buyDisabled + '>' + bagIcon + '<span class="pd-buy__label">' + esc(buyLabel) + '</span></button>' +
           '</div>' +
-          (!p.available ? '' : '<p class="pd-limit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5M12 7.5v.5"/></svg><span><b>Limit 1 per order.</b> Need more? Place a separate order for each item. Everything ships together in one package.</span></p>') +
           trustBlock +
         '</div>' +
         '<div class="pd-reveal" style="--pd-order:6">' + timelineBlock + '</div>' +
-        (detailsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + detailsBlock + '</div>' : (highlightsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + highlightsBlock + '</div>' : '')) +
+        (detailsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + detailsBlock.replace('class="pd-about"', 'class="pd-about pd-about--info"') + '</div>' : (highlightsBlock ? '<div class="pd-reveal" style="--pd-order:7">' + highlightsBlock + '</div>' : '')) +
         '<button type="button" class="pd-share pd-reveal" id="pd-share" style="--pd-order:8" aria-label="Share this product">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>' +
           '<span>Share</span>' +

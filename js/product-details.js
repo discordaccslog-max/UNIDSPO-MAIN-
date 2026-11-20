@@ -117,9 +117,9 @@ window.UNI_DETAILS = {
   /* ---------- Bulk packs ---------- */
   "20pc-ace-ultra-premium": {
     packOf: 20,
-    summary: "Twenty ACE Ultra Premium 2G cartridges in one strain of your choice, at our best per-unit price. Every unit in the pack is sealed and batch-checked before it ships.",
+    summary: "Twenty ACE Ultra Premium 2G cartridges in one strain of your choice or a Mixed pack, at our best per-unit price. Every unit in the pack is sealed and batch-checked before it ships.",
     features: [
-      "20 cartridges, one strain for the whole pack",
+      "20 cartridges: one strain, or Mixed for a bit of each",
       "Lowest per-unit price we offer",
       "Every unit sealed and batch-verified",
       "Ships in one discreet, tracked package"
@@ -128,9 +128,9 @@ window.UNI_DETAILS = {
   },
   "10pc-raw-garden-live-resin-1g": {
     packOf: 10,
-    summary: "Ten Raw Garden 1G live resin cartridges in one strain of your choice, with bulk pricing and the same dispensary-verified sourcing on every unit.",
+    summary: "Ten Raw Garden 1G live resin cartridges in one strain of your choice or a Mixed pack, with bulk pricing and the same dispensary-verified sourcing on every unit.",
     features: [
-      "10 cartridges, one strain for the whole pack",
+      "10 cartridges: one strain, or Mixed for a bit of each",
       "Single-source live resin, no fillers or additives",
       "Every unit sealed and batch-verified",
       "Ships in one discreet, tracked package"
@@ -139,9 +139,9 @@ window.UNI_DETAILS = {
   },
   "10pc-ace-ultra-premium": {
     packOf: 10,
-    summary: "Ten ACE Ultra Premium 2G cartridges in one strain of your choice. Tamper-evident bulk packaging with batch documentation included.",
+    summary: "Ten ACE Ultra Premium 2G cartridges in one strain of your choice or a Mixed pack. Tamper-evident bulk packaging with batch documentation included.",
     features: [
-      "10 cartridges, one strain for the whole pack",
+      "10 cartridges: one strain, or Mixed for a bit of each",
       "Batch documentation included",
       "Every unit sealed and batch-verified",
       "Ships in one discreet, tracked package"
@@ -151,9 +151,9 @@ window.UNI_DETAILS = {
   "10pc-muha-meds-x-cookies-limited-edition": {
     packOf: 10,
     badge: "Limited edition · Low stock",
-    summary: "Ten Muha Meds × Cookies limited-edition units in one strain of your choice. A limited run, sealed from the dispensary and verified unit by unit.",
+    summary: "Ten Muha Meds × Cookies limited-edition units in one strain of your choice or a Mixed pack. A limited run, sealed from the dispensary and verified unit by unit.",
     features: [
-      "10 units, one strain for the whole pack",
+      "10 units: one strain, or Mixed for a bit of each",
       "Limited-run Muha Meds × Cookies collaboration",
       "Every unit sealed and batch-verified",
       "Ships in one discreet, tracked package"
@@ -162,9 +162,9 @@ window.UNI_DETAILS = {
   },
   "10pc-boutiq-switch-v5": {
     packOf: 10,
-    summary: "Ten Boutiq Switch V5 devices in one blend of your choice, with bulk pricing and the same verification on every unit.",
+    summary: "Ten Boutiq Switch V5 devices in one blend of your choice or a Mixed pack, with bulk pricing and the same verification on every unit.",
     features: [
-      "10 devices, one blend for the whole pack",
+      "10 devices: one blend, or Mixed for a bit of each",
       "Dual-chamber Switch design",
       "Every unit sealed and batch-verified",
       "Ships in one discreet, tracked package"

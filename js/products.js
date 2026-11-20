@@ -235,7 +235,7 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 205.99,
     compareAt: null,
-    variants: ["Hybrid", "Sativa", "Indica"],
+    variants: ["Hybrid", "Sativa", "Indica", "Mixed"],
     variantLabel: "Options",
     available: false,
     soldOutNote: "Temporarily unavailable due to low stock",
@@ -250,14 +250,14 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 195.99,
     compareAt: null,
-    variants: ["HYBRID", "SATIVA", "INDICA"],
+    variants: ["HYBRID", "SATIVA", "INDICA", "MIXED"],
     variantLabel: "Options",
     available: false,
     soldOutNote: "Temporarily unavailable due to low stock",
     images: [
       "images/10pc-raw-garden.webp"
     ],
-    description: "10-pack Raw Garden Live Resin 1G cartridges. Choose one strain for the whole pack."
+    description: "10-pack Raw Garden Live Resin 1G cartridges. Choose one strain or a Mixed pack."
   },
 
   "10pc-ace-ultra-premium": {
@@ -265,7 +265,7 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 125.99,
     compareAt: null,
-    variants: ["Hybrid", "Sativa", "Indica"],
+    variants: ["Hybrid", "Sativa", "Indica", "Mixed"],
     variantLabel: "Options",
     available: true,
     images: [
@@ -279,7 +279,7 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 145.99,
     compareAt: null,
-    variants: ["Hybrid", "Sativa", "Indica"],
+    variants: ["Hybrid", "Sativa", "Indica", "Mixed"],
     variantLabel: "Options",
     soldOutVariants: ["Sativa", "Indica"],
     available: true,
@@ -302,7 +302,7 @@ window.UNI_CATALOG = {
     group: "bulk",
     price: 135.99,
     compareAt: null,
-    variants: ["Switch", "New Gen Switch"],
+    variants: ["Switch", "New Gen Switch", "Mixed"],
     variantLabel: "Options",
     available: true,
     images: [
