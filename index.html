@@ -387,6 +387,7 @@
      itself. Settings are at the top of the script below. -->
 <style id="ud-entrance-css">
   #ud-entrance{display:none}
+  #ud-entrance{--t-logo:340ms}
   .hm-js #ud-entrance{display:flex}
   #ud-entrance{
     --bg:#0e0e10;--gold:#D4AF37;--gold-hi:#FFD976;--metal-a:#E8C766;--metal-b:#BA9930;
@@ -410,6 +411,16 @@
   #ud-entrance .ude-grain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.07;
     background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/180px 180px repeat}
   #ud-entrance .ude-brand{position:relative;z-index:4;max-width:100%;padding:0 24px;text-align:center}
+  #ud-entrance .ude-flag{display:block;width:clamp(92px,9vw,128px);height:auto;margin:0 auto 22px;border-radius:2px;opacity:0;filter:drop-shadow(0 8px 24px rgba(212,175,55,.18))}
+  #ud-entrance .ude-eyebrow{display:inline-flex;align-items:center;gap:12px;margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);opacity:0}
+  #ud-entrance .ude-eyebrow::before,#ud-entrance .ude-eyebrow::after{content:"";width:24px;height:1px;background:currentColor}
+  #ud-entrance .ude-facts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:26px 0 0;padding:0;list-style:none}
+  #ud-entrance .ude-facts li{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.06em;color:#D5D6D9;opacity:0}
+  #ud-entrance .ude-facts svg{width:16px;height:16px;flex:0 0 16px;color:var(--gold)}
+  #ud-entrance .ude-facts b{color:#fff;font-weight:800}
+  #ud-entrance .ude-loading{position:absolute;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));z-index:5;margin:0;text-align:center;font-size:11.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--grey);opacity:0}
+  #ud-entrance .ude-loading i{display:inline-block;width:1.4em;text-align:left;font-style:normal}
+  #ud-entrance .ude-loading i::after{content:"";animation:ude-dots 1.2s steps(4,end) infinite}
   #ud-entrance .ude-logo{display:block;width:auto;max-width:60vw;height:clamp(64px,9vw,108px);margin:0 auto 28px;object-fit:contain;opacity:0}
   #ud-entrance .ude-logo[hidden]{display:none}
   #ud-entrance .ude-title{margin:0;padding-left:.14em;font:700 clamp(32px,9.4vw,96px)/1.1 Oswald,"Arial Narrow","Helvetica Neue",Arial,sans-serif;
@@ -443,6 +454,10 @@
   #ud-entrance.is-ready .ude-rule{animation:ude-draw 900ms var(--ease) both;animation-delay:calc(var(--t-logo) + 1000ms)}
   #ud-entrance.is-ready .ude-tag{animation:ude-tag-in 800ms var(--ease) both;animation-delay:calc(var(--t-logo) + 1250ms)}
   #ud-entrance.is-ready .ude-skip{animation:ude-fade 700ms ease 600ms both}
+  #ud-entrance.is-ready .ude-flag{animation:ude-logo-in 900ms var(--ease) 60ms both}
+  #ud-entrance.is-ready .ude-eyebrow{animation:ude-tag-in 800ms var(--ease) 260ms both}
+  #ud-entrance.is-ready .ude-facts li{animation:ude-tag-in 700ms var(--ease) both;animation-delay:calc(var(--t-logo) + 1900ms + var(--f) * 160ms)}
+  #ud-entrance.is-ready .ude-loading{animation:ude-fade 700ms ease 500ms both}
   #ud-entrance.is-ready .ude-bar i{animation:ude-fill var(--dur) linear both}
   /* exit */
   #ud-entrance.is-leaving{opacity:0;pointer-events:none;transition:opacity var(--exit) cubic-bezier(.4,0,.7,1)}
@@ -455,7 +470,8 @@
   @keyframes ude-tag-in{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
   @keyframes ude-fade{from{opacity:0}to{opacity:1}}
   @keyframes ude-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-  @media (max-width:480px){#ud-entrance .ude-brand{padding:0 20px}#ud-entrance .ude-tag{letter-spacing:.06em}#ud-entrance .ude-rule{margin:20px auto 16px}}
+  @keyframes ude-dots{0%{content:""}25%{content:"."}50%{content:".."}75%,100%{content:"..."}}
+  @media (max-width:480px){#ud-entrance .ude-brand{padding:0 20px}#ud-entrance .ude-tag{letter-spacing:.06em}#ud-entrance .ude-rule{margin:20px auto 16px}#ud-entrance .ude-eyebrow{font-size:10px;letter-spacing:.14em;white-space:nowrap}#ud-entrance .ude-eyebrow::before,#ud-entrance .ude-eyebrow::after{display:none}#ud-entrance .ude-facts{flex-direction:column;align-items:center;gap:10px;margin-top:22px}#ud-entrance .ude-facts li{font-size:12.5px}}
   @media (prefers-reduced-motion:reduce){
     #ud-entrance .ude-dust{display:none}
     #ud-entrance .ude-rule{transform:none}
@@ -468,6 +484,8 @@
     #ud-entrance.is-ready .ude-tag{animation-name:ude-fade;animation-duration:800ms}
     #ud-entrance.is-ready .ude-bar i{transform:none;animation-name:ude-fade;animation-timing-function:linear}
     #ud-entrance.is-leaving .ude-brand{transform:none}
+    #ud-entrance.is-ready .ude-flag,#ud-entrance.is-ready .ude-eyebrow,#ud-entrance.is-ready .ude-facts li{animation-name:ude-fade}
+    #ud-entrance .ude-loading i::after{animation:none;content:"..."}
   }
   @media (forced-colors:active){#ud-entrance .ude-ch::after{display:none}}
 </style>
@@ -476,11 +494,44 @@
   <canvas class="ude-dust" aria-hidden="true"></canvas>
   <div class="ude-vignette" aria-hidden="true"></div>
   <div class="ude-brand">
+    <svg class="ude-flag" viewBox="0 0 190 100" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+          <linearGradient id="ude-foil" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="380" y2="200" spreadMethod="repeat" gradientTransform="translate(45.60 24.00)"><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="380 200" dur="3.2s" repeatCount="indefinite"/>
+            <stop offset="0" stop-color="#9C7A36"/>
+            <stop offset=".18" stop-color="#B8913F"/>
+            <stop offset=".36" stop-color="#C9A24B"/>
+            <stop offset=".44" stop-color="#E9D08F"/>
+            <stop offset=".5" stop-color="#F8EBC0"/>
+            <stop offset=".56" stop-color="#E2C47C"/>
+            <stop offset=".64" stop-color="#C29A45"/>
+            <stop offset=".82" stop-color="#A9853C"/>
+            <stop offset="1" stop-color="#9C7A36"/>
+          </linearGradient>
+        </defs>
+        <g fill="url(#ude-foil)">
+          <rect x="76" y="0" width="114" height="7.6923"/>
+          <rect x="76" y="15.3846" width="114" height="7.6923"/>
+          <rect x="76" y="30.7692" width="114" height="7.6923"/>
+          <rect x="76" y="46.1538" width="114" height="7.6923"/>
+          <rect y="61.5385" width="190" height="7.6923"/>
+          <rect y="76.9231" width="190" height="7.6923"/>
+          <rect y="92.3077" width="190" height="7.6923"/>
+          <path d="M6.33 2.30L7.02 4.43L9.26 4.43L7.45 5.75L8.14 7.88L6.33 6.56L4.52 7.88L5.21 5.75L3.40 4.43L5.64 4.43ZM19.00 2.30L19.69 4.43L21.93 4.43L20.12 5.75L20.81 7.88L19.00 6.56L17.19 7.88L17.88 5.75L16.07 4.43L18.31 4.43ZM31.67 2.30L32.36 4.43L34.60 4.43L32.79 5.75L33.48 7.88L31.67 6.56L29.86 7.88L30.55 5.75L28.74 4.43L30.98 4.43ZM44.33 2.30L45.02 4.43L47.26 4.43L45.45 5.75L46.14 7.88L44.33 6.56L42.52 7.88L43.21 5.75L41.40 4.43L43.64 4.43ZM57.00 2.30L57.69 4.43L59.93 4.43L58.12 5.75L58.81 7.88L57.00 6.56L55.19 7.88L55.88 5.75L54.07 4.43L56.31 4.43ZM69.67 2.30L70.36 4.43L72.60 4.43L70.79 5.75L71.48 7.88L69.67 6.56L67.86 7.88L68.55 5.75L66.74 4.43L68.98 4.43ZM12.67 7.69L13.36 9.82L15.60 9.82L13.79 11.13L14.48 13.26L12.67 11.95L10.86 13.26L11.55 11.13L9.74 9.82L11.98 9.82ZM25.33 7.69L26.02 9.82L28.26 9.82L26.45 11.13L27.14 13.26L25.33 11.95L23.52 13.26L24.21 11.13L22.40 9.82L24.64 9.82ZM38.00 7.69L38.69 9.82L40.93 9.82L39.12 11.13L39.81 13.26L38.00 11.95L36.19 13.26L36.88 11.13L35.07 9.82L37.31 9.82ZM50.67 7.69L51.36 9.82L53.60 9.82L51.79 11.13L52.48 13.26L50.67 11.95L48.86 13.26L49.55 11.13L47.74 9.82L49.98 9.82ZM63.33 7.69L64.02 9.82L66.26 9.82L64.45 11.13L65.14 13.26L63.33 11.95L61.52 13.26L62.21 11.13L60.40 9.82L62.64 9.82ZM6.33 13.07L7.02 15.20L9.26 15.20L7.45 16.52L8.14 18.65L6.33 17.33L4.52 18.65L5.21 16.52L3.40 15.20L5.64 15.20ZM19.00 13.07L19.69 15.20L21.93 15.20L20.12 16.52L20.81 18.65L19.00 17.33L17.19 18.65L17.88 16.52L16.07 15.20L18.31 15.20ZM31.67 13.07L32.36 15.20L34.60 15.20L32.79 16.52L33.48 18.65L31.67 17.33L29.86 18.65L30.55 16.52L28.74 15.20L30.98 15.20ZM44.33 13.07L45.02 15.20L47.26 15.20L45.45 16.52L46.14 18.65L44.33 17.33L42.52 18.65L43.21 16.52L41.40 15.20L43.64 15.20ZM57.00 13.07L57.69 15.20L59.93 15.20L58.12 16.52L58.81 18.65L57.00 17.33L55.19 18.65L55.88 16.52L54.07 15.20L56.31 15.20ZM69.67 13.07L70.36 15.20L72.60 15.20L70.79 16.52L71.48 18.65L69.67 17.33L67.86 18.65L68.55 16.52L66.74 15.20L68.98 15.20ZM12.67 18.46L13.36 20.59L15.60 20.59L13.79 21.90L14.48 24.03L12.67 22.71L10.86 24.03L11.55 21.90L9.74 20.59L11.98 20.59ZM25.33 18.46L26.02 20.59L28.26 20.59L26.45 21.90L27.14 24.03L25.33 22.71L23.52 24.03L24.21 21.90L22.40 20.59L24.64 20.59ZM38.00 18.46L38.69 20.59L40.93 20.59L39.12 21.90L39.81 24.03L38.00 22.71L36.19 24.03L36.88 21.90L35.07 20.59L37.31 20.59ZM50.67 18.46L51.36 20.59L53.60 20.59L51.79 21.90L52.48 24.03L50.67 22.71L48.86 24.03L49.55 21.90L47.74 20.59L49.98 20.59ZM63.33 18.46L64.02 20.59L66.26 20.59L64.45 21.90L65.14 24.03L63.33 22.71L61.52 24.03L62.21 21.90L60.40 20.59L62.64 20.59ZM6.33 23.84L7.02 25.97L9.26 25.97L7.45 27.29L8.14 29.41L6.33 28.10L4.52 29.41L5.21 27.29L3.40 25.97L5.64 25.97ZM19.00 23.84L19.69 25.97L21.93 25.97L20.12 27.29L20.81 29.41L19.00 28.10L17.19 29.41L17.88 27.29L16.07 25.97L18.31 25.97ZM31.67 23.84L32.36 25.97L34.60 25.97L32.79 27.29L33.48 29.41L31.67 28.10L29.86 29.41L30.55 27.29L28.74 25.97L30.98 25.97ZM44.33 23.84L45.02 25.97L47.26 25.97L45.45 27.29L46.14 29.41L44.33 28.10L42.52 29.41L43.21 27.29L41.40 25.97L43.64 25.97ZM57.00 23.84L57.69 25.97L59.93 25.97L58.12 27.29L58.81 29.41L57.00 28.10L55.19 29.41L55.88 27.29L54.07 25.97L56.31 25.97ZM69.67 23.84L70.36 25.97L72.60 25.97L70.79 27.29L71.48 29.41L69.67 28.10L67.86 29.41L68.55 27.29L66.74 25.97L68.98 25.97ZM12.67 29.23L13.36 31.36L15.60 31.36L13.79 32.67L14.48 34.80L12.67 33.48L10.86 34.80L11.55 32.67L9.74 31.36L11.98 31.36ZM25.33 29.23L26.02 31.36L28.26 31.36L26.45 32.67L27.14 34.80L25.33 33.48L23.52 34.80L24.21 32.67L22.40 31.36L24.64 31.36ZM38.00 29.23L38.69 31.36L40.93 31.36L39.12 32.67L39.81 34.80L38.00 33.48L36.19 34.80L36.88 32.67L35.07 31.36L37.31 31.36ZM50.67 29.23L51.36 31.36L53.60 31.36L51.79 32.67L52.48 34.80L50.67 33.48L48.86 34.80L49.55 32.67L47.74 31.36L49.98 31.36ZM63.33 29.23L64.02 31.36L66.26 31.36L64.45 32.67L65.14 34.80L63.33 33.48L61.52 34.80L62.21 32.67L60.40 31.36L62.64 31.36ZM6.33 34.61L7.02 36.74L9.26 36.74L7.45 38.06L8.14 40.18L6.33 38.87L4.52 40.18L5.21 38.06L3.40 36.74L5.64 36.74ZM19.00 34.61L19.69 36.74L21.93 36.74L20.12 38.06L20.81 40.18L19.00 38.87L17.19 40.18L17.88 38.06L16.07 36.74L18.31 36.74ZM31.67 34.61L32.36 36.74L34.60 36.74L32.79 38.06L33.48 40.18L31.67 38.87L29.86 40.18L30.55 38.06L28.74 36.74L30.98 36.74ZM44.33 34.61L45.02 36.74L47.26 36.74L45.45 38.06L46.14 40.18L44.33 38.87L42.52 40.18L43.21 38.06L41.40 36.74L43.64 36.74ZM57.00 34.61L57.69 36.74L59.93 36.74L58.12 38.06L58.81 40.18L57.00 38.87L55.19 40.18L55.88 38.06L54.07 36.74L56.31 36.74ZM69.67 34.61L70.36 36.74L72.60 36.74L70.79 38.06L71.48 40.18L69.67 38.87L67.86 40.18L68.55 38.06L66.74 36.74L68.98 36.74ZM12.67 40.00L13.36 42.13L15.60 42.13L13.79 43.44L14.48 45.57L12.67 44.25L10.86 45.57L11.55 43.44L9.74 42.13L11.98 42.13ZM25.33 40.00L26.02 42.13L28.26 42.13L26.45 43.44L27.14 45.57L25.33 44.25L23.52 45.57L24.21 43.44L22.40 42.13L24.64 42.13ZM38.00 40.00L38.69 42.13L40.93 42.13L39.12 43.44L39.81 45.57L38.00 44.25L36.19 45.57L36.88 43.44L35.07 42.13L37.31 42.13ZM50.67 40.00L51.36 42.13L53.60 42.13L51.79 43.44L52.48 45.57L50.67 44.25L48.86 45.57L49.55 43.44L47.74 42.13L49.98 42.13ZM63.33 40.00L64.02 42.13L66.26 42.13L64.45 43.44L65.14 45.57L63.33 44.25L61.52 45.57L62.21 43.44L60.40 42.13L62.64 42.13ZM6.33 45.38L7.02 47.51L9.26 47.51L7.45 48.82L8.14 50.95L6.33 49.64L4.52 50.95L5.21 48.82L3.40 47.51L5.64 47.51ZM19.00 45.38L19.69 47.51L21.93 47.51L20.12 48.82L20.81 50.95L19.00 49.64L17.19 50.95L17.88 48.82L16.07 47.51L18.31 47.51ZM31.67 45.38L32.36 47.51L34.60 47.51L32.79 48.82L33.48 50.95L31.67 49.64L29.86 50.95L30.55 48.82L28.74 47.51L30.98 47.51ZM44.33 45.38L45.02 47.51L47.26 47.51L45.45 48.82L46.14 50.95L44.33 49.64L42.52 50.95L43.21 48.82L41.40 47.51L43.64 47.51ZM57.00 45.38L57.69 47.51L59.93 47.51L58.12 48.82L58.81 50.95L57.00 49.64L55.19 50.95L55.88 48.82L54.07 47.51L56.31 47.51ZM69.67 45.38L70.36 47.51L72.60 47.51L70.79 48.82L71.48 50.95L69.67 49.64L67.86 50.95L68.55 48.82L66.74 47.51L68.98 47.51Z"/>
+        </g>
+        <rect x=".4" y=".4" width="189.2" height="99.2" fill="none" stroke="url(#ude-foil)" stroke-width=".8"/>
+          </svg>
+    <p class="ude-eyebrow">Proudly American · Based in California</p>
     <img class="ude-logo" alt="" hidden>
     <p class="ude-title"><span class="ude-sr">United Dispo</span><span aria-hidden="true"><span class="ude-ch" style="--i:0" data-ch="U">U</span><span class="ude-ch" style="--i:1" data-ch="N">N</span><span class="ude-ch" style="--i:2" data-ch="I">I</span><span class="ude-ch" style="--i:3" data-ch="T">T</span><span class="ude-ch" style="--i:4" data-ch="E">E</span><span class="ude-ch" style="--i:5" data-ch="D">D</span><span class="ude-sp"></span><span class="ude-ch" style="--i:6" data-ch="D">D</span><span class="ude-ch" style="--i:7" data-ch="I">I</span><span class="ude-ch" style="--i:8" data-ch="S">S</span><span class="ude-ch" style="--i:9" data-ch="P">P</span><span class="ude-ch" style="--i:10" data-ch="O">O</span></span></p>
     <div class="ude-rule" aria-hidden="true"></div>
     <p class="ude-tag">Dispensary-Sourced · Authenticated · Delivered</p>
+    <ul class="ude-facts">
+      <li style="--f:0"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><span><b>4.7/5</b> on Trustpilot</span></li>
+      <li style="--f:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><span><b>35,000+</b> customers nationwide</span></li>
+      <li style="--f:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg><span>Discreet, tracked delivery</span></li>
+    </ul>
   </div>
+  <p class="ude-loading" aria-hidden="true">Loading in<i></i></p>
   <button type="button" class="ude-skip" aria-label="Enter the site">Enter</button>
   <div class="ude-bar" aria-hidden="true"><i></i></div>
   <div class="ude-grain" aria-hidden="true"></div>
@@ -489,7 +540,7 @@
 (function () {
   'use strict';
   /* ================================ CONFIG ================================ */
-  var DURATION      = 2500;      // ms on screen before it fades out
+  var DURATION      = 5000;      // ms on screen before it fades out
   var TAGLINE       = 'Dispensary-Sourced · Authenticated · Delivered';
   var LOGO_SRC      = '';        // e.g. 'images/united-dispo-logo.webp' — '' for no logo
   var EXIT_MS       = 450;       // fade-out length
