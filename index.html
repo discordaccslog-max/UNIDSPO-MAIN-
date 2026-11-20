@@ -892,9 +892,14 @@
   .nx-btn:focus-visible{outline:2px solid #FFD976;outline-offset:3px}
   /* Social proof line */
   .nx-proof{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .nx-avatars{display:flex}
-  .nx-avatars span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;margin-left:-9px;border:2px solid #0F0F10;font-size:12px;font-weight:800;letter-spacing:0;color:#111}
-  .nx-avatars span:first-child{margin-left:0}
+  .nx-tp{display:inline-flex;align-items:center;gap:6px;color:#fff !important;text-decoration:none;font-family:"Figtree",sans-serif;font-weight:700;font-size:19px;letter-spacing:-.2px;line-height:1}
+  .nx-tp svg{width:24px;height:24px;flex:0 0 24px;margin-top:-3px}
+  .nx-proof__sep{width:1px;height:34px;background:rgba(255,255,255,.14)}
+  .nx-proof__boxes{display:flex;gap:2px;margin-bottom:5px}
+  .nx-proof__boxes i{width:17px;height:17px;display:grid;place-items:center;background:#00B67A}
+  .nx-proof__boxes i.is-part{background:linear-gradient(90deg,#00B67A 70%,#DCDCE6 70%)}
+  .nx-proof__boxes svg{width:12px;height:12px;color:#fff}
+  @media(max-width:560px){.nx-proof__sep{display:none}}
   .nx-proof__stars{display:flex;gap:2px;color:#FFD976}
   .nx-proof__stars svg{width:15px;height:15px}
   .nx-proof__text{font-size:14px;font-weight:600;color:#D5D6D9;letter-spacing:.3px;line-height:1.4}
@@ -961,13 +966,10 @@
         <a href="#how" class="nx-btn nx-btn--hollow">How It Works</a>
       </div>
       <div class="nx-proof">
-        <div class="nx-avatars" aria-hidden="true">
-          <span style="background:#E8C766">MT</span><span style="background:#C9B48A">JR</span><span style="background:#B99A4A">AK</span><span style="background:#F1DFA4">DS</span>
-        </div>
+        <a class="nx-tp" href="#reviews" aria-label="Trustpilot reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M17.227 16.67l2.19 6.742-7.413-5.388 5.223-1.354zM24 9.31h-9.165L12.005.589l-2.84 8.723L0 9.3l7.422 5.397-2.84 8.714 7.422-5.388 4.583-3.326L24 9.311z"/></svg>Trustpilot</a>
+        <span class="nx-proof__sep" aria-hidden="true"></span>
         <div>
-          <div class="nx-proof__stars" role="img" aria-label="Rated 4.7 out of 5">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="nx-half"><stop offset="70%" stop-color="currentColor"/><stop offset="70%" stop-color="rgba(255,217,118,.25)"/></linearGradient></defs><path fill="url(#nx-half)" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>
-          </div>
+          <div class="nx-proof__boxes" role="img" aria-label="Rated 4.7 out of 5"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i><i class="is-part"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></i></div>
           <div class="nx-proof__text"><strong>4.7/5</strong> on Trustpilot · Trusted by <strong>6,000+</strong> customers nationwide</div>
         </div>
       </div>
