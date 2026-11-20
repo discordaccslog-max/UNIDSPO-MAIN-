@@ -158,6 +158,8 @@
     font: 600 16px/1 inherit; cursor: pointer; letter-spacing: .3px;
     transition: background .15s ease, box-shadow .15s ease;
   }
+  .cart-line__qty1{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border:1px solid rgba(255,255,255,.14);border-radius:6px;font-size:14px;font-weight:600}
+  .cart-line__qty1 small{color:#9EA0A6;font-size:12.5px;font-weight:600}
   .cart-limit{position:relative;margin:0 0 14px;padding:14px 16px 14px 18px;border-radius:12px;background:rgba(212,175,55,.07);border:1px solid rgba(212,175,55,.3);text-align:left;outline:none}
   .cart-limit::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(180deg,#F3D77A,#BA9930)}
   .cart-limit b{display:block;margin:0 0 4px;color:#fff;font-size:15px}
@@ -296,7 +298,7 @@
   <div id="cart-root"></div>
 </main>
 
-<script src="js/cart.js?v=20261119g"></script>
+<script src="js/cart.js?v=20261119h"></script>
 <script>
 (function () {
   var root = document.getElementById('cart-root');
@@ -332,11 +334,7 @@
           '<a class="cart-line__title" href="' + esc(href) + '">' + esc(it.title) + '</a>' +
           (it.variant ? '<div class="cart-line__variant">' + esc(it.variant) + '</div>' : '') +
           '<div class="cart-line__meta">' +
-            '<div class="cart-line__qty">' +
-              '<button type="button" data-op="dec" aria-label="Decrease">−</button>' +
-              '<input type="number" min="1" value="' + Number(it.qty || 1) + '" aria-label="Quantity">' +
-              '<button type="button" data-op="inc" aria-label="Increase">+</button>' +
-            '</div>' +
+            '<span class="cart-line__qty1">Qty 1 <small>· Limit 1 per order</small></span>' +
             '<button type="button" class="cart-line__remove" data-op="remove">Remove</button>' +
           '</div>' +
         '</div>' +
@@ -355,16 +353,7 @@
     root.querySelectorAll('.cart-line').forEach(function (line) {
       var slug = line.getAttribute('data-slug');
       var variant = line.getAttribute('data-variant');
-      var input = line.querySelector('input');
-      line.querySelector('[data-op="dec"]').addEventListener('click', function () {
-        window.UNI_CART.setQty(slug, variant, (Number(input.value) || 1) - 1);
-      });
-      line.querySelector('[data-op="inc"]').addEventListener('click', function () {
-        window.UNI_CART.setQty(slug, variant, (Number(input.value) || 1) + 1);
-      });
-      input.addEventListener('change', function () {
-        window.UNI_CART.setQty(slug, variant, Number(input.value) || 1);
-      });
+
       line.querySelector('[data-op="remove"]').addEventListener('click', function () {
         window.UNI_CART.remove(slug, variant);
       });

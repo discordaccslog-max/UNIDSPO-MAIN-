@@ -210,7 +210,10 @@
     box-shadow: 0 4px 12px rgba(212,175,55,.35);
   }
   .pd-buy:active { transform: translateY(1px); }
-  .pd-atc { display: flex; gap: 10px; align-items: stretch; }
+  .pd-atc { display: flex; gap: 10px; align-items: stretch; margin-top: 22px; }
+  .pd-limit { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0 0; color: #9EA0A6; font-size: 13.5px; line-height: 1.5; }
+  .pd-limit svg { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 1px; color: #D4AF37; }
+  .pd-limit b { color: #E6E6E8; font-weight: 700; }
   .pd-atc .pd-qty { flex: 0 0 auto; }
   .pd-atc .pd-buy {
     flex: 1 1 auto; width: auto; min-width: 0; margin: 0;
@@ -630,7 +633,7 @@
 <div id="pd-toast" class="pd-toast" role="status" aria-live="polite"></div>
 
 <script src="js/products.js?v=20261119c"></script>
-<script src="js/cart.js?v=20261119g"></script>
+<script src="js/cart.js?v=20261119h"></script>
 <script>
 (function () {
   var slug = new URLSearchParams(window.location.search).get('id') || '';
@@ -843,15 +846,10 @@
         (variantsBlock ? '<div class="pd-reveal" style="--pd-order:3">' + variantsBlock + '</div>' : '') +
         (stockHtml ? '<div class="pd-reveal" style="--pd-order:4">' + stockHtml + '</div>' : '') +
         '<div class="pd-reveal" style="--pd-order:5">' +
-          '<label class="pd-qty-label" for="pd-qty">Quantity</label>' +
           '<div class="pd-atc">' +
-            '<div class="pd-qty">' +
-              '<button type="button" class="pd-qty__btn" id="pd-dec" aria-label="Decrease quantity"' + (p.available ? '' : ' disabled') + '>−</button>' +
-              '<input class="pd-qty__num" id="pd-qty" type="number" min="1" value="1" inputmode="numeric" aria-label="Quantity"' + (p.available ? '' : ' disabled') + '>' +
-              '<button type="button" class="pd-qty__btn" id="pd-inc" aria-label="Increase quantity"' + (p.available ? '' : ' disabled') + '>+</button>' +
-            '</div>' +
             '<button type="button" class="pd-buy" id="pd-buy" ' + buyDisabled + '>' + bagIcon + '<span class="pd-buy__label">' + esc(buyLabel) + '</span></button>' +
           '</div>' +
+          (!p.available ? '' : '<p class="pd-limit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5M12 7.5v.5"/></svg><span><b>Limit 1 per order.</b> Need more? Place a separate order for each item. Everything ships together in one package.</span></p>') +
           trustBlock +
         '</div>' +
         '<div class="pd-reveal" style="--pd-order:6">' + timelineBlock + '</div>' +
@@ -926,17 +924,7 @@
   heroImg.addEventListener('click', function () { zoomBtn && zoomBtn.click(); });
 
   /* Quantity */
-  var qtyInput = document.getElementById('pd-qty');
-  document.getElementById('pd-dec').addEventListener('click', function () {
-    qtyInput.value = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1);
-  });
-  document.getElementById('pd-inc').addEventListener('click', function () {
-    qtyInput.value = (parseInt(qtyInput.value, 10) || 1) + 1;
-  });
-  qtyInput.addEventListener('change', function () {
-    var n = parseInt(qtyInput.value, 10);
-    if (!n || n < 1) qtyInput.value = 1;
-  });
+  /* Quantity is always 1: one item per order (see UNI_CHECKOUT in js/cart.js). */
 
   function showToast(msg, ms) {
     toast.textContent = msg;
@@ -953,7 +941,7 @@
   if (buyBtn && p.available) {
     var buyLabelEl = buyBtn.querySelector('.pd-buy__label');
     buyBtn.addEventListener('click', function () {
-      var qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+      var qty = 1;
       window.UNI_CART.add({
         slug: slug,
         title: p.title,

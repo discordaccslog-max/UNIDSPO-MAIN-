@@ -28,8 +28,11 @@
   var KEY = 'uni_cart_v1';
 
   function read() {
-    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+    var items;
+    try { items = JSON.parse(localStorage.getItem(KEY) || '[]'); }
     catch (e) { return []; }
+    /* one unit per product line (see UNI_CHECKOUT below) */
+    return items.map(function (it) { if ((it.qty || 1) > 1) it.qty = 1; return it; });
   }
   function write(items) {
     try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
@@ -48,7 +51,7 @@
       var found = false;
       for (var i = 0; i < items.length; i++) {
         if (matchLine(items[i], item)) {
-          items[i].qty = (items[i].qty || 1) + (item.qty || 1);
+          items[i].qty = 1;   /* already in the cart: one unit per order */
           found = true;
           break;
         }
@@ -59,7 +62,7 @@
           title: item.title,
           price: Number(item.price) || 0,
           variant: item.variant || '',
-          qty: Number(item.qty) || 1,
+          qty: 1,
           image: item.image || ''
         });
       }
@@ -68,7 +71,7 @@
     },
     setQty: function (slug, variant, qty) {
       var items = read();
-      qty = Math.max(0, Math.floor(Number(qty) || 0));
+      qty = Math.min(1, Math.max(0, Math.floor(Number(qty) || 0)));
       var out = [];
       for (var i = 0; i < items.length; i++) {
         if (matchLine(items[i], { slug: slug, variant: variant })) {
@@ -138,17 +141,20 @@
     }
   };
 
-  /* ---------- One product per checkout ----------
-     Orders are limited to one product each (any quantity of it). Shoppers
-     can still buy more: they check out one product, then place a separate
-     order for the next, and all their orders ship together in one package. */
+  /* ---------- One item per checkout ----------
+     Each order is one item: one product at quantity 1 (a bulk pack counts as
+     one item). Shoppers can still buy more: they check out one item, then
+     place a separate order for the next, and all their orders ship together
+     in one package. */
   var UNI_CHECKOUT = {
-    limit: 1,
-    title: 'One product per checkout',
-    hint: 'Limit: 1 product per checkout',
-    text: 'For your security and privacy, each order can include one product. Want more than one? Check out one item now, then place a separate order for the next.',
+    limit: 1,              /* items per order: one product, quantity 1 (bulk packs count as one item) */
+    title: 'One item per checkout',
+    hint: 'Limit: 1 item per checkout',
+    text: 'For your security and privacy, each order can include one item. Want more than one? Check out one item now, then place a separate order for the next.',
     ship: 'Ordering separately won’t split your delivery: all your orders are combined and shipped together in one package.',
-    over: function (items) { return (items || []).length > UNI_CHECKOUT.limit; }
+    over: function (items) {
+      return (items || []).reduce(function (n, it) { return n + (it.qty || 1); }, 0) > UNI_CHECKOUT.limit;
+    }
   };
   window.UNI_CHECKOUT = UNI_CHECKOUT;
 
@@ -251,6 +257,8 @@
     '.uc-checkout:active{transform:translateY(1px)}' +
     '.uc-checkout svg{width:21px;height:21px}' +
     '.uc-guarantee{margin:14px 0 2px;text-align:center;color:#fff;font-size:15px}' +
+    '.uc-qty1{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border:1px solid rgba(255,255,255,.14);border-radius:6px;color:#fff;font-size:14px;font-weight:600;white-space:nowrap}' +
+    '.uc-qty1__lim{padding-left:8px;border-left:1px solid rgba(255,255,255,.14);color:#9EA0A6;font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}' +
     '.uc-hint{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 12px;color:#E8C766;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}' +
     '.uc-hint svg{width:15px;height:15px}' +
     '.uc-hint[hidden],.uc-limit[hidden]{display:none}' +
@@ -434,11 +442,7 @@
             '<h3 class="uc-item__title"><a href="' + url + '">' + esc(it.title) + '</a></h3>' +
             (it.variant ? '<p class="uc-item__variant">' + esc(it.variant) + '</p>' : '<p class="uc-item__variant"></p>') +
             '<div class="uc-item__controls">' +
-              '<div class="uc-qty" role="group" aria-label="Quantity for ' + esc(it.title) + '">' +
-                '<button type="button" data-act="dec" aria-label="Decrease quantity"' + (q <= 1 ? ' disabled' : '') + '>−</button>' +
-                '<output aria-live="polite">' + q + '</output>' +
-                '<button type="button" data-act="inc" aria-label="Increase quantity">+</button>' +
-              '</div>' +
+              '<span class="uc-qty1" title="Limit 1 per order">Qty 1<span class="uc-qty1__lim">Max 1</span></span>' +
               '<button type="button" class="uc-remove" data-act="remove" aria-label="Remove ' + esc(it.title) + (it.variant ? ' (' + esc(it.variant) + ')' : '') + '"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2zm-3 6h12l-1 12H7L6 9zm4 2v8h1.6v-8H10zm2.4 0v8H14v-8h-1.6z"/></svg></button>' +
             '</div>' +
           '</div>' +
