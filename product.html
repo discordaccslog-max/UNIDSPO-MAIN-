@@ -508,6 +508,10 @@
   .pd-trust svg { width: 18px; height: 18px; flex: 0 0 18px; color: #D4AF37; }
 
   /* ---- Delivery timeline ---- */
+  .pd-express { display: flex; align-items: flex-start; gap: 10px; margin: 18px 0 0; padding: 12px 14px; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; background: rgba(255,255,255,.02); color: #A5A7AC; font-family: "Figtree", sans-serif; font-size: 14px; line-height: 1.5; }
+  .pd-express svg { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 2px; color: #D4AF37; }
+  .pd-express b { color: #fff; font-weight: 700; }
+  .pd-express .pd-express__date { color: #FFD976; white-space: nowrap; }
   .pd-tl {
     position: relative;
     display: grid; grid-template-columns: repeat(3, 1fr);
@@ -866,7 +870,9 @@
         '<span class="pd-tl__label">Order Ready</span><span class="pd-tl__date" title="' + esc(cutoffNote) + '">' + fmtDay(readyDay) + '</span></li>' +
       '<li class="pd-tl__step"><span class="pd-tl__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>' +
         '<span class="pd-tl__label">Delivered</span><span class="pd-tl__date" title="Standard USPS shipping, 3–4 business days from your order.">' + fmtDay(earliest) + ' – ' + fmtDay(latest) + '</span></li>' +
-    '</ol>';
+    '</ol>' +
+    '<p class="pd-express"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>' +
+      '<span><b>Need it sooner?</b> Select Express FedEx shipping at checkout and get it as early as <b class="pd-express__date">' + fmtDay(est.expressEarliest) + '</b>.</span></p>';
 
   /* ---- About this product + verification + FAQs (data: js/product-details.js) ---- */
   var D = (window.UNI_DETAILS || {})[slug];
