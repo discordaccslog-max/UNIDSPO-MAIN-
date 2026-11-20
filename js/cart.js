@@ -10,7 +10,9 @@
      remove(slug, variant)        → remove line
      clear()                      → empty cart
      count()                      → total number of items (sum of qty)
-     subtotal()                   → total price in dollars
+     subtotal()                   → total price in dollars (products only)
+     protection() / setProtection(on) → optional $1.99 shipping protection
+     total()                      → subtotal + shipping protection when chosen
      onChange(fn)                 → subscribe; fn() called on any mutation
      open() / close()             → show / hide the cart drawer
 
@@ -21,11 +23,13 @@
        timeline and the drawer, so they always agree
      - window.UNI_UI.paymentsHtml(): the accepted-payment logo row
    Checkout is a demo: the Secure Checkout button fires a cancelable
-   "uni:checkout" event (detail = { items, subtotal }) for a real checkout
+   "uni:checkout" event (detail = { items, subtotal, shippingProtection,
+   protectionPrice, total }) for a real checkout
    to handle later; if nothing handles it, it shows the demo message.
 --------------------------------------------------------------- */
 (function () {
   var KEY = 'uni_cart_v1';
+  var PROTECT_KEY = 'uni_ship_protect_v1';
 
   function read() {
     var items;
@@ -89,6 +93,19 @@
       return read().reduce(function (s, it) {
         return s + (Number(it.price) || 0) * (it.qty || 1);
       }, 0);
+    },
+    /* Optional shipping protection ($1.99 per order), remembered across pages */
+    protectionPrice: 1.99,
+    protection: function () {
+      try { return localStorage.getItem(PROTECT_KEY) === '1'; } catch (e) { return false; }
+    },
+    setProtection: function (on) {
+      try { localStorage.setItem(PROTECT_KEY, on ? '1' : '0'); } catch (e) {}
+      listeners.forEach(function (fn) { try { fn(); } catch (e) {} });
+    },
+    total: function () {
+      var sub = UNI_CART.subtotal();
+      return sub > 0 && UNI_CART.protection() ? sub + UNI_CART.protectionPrice : sub;
     },
     onChange: function (fn) { if (typeof fn === 'function') listeners.push(fn); },
     open: function () { drawer.open(); },
@@ -163,6 +180,16 @@
   var UNI_UI = {
     trustpilotLogo: function () {
       return '<span class="uni-tp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="' + ICON.trustpilot + '"/></svg>Trustpilot</span>';
+    },
+    /* Shipping protection toggle card (cart drawer + cart page) */
+    protectionHtml: function (id) {
+      return '<label class="uni-prot" for="' + id + '">' +
+        '<span class="uni-prot__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>' +
+        '<span class="uni-prot__copy"><span class="uni-prot__title">Shipping Protection <span class="uni-prot__price">$1.99</span></span>' +
+        '<span class="uni-prot__sub">Covers loss, theft and damage in transit. If anything goes wrong, we reship it free.</span></span>' +
+        '<input type="checkbox" class="uni-prot__input" id="' + id + '" role="switch" data-uni-protect>' +
+        '<span class="uni-prot__switch" aria-hidden="true"></span>' +
+      '</label>';
     },
     paymentsHtml: function () {
       return '<ul class="uni-pay" aria-label="Accepted payment methods">' +
@@ -274,6 +301,25 @@
     '.uc-one:hover{background:rgba(212,175,55,.1)}' +
     '.uc-one:focus-visible,.uc-limit:focus-visible{outline:2px solid #FFD976;outline-offset:2px}' +
     '.uc-note{margin:0 0 14px;text-align:center;color:#9EA0A6;font-size:13.5px}' +
+    '.uni-prot{position:relative;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#141416;cursor:pointer;font-family:"Figtree",sans-serif;transition:border-color .2s ease,background .2s ease}' +
+    '.uni-prot:hover{border-color:rgba(212,175,55,.45)}' +
+    '.uni-prot:has(.uni-prot__input:checked){border-color:rgba(212,175,55,.6);background:linear-gradient(180deg,rgba(212,175,55,.08),rgba(212,175,55,.02)),#141416}' +
+    '.uni-prot__icon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:10px;background:rgba(212,175,55,.1);color:#D4AF37}' +
+    '.uni-prot__icon svg{width:20px;height:20px}' +
+    '.uni-prot__copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;text-align:left}' +
+    '.uni-prot__title{color:#fff;font-size:14.5px;font-weight:700;line-height:1.3}' +
+    '.uni-prot__price{margin-left:4px;color:#FFD976;font-weight:700;white-space:nowrap}' +
+    '.uni-prot__sub{color:#9EA0A6;font-size:12.5px;line-height:1.45}' +
+    '.uni-prot__input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}' +
+    '.uni-prot__switch{position:relative;width:44px;height:26px;flex:0 0 44px;border-radius:999px;background:#2A2B2E;border:1px solid rgba(255,255,255,.14);transition:background .2s ease,border-color .2s ease}' +
+    '.uni-prot__switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#BFC1C6;transition:transform .2s ease,background .2s ease}' +
+    '.uni-prot__input:checked + .uni-prot__switch{background:linear-gradient(180deg,#E8C766,#BA9930);border-color:#E8C766}' +
+    '.uni-prot__input:checked + .uni-prot__switch::after{transform:translateX(18px);background:#111}' +
+    '.uni-prot__input:focus-visible + .uni-prot__switch{outline:2px solid #FFD976;outline-offset:2px}' +
+    '.uc-total.has-incl{margin-bottom:2px}' +
+    '.uc-total__incl{margin:0 0 14px;text-align:right;color:#9EA0A6;font-size:12.5px}' +
+    '.uc-total__incl[hidden]{display:none}' +
+    '@media (prefers-reduced-motion: reduce){.uni-prot__switch,.uni-prot__switch::after{transition:none}}' +
     '.uc :focus-visible{outline:2px solid #E8C766;outline-offset:2px}' +
     '@media (max-width:480px){.uc-banner{gap:12px;padding:14px}.uc-banner::after{font-size:76px}.uc-banner__logo{flex-basis:52px;width:52px;height:52px}.uc-banner__row{flex-wrap:nowrap;gap:7px;font-size:14px}.uc-boxes i{width:16px;height:16px}.uc-boxes svg{width:11px;height:11px}.uc-banner__score{font-size:16px}.uc-banner__sub{margin-top:6px;letter-spacing:1.3px;font-size:10px}}' +
     '@media (max-width:380px){.uc-banner{gap:10px;padding:12px}.uc-banner__logo{flex-basis:46px;width:46px;height:46px}.uc-banner__row{gap:5px;font-size:13px}.uc-boxes i{width:14px;height:14px}.uc-banner__score{font-size:15px}.uc-banner__sub{letter-spacing:.9px;font-size:9.5px}.uc-item{grid-template-columns:72px 1fr auto;gap:12px}.uc-item__img{width:72px;height:72px}}' +
@@ -343,7 +389,9 @@
         '</div>' +
         '<div class="uc-foot">' +
           '<p class="uc-eta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg><span>Estimated delivery: <strong class="uc-eta__dates"></strong></span></p>' +
+          UNI_UI.protectionHtml('uc-protect') +
           '<div class="uc-total"><span class="uc-total__label"></span><span class="uc-total__amount"></span></div>' +
+          '<p class="uc-total__incl" hidden>Includes $1.99 shipping protection</p>' +
           '<div class="uc-limit" role="alert" tabindex="-1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v5M12 16v.5"/></svg><div><b>' + UNI_CHECKOUT.title + '</b><p>' + UNI_CHECKOUT.text + '</p><p>' + UNI_CHECKOUT.ship + '</p></div></div>' +
           '<p class="uc-hint" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5M12 7.5v.5"/></svg>' + UNI_CHECKOUT.hint + '</p>' +
           '<button type="button" class="uc-checkout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="11" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>Secure Checkout</button>' +
@@ -403,6 +451,7 @@
         }
         checkout(items);
       });
+      panel.querySelector('[data-uni-protect]').addEventListener('change', function (e) { UNI_CART.setProtection(e.target.checked); });
       UNI_CART.onChange(render);
       render();
     }
@@ -411,13 +460,14 @@
        "uni:checkout" event for a real checkout; otherwise shows a demo message. */
     function checkout(items) {
       var subtotal = items.reduce(function (t, it) { return t + (Number(it.price) || 0) * (it.qty || 1); }, 0);
+      var prot = UNI_CART.protection(), total = subtotal + (prot ? UNI_CART.protectionPrice : 0);
       var ev;
-      try { ev = new CustomEvent('uni:checkout', { cancelable: true, detail: { items: items, subtotal: subtotal } }); }
+      try { ev = new CustomEvent('uni:checkout', { cancelable: true, detail: { items: items, subtotal: subtotal, shippingProtection: prot, protectionPrice: prot ? UNI_CART.protectionPrice : 0, total: total } }); }
       catch (err) { ev = null; }
       var handled = ev ? !document.dispatchEvent(ev) : false;
       if (!handled) {
         var rest = read().length - items.length;
-        alert('Demo checkout — your order of ' + items[0].title + ' (' + money(subtotal) + ') would be placed.' +
+        alert('Demo checkout — your order of ' + items[0].title + (prot ? ' with shipping protection' : '') + ' (' + money(total) + ') would be placed.' +
           (rest > 0 ? '\n\nYour other ' + (rest === 1 ? 'item stays' : rest + ' items stay') + ' in your cart for your next order. All your orders ship together in one package.' : ''));
       }
     }
@@ -456,7 +506,11 @@
       var est = UNI_DELIVERY.estimate();
       panel.querySelector('.uc-eta__dates').textContent = UNI_DELIVERY.format(est.earliest) + ' – ' + UNI_DELIVERY.format(est.latest);
       panel.querySelector('.uc-total__label').textContent = 'Total: ' + n + (n === 1 ? ' Item' : ' Items');
-      panel.querySelector('.uc-total__amount').textContent = money(UNI_CART.subtotal());
+      var prot = UNI_CART.protection();
+      panel.querySelector('[data-uni-protect]').checked = prot;
+      panel.querySelector('.uc-total__amount').textContent = money(UNI_CART.total());
+      panel.querySelector('.uc-total__incl').hidden = !prot;
+      panel.querySelector('.uc-total').classList.toggle('has-incl', prot);
     }
 
     function open() {

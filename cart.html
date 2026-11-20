@@ -149,6 +149,10 @@
   }
   .cart-summary__total { font-family: "Oswald", sans-serif; font-size: 24px; letter-spacing: .5px; }
   .cart-summary__total strong { color: #FFD976; font-weight: 500; margin-left: 10px; }
+  .cart-summary__incl { display: block; margin-top: 4px; font-family: "Figtree", sans-serif; font-size: 13px; letter-spacing: 0; color: #9EA0A6; }
+  .cart-protect { margin-top: 28px; max-width: 520px; margin-left: auto; }
+  .cart-protect .uni-prot { margin: 0; }
+  @media (max-width: 749px) { .cart-protect { max-width: none; } }
   .cart-checkout {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 14px 32px;
@@ -298,7 +302,7 @@
   <div id="cart-root"></div>
 </main>
 
-<script src="js/cart.js?v=20261119i"></script>
+<script src="js/cart.js?v=20261120b"></script>
 <script>
 (function () {
   var root = document.getElementById('cart-root');
@@ -342,13 +346,18 @@
         (multi ? '<button type="button" class="cart-line__one" data-op="checkout-one">Check out this item</button>' : '') +
       '</div>';
     });
+    var prot = window.UNI_CART.protection();
+    html += '<div class="cart-protect">' + window.UNI_UI.protectionHtml('cart-protect') + '</div>';
     html += '<div class="cart-summary">' +
-      '<div class="cart-summary__total">Subtotal<strong>' + esc(money(window.UNI_CART.subtotal())) + '</strong></div>' +
+      '<div class="cart-summary__total">' + (prot ? 'Total' : 'Subtotal') + '<strong>' + esc(money(window.UNI_CART.total())) + '</strong>' +
+        (prot ? '<small class="cart-summary__incl">Includes $1.99 shipping protection</small>' : '') + '</div>' +
       (multi ? '<div class="cart-limit" id="cart-limit" role="alert" tabindex="-1" hidden><b>' + esc(LIM.title) + '</b><p>' + esc(LIM.text) + '</p><p>' + esc(LIM.ship) + '</p></div>' +
                '<p class="cart-hint" id="cart-hint">' + esc(LIM.hint) + '</p>' : '') +
       '<button type="button" class="cart-checkout" id="cart-checkout">Checkout</button>' +
     '</div></div>';
     root.innerHTML = html;
+    var pt = root.querySelector('[data-uni-protect]');
+    if (pt) { pt.checked = prot; pt.addEventListener('change', function () { window.UNI_CART.setProtection(pt.checked); }); }
 
     root.querySelectorAll('.cart-line').forEach(function (line) {
       var slug = line.getAttribute('data-slug');
@@ -379,10 +388,11 @@
   /* One product per checkout (see UNI_CHECKOUT in js/cart.js) */
   function checkoutLines(lines) {
     var subtotal = lines.reduce(function (t, it) { return t + (Number(it.price) || 0) * (it.qty || 1); }, 0);
-    var ev; try { ev = new CustomEvent('uni:checkout', { cancelable: true, detail: { items: lines, subtotal: subtotal } }); } catch (e) { ev = null; }
+    var C = window.UNI_CART, prot = C.protection(), total = subtotal + (prot ? C.protectionPrice : 0);
+    var ev; try { ev = new CustomEvent('uni:checkout', { cancelable: true, detail: { items: lines, subtotal: subtotal, shippingProtection: prot, protectionPrice: prot ? C.protectionPrice : 0, total: total } }); } catch (e) { ev = null; }
     if (ev && !document.dispatchEvent(ev)) return;
     var rest = window.UNI_CART.get().length - lines.length;
-    alert('Demo checkout — your order of ' + lines[0].title + ' (' + money(subtotal) + ') would be placed.' +
+    alert('Demo checkout — your order of ' + lines[0].title + (prot ? ' with shipping protection' : '') + ' (' + money(total) + ') would be placed.' +
       (rest > 0 ? '\n\nYour other ' + (rest === 1 ? 'item stays' : rest + ' items stay') + ' in your cart for your next order. All your orders ship together in one package.' : ''));
   }
 
