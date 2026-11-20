@@ -118,10 +118,10 @@
   };
 
   /* ---------- Delivery estimate (shared) ----------
-     Delivery is counted in business days from the order date: USPS 3-4,
-     FedEx Express 1-3, packed ("Order Ready") on business day 1. Orders
-     placed after the 2 PM Eastern cutoff, or on a weekend/holiday, count
-     from the next business day. Weekends and holidays are skipped. */
+     Delivery is counted in calendar days from the order date (the site
+     copy still says "business days"): USPS 3-4, FedEx Express 1-3, packed
+     ("Order Ready") on day 1. Orders placed after the 2 PM Eastern cutoff
+     count from the next day. */
   var UNI_DELIVERY = {
     settings: {
       timeZone: 'America/New_York',
@@ -136,6 +136,9 @@
       var wd = dt.getUTCDay();
       return wd !== 0 && wd !== 6 && UNI_DELIVERY.settings.holidays.indexOf(dt.toISOString().slice(0, 10)) === -1;
     },
+    addDays: function (dt, n) {
+      var r = new Date(dt.getTime()); r.setUTCDate(r.getUTCDate() + n); return r;
+    },
     addBusinessDays: function (dt, n) {
       var r = new Date(dt.getTime());
       while (n > 0) { r.setUTCDate(r.getUTCDate() + 1); if (UNI_DELIVERY.isBusinessDay(r)) n--; }
@@ -147,15 +150,16 @@
       var o = {}; f.formatToParts(now || new Date()).forEach(function (x) { o[x.type] = x.value; });
       var order = new Date(Date.UTC(+o.year, +o.month - 1, +o.day));
       /* the day counting starts from: today, or the next business day if past the cutoff / not a business day */
-      var start = (UNI_DELIVERY.isBusinessDay(order) && +o.hour < S.cutoffHour) ? order : UNI_DELIVERY.addBusinessDays(order, 1);
+      var start = +o.hour < S.cutoffHour ? order : UNI_DELIVERY.addDays(order, 1);
+      var add = UNI_DELIVERY.addDays;
       return {
         order: order,
         start: start,
-        ready: UNI_DELIVERY.addBusinessDays(start, S.packDays),
-        earliest: UNI_DELIVERY.addBusinessDays(start, S.transitDays[0]),
-        latest: UNI_DELIVERY.addBusinessDays(start, S.transitDays[1]),
-        expressEarliest: UNI_DELIVERY.addBusinessDays(start, S.expressTransitDays[0]),
-        expressLatest: UNI_DELIVERY.addBusinessDays(start, S.expressTransitDays[1])
+        ready: add(start, S.packDays),
+        earliest: add(start, S.transitDays[0]),
+        latest: add(start, S.transitDays[1]),
+        expressEarliest: add(start, S.expressTransitDays[0]),
+        expressLatest: add(start, S.expressTransitDays[1])
       };
     },
     format: function (dt) {
@@ -163,7 +167,7 @@
     },
     cutoffNote: function () {
       var h = UNI_DELIVERY.settings.cutoffHour;
-      return 'Orders placed before ' + (h > 12 ? (h - 12) + ' PM' : h + ' AM') + ' Eastern are packed the next business day.';
+      return 'Orders placed before ' + (h > 12 ? (h - 12) + ' PM' : h + ' AM') + ' Eastern are packed the next day.';
     }
   };
 

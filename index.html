@@ -2051,7 +2051,7 @@
     }
   })();
 </script>
-<script src="js/cart.js?v=20261120e"></script>
+<script src="js/cart.js?v=20261120f"></script>
 <script>
 /* ===== Homepage: live delivery dates, reviews carousel, scroll reveal ===== */
 (function () {
@@ -2077,7 +2077,7 @@
       var today = new Date(Date.UTC(+o.year, +o.month - 1, +o.day));
       var mins = S.cutoffHour * 60 - (+o.hour * 60 + +o.minute);
       var e = D.estimate(now), r = D.format(e.earliest) + ' – ' + D.format(e.latest);
-      if (D.isBusinessDay(today) && mins > 0) {
+      if (mins > 0) {
         var h = Math.floor(mins / 60), m = mins % 60;
         cut.innerHTML = '<i class="hm-trust__dot" aria-hidden="true"></i>Order within <span class="hm-live">' + (h ? h + 'h ' : '') + m + 'm</span>';
         cut.nextElementSibling.textContent = 'Arrives ' + r + ' · USPS';
