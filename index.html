@@ -197,6 +197,14 @@
   .hm-badge{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;padding:40px 28px;border-radius:18px;border:1px solid rgba(212,175,55,.32);background:radial-gradient(80% 70% at 50% 30%,rgba(212,175,55,.16),rgba(212,175,55,0) 70%),#121213}
   .hm-badge::after{content:"UNITED";position:absolute;top:-30px;right:-12px;font-family:"Oswald",sans-serif;font-weight:700;font-size:170px;line-height:1;color:rgba(212,175,55,.04);pointer-events:none;letter-spacing:2px}
   .hm-badge img{width:112px;height:112px;position:relative;z-index:1}
+  .hm-badge__logos{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:6px;position:relative;z-index:1}
+  .hm-badge__logos img{width:104px;height:104px;border-radius:50%;object-fit:contain}
+  .hm-badge__x{position:relative;width:18px;height:18px;flex:0 0 18px}
+  .hm-badge__x::before,.hm-badge__x::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:1.5px;background:rgba(255,217,118,.7);transform:translate(-50%,-50%) rotate(45deg)}
+  .hm-badge__x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+  .hm-badge__eyebrow{text-wrap:balance;margin:0 0 -6px;font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#A5A7AC}
+  @media(max-width:520px){.hm-badge__eyebrow{font-size:11px;letter-spacing:.14em}}
+  @media(max-width:420px){.hm-badge__logos{gap:16px}.hm-badge__logos img{width:88px;height:88px}}
   @media(max-width:749px){.hm-badge::after{display:none}}
   .hm-badge__title{margin:0;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(24px,2.2vw,30px);line-height:1.15;letter-spacing:.6px;text-transform:uppercase;color:#FFD976}
   .hm-badge__sub{margin:0;color:#A5A7AC;font-size:14.5px;font-weight:600}
@@ -1167,8 +1175,13 @@
         </ul>
       </div>
       <div class="hm-badge hm-rv" style="--d:1">
-        <img src="images/united-dispo-logo.webp" alt="United Dispo emblem" width="112" height="112" loading="lazy">
-        <p class="hm-badge__title">Official Sponsor of Raw Garden</p>
+        <div class="hm-badge__logos">
+          <img src="images/united-dispo-logo.webp" alt="United Dispo emblem" width="112" height="112" loading="lazy">
+          <span class="hm-badge__x" aria-hidden="true"></span>
+          <img src="images/cold-extracts-logo.webp" alt="Cold Extracts Inc. logo" width="112" height="112" loading="lazy">
+        </div>
+        <p class="hm-badge__eyebrow">Official Affiliate &amp; Sponsored by</p>
+        <p class="hm-badge__title">Cold Extracts Inc.</p>
         <p class="hm-badge__sub">Based in California · Shipping nationwide</p>
         <ul class="hm-pills" aria-label="Our checks">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Licensed sourcing</li>
