@@ -319,6 +319,7 @@ window.UNI_CATALOG = {
     variants: ["SWITCH"],
     variantLabel: "Options",
     available: false,
+    soldOutNote: "Temporarily unavailable due to low stock",
     images: [
       "images/wholemelts.webp"
     ],
