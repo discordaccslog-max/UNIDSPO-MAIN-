@@ -1,4 +1,4 @@
-# United Dispo — Website
+# United Dispo — Websitee
 
 Static site for **United Dispo**, live at **https://uniteddispo.com** (hosted on Vercel,
 deployed automatically from the `main` branch). Plain HTML, CSS and JavaScript —
