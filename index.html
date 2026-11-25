@@ -238,27 +238,6 @@
   .hm-acc__body strong{color:#fff}
 
   /* Final CTA */
-  /* ===== Follow us on TikTok ===== */
-  .hm-tt{position:relative;overflow:hidden;text-align:center;padding:54px 34px 38px;border-radius:22px;border:1px solid rgba(255,255,255,.1);
-    background:radial-gradient(44% 72% at 14% 18%,rgba(37,244,238,.17),rgba(37,244,238,0) 68%),radial-gradient(44% 72% at 86% 84%,rgba(254,44,85,.17),rgba(254,44,85,0) 68%),#121213}
-  .hm-tt::before{content:"";position:absolute;left:50%;top:-80px;width:460px;height:260px;transform:translateX(-50%);pointer-events:none;
-    background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,.07),rgba(255,255,255,0) 70%);animation:ttGlow 5s ease-in-out infinite}
-  @keyframes ttGlow{0%,100%{opacity:.55}50%{opacity:1}}
-  .hm-tt__logo{position:relative;display:block;width:auto;height:88px;margin:0 auto 22px;filter:drop-shadow(0 8px 26px rgba(0,0,0,.5))}
-  .hm-tt__badge{position:relative;display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:7px 14px;border-radius:999px;
-    border:1px solid rgba(212,175,55,.45);background:rgba(212,175,55,.09);color:#FFD976;font-size:11.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
-  .hm-tt__badge svg{width:13px;height:13px}
-  .hm-tt__title{position:relative;margin:0;font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(30px,4vw,50px);line-height:1.06;letter-spacing:.2px;color:#fff;-webkit-text-stroke:.4px #fff;paint-order:stroke fill}
-  .hm-tt__lead{position:relative;text-wrap:balance;margin:14px auto 26px;max-width:42ch;color:#B9BBC0;font-size:16.5px;font-weight:500;line-height:1.6}
-  .hm-tt__lead b{color:#fff;font-weight:700}
-  .hm-tt__cta{position:relative}
-  .hm-tt__cta svg{width:18px;height:18px}
-  .hm-tt__note{position:relative;text-wrap:balance;margin:30px auto 0;padding:18px 20px 0;max-width:50ch;border-top:1px solid rgba(255,255,255,.09);color:#8E9096;font-size:13.5px;font-weight:500;line-height:1.65}
-  .hm-tt__note b{color:#D5D6D9;font-weight:700}
-  .hm-tt__note a{color:#FFD976;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,217,118,.35)}
-  .hm-tt__note a:hover{border-bottom-color:#FFD976}
-  @media(max-width:560px){.hm-tt{padding:42px 20px 32px}.hm-tt__logo{height:72px;margin-bottom:18px}.hm-tt__lead{font-size:15.5px}.hm-tt__cta{width:100%}}
-  @media(prefers-reduced-motion:reduce){.hm-tt::before{animation:none}}
   .hm-final{position:relative;overflow:hidden;text-align:center;padding:64px 24px;border-radius:20px;border:1px solid rgba(212,175,55,.3);background:radial-gradient(60% 90% at 50% 0%,rgba(212,175,55,.18),rgba(212,175,55,0) 70%),#121213}
   .hm-final img{width:84px;height:84px;margin:0 auto 18px;display:block}
   .hm-final h2{margin:0 auto;max-width:900px;font-family:"Oswald",sans-serif;font-weight:700;font-style:italic;font-size:clamp(28px,4vw,56px);line-height:1.1;letter-spacing:.3px;color:#fff;-webkit-text-stroke:.4px #fff;paint-order:stroke fill}
@@ -933,6 +912,31 @@
   .nx-proof__stars svg{width:15px;height:15px}
   .nx-proof__text{font-size:14px;font-weight:600;color:#D5D6D9;letter-spacing:.3px;line-height:1.4}
   .nx-proof__text strong{color:#fff;font-weight:800}
+  /* Hero TikTok card */
+  .nx-tt{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;max-width:580px;margin:22px 0 0;padding:14px 16px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.13);
+    background:radial-gradient(62% 130% at 6% 50%,rgba(37,244,238,.16),rgba(37,244,238,0) 62%),radial-gradient(62% 130% at 94% 50%,rgba(254,44,85,.16),rgba(254,44,85,0) 62%),#141416;
+    box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .nx-tt__logo{width:38px;height:auto;flex:0 0 38px;display:block;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
+  .nx-tt__copy{flex:1;min-width:0}
+  .nx-tt__title{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0;color:#fff;font-family:"Figtree",sans-serif;font-size:15.5px;font-weight:800;letter-spacing:.1px;line-height:1.25}
+  .nx-tt__badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;border:1px solid rgba(212,175,55,.45);background:rgba(212,175,55,.1);color:#FFD976;font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+  .nx-tt__badge svg{width:10px;height:10px}
+  .nx-tt__sub{margin:4px 0 0;color:#9EA0A6;font-size:12.5px;font-weight:500;line-height:1.5;letter-spacing:.1px}
+  .nx-tt__sub a{color:#FFD976;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,217,118,.4)}
+  .nx-tt__sub a:hover{border-bottom-color:#FFD976}
+  .nx-tt__btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 16px;border-radius:999px;
+    background:linear-gradient(180deg,#E8C766,#BA9930);color:#111 !important;text-decoration:none;font-family:"Figtree",sans-serif;font-size:14px;font-weight:800;letter-spacing:.2px;
+    box-shadow:0 8px 20px rgba(186,153,48,.3);transition:filter .15s ease,box-shadow .15s ease}
+  .nx-tt__btn svg{width:14px;height:14px;transition:transform .2s ease}
+  .nx-tt__btn:hover{filter:brightness(1.07)}
+  .nx-tt__btn:hover svg{transform:translateX(3px)}
+  .nx-tt__btn:focus-visible{outline:2px solid #FFD976;outline-offset:3px}
+  @media(max-width:620px){
+    .nx-tt{flex-wrap:wrap;gap:12px;padding:14px}
+    .nx-tt__btn{width:100%;justify-content:center;min-height:44px}
+  }
+  @media(prefers-reduced-motion:reduce){.nx-tt__btn svg{transition:none}}
   /* Product showcase */
   .nx-show{position:relative;max-width:560px;width:100%;margin:0 auto;aspect-ratio:1/1}
   .nx-show__glow{position:absolute;inset:8% 6%;border-radius:50%;background:radial-gradient(closest-side,rgba(212,175,55,.28),rgba(212,175,55,0));filter:blur(10px)}
@@ -1002,6 +1006,14 @@
           <div class="nx-proof__text"><strong>4.7/5</strong> on Trustpilot · Trusted by <strong>6,000+</strong> customers nationwide</div>
         </div>
       </div>
+      <div class="nx-tt">
+        <img class="nx-tt__logo" src="images/tiktok-glyph.webp" alt="TikTok" width="143" height="160" loading="lazy">
+        <div class="nx-tt__copy">
+          <p class="nx-tt__title">Follow us on TikTok!<span class="nx-tt__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2"/><path d="M8.5 10.5V7a3.5 3.5 0 0 1 7 0v3.5"/></svg>Customers only</span></p>
+          <p class="nx-tt__sub">Giveaways and drops first. Already ordered? <a href="contact.html">Send your order ID</a>.</p>
+        </div>
+        <a class="nx-tt__btn" href="#" data-tiktok-link target="_blank" rel="noopener">Follow<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
     </div>
 
     <div class="nx-show" aria-hidden="false">
@@ -1016,22 +1028,6 @@
         <span class="nx-chip__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h12v10h-12z"/><path d="M13.5 9.5h4.5l3.5 3.5v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span>
         <span><small>Order today, arrives</small><b data-hm-eta>in 4–5 business days</b></span>
       </div>
-    </div>
-  </div>
-</section>
-</div>
-
-<!-- ============ FOLLOW ON TIKTOK ============ -->
-<div class="uni-section hm-gap">
-<section class="hm-sec" aria-labelledby="hm-tt-title">
-  <div class="hm-page">
-    <div class="hm-tt hm-rv">
-      <img class="hm-tt__logo" src="images/tiktok-logo.webp" alt="TikTok" width="216" height="260" loading="lazy">
-      <span class="hm-tt__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2"/><path d="M8.5 10.5V7a3.5 3.5 0 0 1 7 0v3.5"/></svg>Private &middot; Customers Only</span>
-      <h2 class="hm-tt__title" id="hm-tt-title">Follow us on TikTok!</h2>
-      <p class="hm-tt__lead">Giveaways, restock alerts and new drops &mdash; <b>posted there first</b>.</p>
-      <a class="hm-btn hm-btn--gold hm-tt__cta" href="#" data-tiktok-link target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>Follow Us</a>
-      <p class="hm-tt__note"><b>Customers only.</b> Our TikTok is private. Already ordered? <a href="contact.html">Send us your order ID</a> and we&rsquo;ll verify you in.</p>
     </div>
   </div>
 </section>
