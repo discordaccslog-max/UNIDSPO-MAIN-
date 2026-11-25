@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin access — United Dispo</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=Oswald:wght@400;500&amp;display=swap">
+<style>
+  :root{--bg:#0e0e10;--panel:#141416;--line:rgba(255,255,255,.1);--muted:#9ea0a6;--gold:#d4af37;--gold-hi:#ffd976;--ok:#7fd3a8}
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;display:grid;place-items:center;padding:40px 20px;background:radial-gradient(70% 55% at 50% 0%,rgba(212,175,55,.1),rgba(212,175,55,0) 65%),var(--bg);
+    color:#f2f2f3;font:500 15px/1.6 "Figtree",system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-align:center}
+  .wrap{width:100%;max-width:420px}
+  .logo{font-family:"Oswald",sans-serif;font-weight:500;font-size:22px;letter-spacing:.18em;color:#fff;margin:0 0 28px}
+  .card{padding:30px 26px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+  h1{margin:0 0 10px;font-family:"Oswald",sans-serif;font-weight:500;font-size:26px;letter-spacing:.3px;color:#fff}
+  p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
+  .dot{width:40px;height:40px;margin:0 auto 18px;border-radius:50%;border:2px solid rgba(255,255,255,.12);border-top-color:var(--gold);animation:spin .9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tick{width:44px;height:44px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;background:rgba(127,211,168,.12);color:var(--ok)}
+  .tick svg{width:22px;height:22px}
+  .field{margin:18px 0 0;display:flex;gap:8px}
+  .field input{flex:1;min-width:0;height:46px;padding:0 14px;border-radius:9px;border:1px solid rgba(255,255,255,.16);background:#17181a;color:#fff;font-size:16px;outline:none}
+  .field input:focus{border-color:var(--gold)}
+  .field button{flex:0 0 auto;height:46px;padding:0 18px;border:0;border-radius:9px;background:var(--gold);color:#111;font-weight:800;font-size:14px;cursor:pointer}
+  .field button:hover{background:var(--gold-hi)}
+  .exit{display:inline-block;margin:18px 0 0;color:var(--muted);font-size:13px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)}
+  .exit:hover{color:#fff}
+  @media(prefers-reduced-motion:reduce){.dot{animation:none}}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="logo">UNITED DISPO</p>
+    <div class="card" id="card"></div>
+  </main>
+
+<script>
+(function () {
+  'use strict';
+  var COOKIE = 'ud_bypass';
+  var DAYS = 7;
+  var card = document.getElementById('card');
+  var q = new URLSearchParams(location.search);
+
+  function setCookie(v, maxAge) {
+    document.cookie = COOKIE + '=' + encodeURIComponent(v) +
+      '; path=/; max-age=' + maxAge + '; samesite=lax' +
+      (location.protocol === 'https:' ? '; secure' : '');
+  }
+
+  /* ?exit=1 — drop the key and go back to seeing the maintenance page */
+  if (q.get('exit') !== null) {
+    setCookie('', 0);
+    card.innerHTML =
+      '<div class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>' +
+      '<h1>Access cleared</h1><p>This browser will see the maintenance page again.</p>';
+    return;
+  }
+
+  /* ?key=… — store whatever was passed. Vercel decides if it is valid. */
+  var key = q.get('key');
+  if (key) {
+    setCookie(key, DAYS * 24 * 60 * 60);
+    card.innerHTML =
+      '<div class="dot" aria-hidden="true"></div>' +
+      '<h1>Unlocking…</h1><p>Taking you to the live site.</p>';
+    setTimeout(function () { location.replace('/'); }, 600);
+    return;
+  }
+
+  /* No key in the URL — offer a box to paste it into. */
+  card.innerHTML =
+    '<h1>Admin access</h1>' +
+    '<p>Enter the access key to view the site while maintenance mode is on.</p>' +
+    '<form class="field" id="f"><input type="password" id="k" placeholder="Access key" autocomplete="off" autocapitalize="off" spellcheck="false"><button type="submit">Enter</button></form>' +
+    '<a class="exit" href="?exit=1">Clear access on this browser</a>';
+  document.getElementById('f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = document.getElementById('k').value.trim();
+    if (!v) return;
+    setCookie(v, DAYS * 24 * 60 * 60);
+    location.replace('/');
+  });
+})();
+</script>
+</body>
+</html>

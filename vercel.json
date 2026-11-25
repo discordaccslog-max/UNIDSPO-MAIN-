@@ -2,7 +2,14 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/((?!maintenance|images|favicon|robots).*)",
+      "source": "/((?!maintenance|bypass|images|favicon|robots).*)",
+      "missing": [
+        {
+          "type": "cookie",
+          "key": "ud_bypass",
+          "value": "ud-jrv5uzki9y36n3bhfe1ay908"
+        }
+      ],
       "destination": "/maintenance.html",
       "permanent": false
     }
@@ -11,14 +18,14 @@
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, max-age=0"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "no-referrer"
-        }
+        { "key": "Cache-Control", "value": "no-store, max-age=0" },
+        { "key": "Referrer-Policy", "value": "no-referrer" }
+      ]
+    },
+    {
+      "source": "/bypass(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
   ]
