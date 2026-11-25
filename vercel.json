@@ -1,0 +1,18 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/((?!maintenance|images/|robots.txt|favicon).*)",
+      "destination": "/maintenance.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, max-age=0" },
+        { "key": "Referrer-Policy", "value": "no-referrer" }
+      ]
+    }
+  ]
+}
