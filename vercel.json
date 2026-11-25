@@ -1,9 +1,10 @@
 {
   "cleanUrls": true,
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/((?!maintenance|images/|robots.txt|favicon).*)",
-      "destination": "/maintenance.html"
+      "source": "/((?!maintenance|images/|favicon|robots.txt).*)",
+      "destination": "/maintenance.html",
+      "permanent": false
     }
   ],
   "headers": [
