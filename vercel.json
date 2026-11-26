@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/((?!maintenance|bypass|images|favicon|robots).*)",
+      "source": "/((?!maintenance|bypass|images|favicon|robots|api).*)",
       "missing": [
         {
           "type": "cookie",

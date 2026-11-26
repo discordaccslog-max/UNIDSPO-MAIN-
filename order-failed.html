@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Not Completed — United Dispo</title>
+<meta name="description" content="Your United Dispo order was not placed.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=Oswald:wght@400;500;600;700&amp;display=swap">
+<style>
+  :root {
+    --bg: #0e0e10;
+    --side: #151517;
+    --line: rgba(255,255,255,.10);
+    --text: #f2f2f3;
+    --muted: #9ea0a6;
+    --gold: #d4af37;
+    --gold-hi: #ffd976;
+    --err: #ff8a80;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 500 15px/1.5 "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+
+  .co-head { background: #000; border-bottom: 1px solid var(--line); }
+  .co-head__in { max-width: 1180px; margin: 0 auto; padding: 22px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .co-logo { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 30px; letter-spacing: .16em; text-decoration: none; color: #fff; white-space: nowrap; }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 72px 32px 96px; }
+  .done { text-align: center; }
+  .done__icon { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 50%; background: rgba(212, 175, 55, 0.12); color: var(--gold); margin-bottom: 22px; }
+  .done__icon svg { width: 36px; height: 36px; }
+  .done__kicker { margin: 0; color: var(--gold-hi); font-size: 12.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .done__h { font-family: "Oswald", sans-serif; font-size: 32px; font-weight: 600; letter-spacing: 1px; margin: 10px 0 14px; }
+  .done__p { color: var(--muted); font-size: 16px; line-height: 1.7; margin: 0 auto 20px; max-width: 480px; }
+  .done__p b { color: #fff; }
+  .done__actions { display: flex; gap: 12px; justify-content: center; margin-top: 26px; flex-wrap: wrap; }
+  .done__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 30px; border-radius: 999px; font-family: "Oswald", sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; text-decoration: none; }
+  .done__btn--primary { border: 1px solid #ffd700; background: linear-gradient(180deg, #e8c766, #ba9930); color: #111; }
+  .done__btn--secondary { border: 1px solid var(--line); background: transparent; color: var(--text); }
+  .done__note { margin-top: 32px; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="co-head">
+  <div class="co-head__in">
+    <a href="/" class="co-logo">UNITED DISPO</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="done" tabindex="-1">
+    <span class="done__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+    </span>
+    <p class="done__kicker">Payment not completed</p>
+    <h1 class="done__h">Your order was not placed</h1>
+    <p class="done__p">We didn't charge your card. Your cart is still saved — try again or pick a different payment method.</p>
+    <div class="done__actions">
+      <a class="done__btn done__btn--primary" href="/cart.html">Return to cart</a>
+      <a class="done__btn done__btn--secondary" href="/catalog.html">Keep shopping</a>
+    </div>
+    <p class="done__note">Need help? <a href="/contact.html" style="color: var(--gold-hi);">Contact us</a> and we'll make sure your order goes through.</p>
+  </div>
+</main>
+
+</body>
+</html>
