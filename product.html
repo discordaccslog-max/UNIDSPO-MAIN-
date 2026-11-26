@@ -839,12 +839,9 @@
     var bg = fill >= 1 ? '#00B67A' : (fill <= 0 ? '#3a3b3d' : 'linear-gradient(90deg,#00B67A ' + Math.round(fill * 100) + '%,#3a3b3d ' + Math.round(fill * 100) + '%)');
     boxes += '<i style="background:' + bg + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="' + TP_STAR + '"/></svg></i>';
   }
-  var ratingBlock =
-    '<a class="pd-rating" href="index.html#reviews" aria-label="' + UNI_RATING.word + ', rated ' + UNI_RATING.score + ' out of ' + UNI_RATING.outOf + ' on ' + UNI_RATING.platform + '. Read reviews">' +
-      '<span class="pd-tp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M17.227 16.67l2.19 6.742-7.413-5.388 5.223-1.354zM24 9.31h-9.165L12.005.589l-2.84 8.723L0 9.3l7.422 5.397-2.84 8.714 7.422-5.388 4.583-3.326L24 9.311z"/></svg>Trustpilot</span>' +
-      '<span class="pd-tp-boxes" aria-hidden="true">' + boxes + '</span>' +
-      '<span class="pd-rating__score"><b>' + UNI_RATING.word + '</b> · ' + UNI_RATING.score + ' / ' + UNI_RATING.outOf + '</span>' +
-    '</a>';
+  /* Reviews currently hidden site-wide; suppress product-page rating pill
+     (and its link to the hidden index.html#reviews anchor). */
+  var ratingBlock = '';
 
   /* ---- Trust badges + accepted payment methods ---- */
   var trustBlock =
