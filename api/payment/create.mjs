@@ -161,8 +161,10 @@ export default async function handler(req, res) {
     });
   }
 
-  // Order ID — UD_ prefix + 28 hex chars = 31 chars (A-Z/a-z/0-9/_ only, Muadata-safe)
-  const order_id = 'UD_' + crypto.randomBytes(14).toString('hex');
+  // Order ID — 10 random digits (0-9 only, Muadata-safe). Never leading zero,
+  // so displays cleanly as "Order #XXXXXXXXXX" on the processor dashboard.
+  // 9e9 possibilities ≈ 112k orders before 50% collision (birthday bound).
+  const order_id = String(crypto.randomInt(1_000_000_000, 10_000_000_000));
   const order_currency = 'USD';
   const order_amount = order_total.toFixed(2);
 
