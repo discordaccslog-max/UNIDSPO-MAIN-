@@ -350,7 +350,7 @@
     '<form id="co-form" novalidate>' +
       '<section class="co-sec" aria-labelledby="h-contact"><div class="co-sec__head"><h2 class="co-h" id="h-contact">Contact</h2></div>' +
         field('email', 'Email', 'email', 'email', ' inputmode="email" required') +
-        '<p class="co-sec__note" style="margin:8px 2px 0">Your order confirmation and tracking number go here.</p>' +
+        '<p class="co-sec__note" style="margin:8px 2px 0">Your tracking number will be sent here once your order ships.</p>' +
       '</section>' +
       '<section class="co-sec" aria-labelledby="h-delivery"><div class="co-sec__head"><h2 class="co-h" id="h-delivery">Delivery</h2></div>' +
         '<div class="f f--select"><select class="f__in" id="country" name="country" autocomplete="country"><option value="US" selected>United States</option></select><label class="f__lab" for="country">Country/Region</label></div>' +
@@ -586,7 +586,7 @@
         '<span class="done__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>' +
         '<p class="done__kicker">Order ' + num + '</p>' +
         '<h1 class="done__h">Thank you, ' + esc(d.first) + '!</h1>' +
-        '<p class="done__p">Your order is confirmed. We’ve sent a confirmation to <b>' + esc(d.email) + '</b>, and your tracking number will follow as soon as it ships.</p>' +
+        '<p class="done__p">Your order is confirmed. You will be emailed automatically at <b>' + esc(d.email) + '</b> with your tracking number once it ships.</p>' +
         '<div class="done__card">' +
           '<div><span>Estimated delivery</span><b>' + esc(order.shipping.estimate) + '</b></div>' +
           '<div><span>Shipping</span><b>' + (order.shipping.method === 'express' ? 'Express FedEx' : 'Standard USPS') + '</b></div>' +
