@@ -135,6 +135,7 @@
     <div class="tabs">
       <button type="button" class="tab is-on" data-tab="send">Send Tracking</button>
       <button type="button" class="tab" data-tab="log">Sent Tracking <span class="tab__count" id="log-count" style="display:none;">0</span></button>
+      <button type="button" class="tab" data-tab="backfill">Backfill <span class="tab__count" id="backfill-count" style="display:none;">0</span></button>
     </div>
 
     <!-- Send tracking form -->
@@ -202,6 +203,70 @@
 
       <div class="status" id="log-status"></div>
     </div>
+
+    <!-- Backfill confirmations -->
+    <div class="card" id="form-backfill" style="display:none;">
+      <h2>Backfill order confirmations</h2>
+      <p class="card__sub">
+        For orders placed <b>before</b> the auto-confirmation system went live.
+        Paste a list from the Muadata panel (or Stripe/Square CSV) below and we'll
+        send each customer a simplified confirmation email.
+        Sends are rate-limited (~1 email every 600ms) to protect sender reputation.
+      </p>
+
+      <div class="field">
+        <label>Paste customer list <span style="color:var(--gold-hi)">*</span></label>
+        <textarea id="bf-input" style="min-height:180px;font-family:'Geist Mono', ui-monospace, monospace;font-size:13px;" placeholder="email,firstName,orderNumber,orderDate,orderTotal
+customer1@example.com,John,9123720708,Nov 10 2026,$54.99
+customer2@example.com,Sarah,9123720709,Nov 11 2026,$48.50
+
+Or, bare minimum — just one email per line:
+customer3@example.com
+customer4@example.com"></textarea>
+        <p class="field__hint">
+          Accepts three formats: (1) one email per line (minimum), (2) <code style="background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;color:#FFD976;">email,orderNumber</code>, or (3) full CSV with headers:
+          <code style="background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;color:#FFD976;">email,firstName,orderNumber,orderDate,orderTotal</code>.
+          Any missing fields will be omitted from the email (cleanly — no "undefined" placeholders).
+        </p>
+      </div>
+
+      <div class="actions" style="margin-bottom:8px;">
+        <button type="button" class="btn-ghost" id="bf-parse" style="background:transparent;border:1px solid var(--line);color:var(--text);padding:12px 20px;border-radius:999px;cursor:pointer;font-weight:700;font-family:inherit;">Parse & Preview</button>
+      </div>
+
+      <div id="bf-preview" style="display:none;margin-top:16px;">
+        <div style="background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <b style="color:var(--gold-hi);letter-spacing:.08em;text-transform:uppercase;font-size:12px;">Preview</b>
+            <span id="bf-preview-count" style="color:var(--muted);font-size:13px;"></span>
+          </div>
+          <div id="bf-preview-list" style="max-height:280px;overflow-y:auto;font-family:'Geist Mono', ui-monospace, monospace;font-size:12.5px;"></div>
+        </div>
+      </div>
+
+      <div class="status" id="bf-status"></div>
+      <div class="actions">
+        <button type="button" class="btn" id="bf-send" disabled style="opacity:.4;cursor:not-allowed;">Send Backfill Confirmations</button>
+      </div>
+
+      <div id="bf-progress" style="display:none;margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <b style="color:var(--gold-hi);letter-spacing:.08em;text-transform:uppercase;font-size:12px;">Progress</b>
+          <span id="bf-progress-count" style="color:var(--muted);font-size:13px;"></span>
+        </div>
+        <div id="bf-progress-list" style="max-height:320px;overflow-y:auto;font-family:'Geist Mono', ui-monospace, monospace;font-size:12.5px;"></div>
+      </div>
+
+      <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--line);">
+        <h3 style="margin:0 0 8px;font-family:'Oswald',Arial,sans-serif;font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text);">Previously backfilled</h3>
+        <p style="margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.5;">
+          Every backfill send from this device, newest first. Duplicates (same email + order number) are blocked on re-runs so no customer gets two confirmations.
+        </p>
+        <div id="bf-log-list" style="font-family:'Geist Mono', ui-monospace, monospace;font-size:12.5px;max-height:260px;overflow-y:auto;">
+          <div class="log-empty" style="color:var(--muted);padding:12px;text-align:center;">No backfill emails sent yet.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
 </main>
@@ -212,6 +277,8 @@
 
   var KEY_STORE = 'ud_admin_key';
   var LOG_STORE = 'ud_admin_tracking_log';
+  var BACKFILL_LOG_STORE = 'ud_admin_backfill_log';
+  var BACKFILL_RATE_MS = 600; // one send every ~600ms (safe for Resend + sender reputation)
 
   var $ = function (id) { return document.getElementById(id); };
   var show = function (el) { if (el) el.style.display = ''; };
@@ -341,7 +408,7 @@
     list.innerHTML = html;
   }
 
-  function showPanel() { hide($('gate')); show($('panel')); show($('logout')); renderLog(); }
+  function showPanel() { hide($('gate')); show($('panel')); show($('logout')); renderLog(); renderBackfillLog(); }
   function showGate() { hide($('panel')); show($('gate')); hide($('logout')); $('admin-key').value = ''; $('admin-key').focus(); }
 
   if (getKey()) showPanel(); else showGate();
@@ -367,8 +434,10 @@
       document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('is-on'); });
       btn.classList.add('is-on');
       var tab = btn.getAttribute('data-tab');
-      if (tab === 'send') { show($('form-tracking')); hide($('log-view')); }
-      else { show($('log-view')); hide($('form-tracking')); renderLog(); }
+      hide($('form-tracking')); hide($('log-view')); hide($('form-backfill'));
+      if (tab === 'send') show($('form-tracking'));
+      else if (tab === 'log') { show($('log-view')); renderLog(); }
+      else if (tab === 'backfill') { show($('form-backfill')); renderBackfillLog(); }
     });
   });
 
@@ -478,6 +547,282 @@
       }
     }
   });
+
+  /* ================================================================
+     BACKFILL — paste customer list → send simplified confirmation
+     ================================================================ */
+
+  var backfillParsed = []; // most recently parsed rows (ready to send)
+
+  function getBackfillLog() {
+    try { return JSON.parse(localStorage.getItem(BACKFILL_LOG_STORE) || '[]'); }
+    catch (e) { return []; }
+  }
+  function setBackfillLog(arr) {
+    try { localStorage.setItem(BACKFILL_LOG_STORE, JSON.stringify(arr)); } catch (e) {}
+  }
+  function addBackfillLogEntry(entry) {
+    var arr = getBackfillLog();
+    arr.unshift(entry);
+    setBackfillLog(arr);
+    renderBackfillLog();
+  }
+
+  // Dedupe key for one past send
+  function backfillKey(row) {
+    return (row.email || '').trim().toLowerCase() + '|' + (row.orderNumber || '').trim();
+  }
+
+  // Build a set of all previously-sent dedupe keys
+  function alreadySentKeys() {
+    var set = {};
+    getBackfillLog().forEach(function (e) { set[backfillKey(e)] = true; });
+    return set;
+  }
+
+  /* Parse the user's input text. Supports three shapes:
+     (1) one email per line
+     (2) email,orderNumber per line
+     (3) full CSV with a header row: email,firstName,orderNumber,orderDate,orderTotal
+     Blank lines ignored. Lines starting with # or // are ignored (comments). */
+  function parseBackfillInput(text) {
+    var lines = String(text || '').split(/\r?\n/).map(function (l) { return l.trim(); })
+      .filter(function (l) { return l && l[0] !== '#' && l.slice(0, 2) !== '//'; });
+
+    if (!lines.length) return { rows: [], errors: ['Input is empty.'] };
+
+    // Detect header
+    var firstLow = lines[0].toLowerCase();
+    var hasHeader = firstLow.indexOf('email') !== -1 && firstLow.indexOf(',') !== -1;
+    var header = null;
+    if (hasHeader) {
+      header = lines.shift().split(',').map(function (h) { return h.trim().toLowerCase(); });
+    }
+
+    var rows = [];
+    var errors = [];
+    lines.forEach(function (line, i) {
+      // Split respecting simple quoted fields
+      var parts = splitCsvLine(line);
+      var row = {};
+
+      if (header) {
+        header.forEach(function (col, idx) { row[col] = (parts[idx] || '').trim(); });
+      } else if (parts.length === 1) {
+        row.email = parts[0].trim();
+      } else if (parts.length >= 2) {
+        row.email = parts[0].trim();
+        row.ordernumber = parts[1].trim();
+        if (parts[2]) row.firstname = parts[2].trim();
+        if (parts[3]) row.orderdate = parts[3].trim();
+        if (parts[4]) row.ordertotal = parts[4].trim();
+      }
+
+      if (!row.email || !/^\S+@\S+\.\S+$/.test(row.email)) {
+        errors.push('Line ' + (i + 1) + ': invalid email "' + (row.email || line) + '"');
+        return;
+      }
+
+      rows.push({
+        email: row.email,
+        firstName: row.firstname || row.first_name || row['first name'] || '',
+        orderNumber: row.ordernumber || row.order_number || row['order number'] || row.order || '',
+        orderDate: row.orderdate || row.order_date || row['order date'] || row.date || '',
+        orderTotal: row.ordertotal || row.order_total || row['order total'] || row.total || row.amount || '',
+      });
+    });
+
+    return { rows: rows, errors: errors };
+  }
+
+  function splitCsvLine(line) {
+    var parts = []; var cur = ''; var inQ = false;
+    for (var i = 0; i < line.length; i++) {
+      var c = line[i];
+      if (c === '"') { inQ = !inQ; continue; }
+      if (c === ',' && !inQ) { parts.push(cur); cur = ''; continue; }
+      cur += c;
+    }
+    parts.push(cur);
+    return parts;
+  }
+
+  function escHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // Parse & Preview button
+  $('bf-parse').addEventListener('click', function () {
+    clearStatus($('bf-status'));
+    var parsed = parseBackfillInput($('bf-input').value);
+    backfillParsed = parsed.rows;
+
+    if (parsed.errors.length) {
+      setStatus($('bf-status'), 'err', parsed.errors.slice(0, 5).join(' • ') + (parsed.errors.length > 5 ? ' • …' : ''));
+    }
+
+    if (!parsed.rows.length) {
+      hide($('bf-preview'));
+      $('bf-send').disabled = true;
+      $('bf-send').style.opacity = '.4';
+      $('bf-send').style.cursor = 'not-allowed';
+      $('bf-send').textContent = 'Send Backfill Confirmations';
+      return;
+    }
+
+    var sentKeys = alreadySentKeys();
+    var newRows = parsed.rows.filter(function (r) { return !sentKeys[backfillKey(r)]; });
+    var dupeRows = parsed.rows.filter(function (r) { return sentKeys[backfillKey(r)]; });
+
+    $('bf-preview-count').textContent = parsed.rows.length + ' row' + (parsed.rows.length === 1 ? '' : 's') +
+      ' • ' + newRows.length + ' new' +
+      (dupeRows.length ? ' • ' + dupeRows.length + ' already sent (skipped)' : '');
+
+    var html = parsed.rows.slice(0, 500).map(function (r) {
+      var isDupe = !!sentKeys[backfillKey(r)];
+      var badge = isDupe
+        ? '<span style="color:#9EA0A6;background:rgba(255,255,255,.06);padding:1px 7px;border-radius:999px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;">Skipped</span>'
+        : '<span style="color:#FFD976;background:rgba(255,217,118,.12);padding:1px 7px;border-radius:999px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;">Ready</span>';
+      return '<div style="padding:7px 10px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;">' +
+        '<span style="color:#E6E6E8;overflow:hidden;text-overflow:ellipsis;">' +
+          escHtml(r.email) +
+          (r.firstName ? ' · <span style="color:#9EA0A6;">' + escHtml(r.firstName) + '</span>' : '') +
+          (r.orderNumber ? ' · <span style="color:#9EA0A6;">#' + escHtml(r.orderNumber) + '</span>' : '') +
+          (r.orderTotal ? ' · <span style="color:#9EA0A6;">' + escHtml(r.orderTotal) + '</span>' : '') +
+        '</span>' + badge + '</div>';
+    }).join('');
+    if (parsed.rows.length > 500) {
+      html += '<div style="padding:10px;color:#9EA0A6;text-align:center;">… ' + (parsed.rows.length - 500) + ' more rows (will still be sent)</div>';
+    }
+    $('bf-preview-list').innerHTML = html;
+    show($('bf-preview'));
+
+    var toSend = newRows.length;
+    if (toSend > 0) {
+      $('bf-send').disabled = false;
+      $('bf-send').style.opacity = '1';
+      $('bf-send').style.cursor = 'pointer';
+      $('bf-send').textContent = 'Send to ' + toSend + ' Customer' + (toSend === 1 ? '' : 's');
+    } else {
+      $('bf-send').disabled = true;
+      $('bf-send').style.opacity = '.4';
+      $('bf-send').style.cursor = 'not-allowed';
+      $('bf-send').textContent = 'Nothing new to send';
+    }
+  });
+
+  // Send backfill
+  $('bf-send').addEventListener('click', async function () {
+    if (!backfillParsed.length) return;
+    var btn = $('bf-send');
+    var sentKeys = alreadySentKeys();
+    var queue = backfillParsed.filter(function (r) { return !sentKeys[backfillKey(r)]; });
+    if (!queue.length) return;
+
+    if (!confirm('Send ' + queue.length + ' confirmation email' + (queue.length === 1 ? '' : 's') + '? This cannot be undone.')) return;
+
+    btn.disabled = true; btn.style.opacity = '.4'; btn.style.cursor = 'not-allowed';
+    show($('bf-progress'));
+    $('bf-progress-list').innerHTML = '';
+    clearStatus($('bf-status'));
+
+    var okCount = 0, errCount = 0;
+    for (var i = 0; i < queue.length; i++) {
+      var r = queue[i];
+      btn.textContent = 'Sending ' + (i + 1) + ' / ' + queue.length + '…';
+      $('bf-progress-count').textContent = (i + 1) + ' / ' + queue.length;
+
+      try {
+        var res = await fetch('/api/admin/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': getKey() },
+          body: JSON.stringify({
+            template: 'backfill',
+            email: r.email,
+            firstName: r.firstName,
+            orderNumber: r.orderNumber,
+            orderDate: r.orderDate,
+            orderTotal: r.orderTotal,
+          }),
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (res.status === 401) {
+          appendBackfillProgress('err', r, 'Invalid admin key — aborting');
+          setStatus($('bf-status'), 'err', 'Invalid admin key. Re-enter and try again.');
+          clearKey(); setTimeout(showGate, 1500);
+          break;
+        }
+        if (!res.ok) {
+          errCount++;
+          appendBackfillProgress('err', r, data.error || ('HTTP ' + res.status));
+        } else {
+          okCount++;
+          appendBackfillProgress('ok', r, 'sent');
+          addBackfillLogEntry({
+            id: 'bf_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+            sentAt: Date.now(),
+            email: r.email,
+            firstName: r.firstName,
+            orderNumber: r.orderNumber,
+            orderDate: r.orderDate,
+            orderTotal: r.orderTotal,
+          });
+        }
+      } catch (err) {
+        errCount++;
+        appendBackfillProgress('err', r, 'network: ' + (err && err.message || 'unknown'));
+      }
+
+      // Rate limit
+      if (i < queue.length - 1) await new Promise(function (resolve) { setTimeout(resolve, BACKFILL_RATE_MS); });
+    }
+
+    btn.textContent = 'Done — ' + okCount + ' sent' + (errCount ? ', ' + errCount + ' failed' : '');
+    setStatus($('bf-status'), errCount ? 'err' : 'ok', '✓ ' + okCount + ' email' + (okCount === 1 ? '' : 's') + ' sent' + (errCount ? ' • ' + errCount + ' failed (see progress log)' : ''));
+    renderBackfillLog();
+  });
+
+  function appendBackfillProgress(type, row, msg) {
+    var color = type === 'ok' ? '#7FD3A8' : '#FF9C9C';
+    var icon = type === 'ok' ? '✓' : '✗';
+    var div = document.createElement('div');
+    div.style.cssText = 'padding:6px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;';
+    div.innerHTML = '<span style="color:' + color + ';">' + icon + ' ' + escHtml(row.email) +
+      (row.orderNumber ? ' <span style="color:#9EA0A6;">· #' + escHtml(row.orderNumber) + '</span>' : '') +
+      '</span><span style="color:#9EA0A6;font-size:11.5px;">' + escHtml(msg) + '</span>';
+    $('bf-progress-list').appendChild(div);
+    $('bf-progress-list').scrollTop = $('bf-progress-list').scrollHeight;
+  }
+
+  function renderBackfillLog() {
+    var list = $('bf-log-list');
+    var log = getBackfillLog();
+    var countEl = $('backfill-count');
+    if (countEl) {
+      countEl.textContent = log.length;
+      countEl.style.display = log.length ? 'inline-block' : 'none';
+    }
+    if (!list) return;
+    if (!log.length) {
+      list.innerHTML = '<div class="log-empty" style="color:var(--muted);padding:12px;text-align:center;">No backfill emails sent yet.</div>';
+      return;
+    }
+    list.innerHTML = log.slice(0, 500).map(function (e) {
+      var when = new Date(e.sentAt).toLocaleString();
+      return '<div style="padding:8px 10px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;">' +
+        '<span style="color:#E6E6E8;overflow:hidden;text-overflow:ellipsis;">' +
+          escHtml(e.email) +
+          (e.firstName ? ' · <span style="color:#9EA0A6;">' + escHtml(e.firstName) + '</span>' : '') +
+          (e.orderNumber ? ' · <span style="color:#9EA0A6;">#' + escHtml(e.orderNumber) + '</span>' : '') +
+        '</span>' +
+        '<span style="color:#9EA0A6;font-size:11px;">' + escHtml(when) + '</span>' +
+      '</div>';
+    }).join('');
+    if (log.length > 500) {
+      list.innerHTML += '<div style="padding:10px;color:#9EA0A6;text-align:center;">… ' + (log.length - 500) + ' more</div>';
+    }
+  }
 })();
 </script>
 </body>

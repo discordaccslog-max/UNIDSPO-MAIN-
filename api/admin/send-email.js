@@ -262,6 +262,93 @@ function buildFollowUpEmail({ firstName, orderNumber }) {
 }
 
 /* --------------------------------------------------------------------
+   Template: backfill confirmation
+
+   For orders placed BEFORE the auto-confirmation system went live.
+   The original cart detail (item names, variants, images) only ever
+   lived in the customer's browser localStorage during checkout and
+   was never persisted server-side, so we can't rebuild the full
+   confirmation email. This template is deliberately simplified and
+   honest: date, total, and a note that tracking will follow.
+
+   DO NOT claim things that weren't in the real order. No item names,
+   no images, no shipping method — only facts we can verify from the
+   Muadata order record (email + total + date + order_no).
+   -------------------------------------------------------------------- */
+
+function buildBackfillEmail({ firstName, orderNumber, orderDate, orderTotal }) {
+  const greeting = firstName ? `Hi ${esc(firstName)},` : 'Hi there,';
+  const dateLine = orderDate ? ` placed on <b style="color:#fff;">${esc(orderDate)}</b>` : '';
+  const totalLine = orderTotal
+    ? `<tr>
+         <td style="padding:10px 0;color:#9EA0A6;font-size:14px;">Order total</td>
+         <td style="padding:10px 0;color:#fff;font-size:15px;font-weight:700;text-align:right;">${esc(orderTotal)}</td>
+       </tr>`
+    : '';
+  const orderRow = orderNumber
+    ? `<tr>
+         <td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#9EA0A6;font-size:14px;">Order number</td>
+         <td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);color:#fff;font-size:15px;font-weight:700;text-align:right;">${esc(orderNumber)}</td>
+       </tr>`
+    : '';
+
+  const body = `
+    <tr>
+      <td style="background:#111113;padding:36px 32px 24px;text-align:left;">
+        <table role="presentation" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="width:52px;height:52px;border-radius:50%;background:rgba(212,175,55,0.12);text-align:center;vertical-align:middle;">
+              <span style="display:inline-block;font-size:28px;line-height:52px;color:#FFD976;">&#x2713;</span>
+            </td>
+          </tr>
+        </table>
+        <p style="margin:14px 0 4px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">Order confirmation</p>
+        <h1 style="margin:4px 0 14px;font-family:'Oswald',Arial,sans-serif;font-size:30px;font-weight:500;line-height:1.15;color:#fff;">Thanks for your order${firstName ? `, ${esc(firstName)}` : ''}!</h1>
+        <p style="margin:0;font-family:'Figtree',Arial,sans-serif;font-size:15.5px;line-height:1.7;color:#C9CBD0;">${greeting} We're writing to confirm the order you${dateLine} with United Dispo. Your package is being prepared for shipment — you'll receive a separate email with tracking information once it's on its way.</p>
+      </td>
+    </tr>
+
+    ${(orderRow || totalLine) ? `
+    <tr>
+      <td style="background:#111113;padding:0 32px 28px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#17181A;border:1px solid rgba(255,255,255,0.1);border-radius:12px;">
+          <tr>
+            <td style="padding:16px 22px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                ${orderRow}
+                ${totalLine}
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    ` : ''}
+
+    <tr>
+      <td style="background:#111113;padding:0 32px 32px;">
+        <p style="margin:0;font-family:'Figtree',Arial,sans-serif;font-size:14px;line-height:1.7;color:#9EA0A6;">If you have any questions about your order in the meantime, reply to this email or text us using the button below. We're available 24/7.</p>
+      </td>
+    </tr>
+  `;
+
+  const subject = orderNumber
+    ? `Your United Dispo order ${orderNumber} confirmation`
+    : `Your United Dispo order confirmation`;
+
+  return {
+    html: wrap({
+      preheader: orderNumber
+        ? `Confirming your United Dispo order ${orderNumber} — tracking details to follow.`
+        : `Confirming your United Dispo order — tracking details to follow.`,
+      headline: subject,
+      bodyHtml: body,
+    }),
+    subject,
+  };
+}
+
+/* --------------------------------------------------------------------
    Handler
    -------------------------------------------------------------------- */
 
@@ -292,6 +379,9 @@ module.exports = async function handler(req, res) {
     trackingNumber,
     estimatedDelivery,
     shippingAddress,
+    // backfill-specific
+    orderDate,
+    orderTotal,
   } = body;
 
   if (!email) return res.status(400).json({ error: 'Missing customer email.' });
@@ -315,6 +405,10 @@ module.exports = async function handler(req, res) {
       : `Your United Dispo order has shipped`;
   } else if (template === 'followup') {
     const built = buildFollowUpEmail({ firstName, orderNumber });
+    html = built.html;
+    emailSubject = built.subject;
+  } else if (template === 'backfill') {
+    const built = buildBackfillEmail({ firstName, orderNumber, orderDate, orderTotal });
     html = built.html;
     emailSubject = built.subject;
   } else {
