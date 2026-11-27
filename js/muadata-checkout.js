@@ -109,6 +109,11 @@
             orderNumber: result.data.order_id || '',
             createdAt: Date.now(),
           }));
+          // Clear any lingering sent-flag from a previous order in the same
+          // tab so the second-order-in-same-session case still fires. The
+          // flag's only job is to block rapid refresh-induced double-sends,
+          // not to permanently lock the session.
+          sessionStorage.removeItem('uni_pending_order_sent');
         } catch (e) { /* localStorage quota or disabled — email just won't fire */ }
 
         // Navigate. The promise never resolves after this.
