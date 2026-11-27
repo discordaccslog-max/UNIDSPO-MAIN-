@@ -214,25 +214,107 @@
     <p class="uni-page__intro">Have a question or need help with an order? Reach out below.</p>
 
     
-    <form class="uni-form" method="post" action="">
+    <form class="uni-form" id="uni-contact-form" method="post" action="/api/contact" novalidate>
       <div class="uni-form__row">
         <label for="uni-name">Name</label>
-        <input type="text" id="uni-name" name="uni_name" placeholder="Your name" required>
+        <input type="text" id="uni-name" name="uni_name" placeholder="Your name" required maxlength="120">
       </div>
       <div class="uni-form__row">
         <label for="uni-email">Email</label>
-        <input type="email" id="uni-email" name="uni_email" placeholder="your@email.com" required>
+        <input type="email" id="uni-email" name="uni_email" placeholder="your@email.com" required maxlength="200">
       </div>
       <div class="uni-form__row">
         <label for="uni-subject">Subject</label>
-        <input type="text" id="uni-subject" name="uni_subject" placeholder="Order inquiry, bulk pricing, etc.">
+        <input type="text" id="uni-subject" name="uni_subject" placeholder="Order inquiry, bulk pricing, etc." maxlength="200">
       </div>
       <div class="uni-form__row">
         <label for="uni-message">Message</label>
-        <textarea id="uni-message" name="uni_message" placeholder="How can we help?" required></textarea>
+        <textarea id="uni-message" name="uni_message" placeholder="How can we help?" required maxlength="5000"></textarea>
       </div>
-      <button type="submit" class="uni-form__submit">Send Message</button>
+      <!-- Honeypot: real users won't see or fill this. Bots that autofill every input will. -->
+      <div class="uni-hp" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+        <label for="uni-hp">Website</label>
+        <input type="text" id="uni-hp" name="uni_website" tabindex="-1" autocomplete="off">
+      </div>
+      <div id="uni-form-status" role="status" aria-live="polite" style="display:none;margin:12px 0 4px;padding:12px 14px;border-radius:8px;font-size:14px;line-height:1.5;"></div>
+      <button type="submit" class="uni-form__submit" id="uni-form-submit">Send Message</button>
     </form>
+
+    <script>
+    (function () {
+      var form   = document.getElementById('uni-contact-form');
+      var btn    = document.getElementById('uni-form-submit');
+      var status = document.getElementById('uni-form-status');
+      if (!form || !btn || !status) return;
+
+      function showStatus(kind, text) {
+        status.style.display = 'block';
+        status.textContent = text;
+        if (kind === 'ok') {
+          status.style.background = 'rgba(212,175,55,.12)';
+          status.style.color = '#FFD976';
+          status.style.border = '1px solid rgba(212,175,55,.35)';
+        } else {
+          status.style.background = 'rgba(255,100,100,.08)';
+          status.style.color = '#FF9C9C';
+          status.style.border = '1px solid rgba(255,100,100,.3)';
+        }
+      }
+      function clearStatus() {
+        status.style.display = 'none';
+        status.textContent = '';
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        clearStatus();
+
+        var name    = (document.getElementById('uni-name').value    || '').trim();
+        var email   = (document.getElementById('uni-email').value   || '').trim();
+        var subject = (document.getElementById('uni-subject').value || '').trim();
+        var message = (document.getElementById('uni-message').value || '').trim();
+        var honey   = (document.getElementById('uni-hp').value      || '').trim();
+
+        if (!name)    { showStatus('err', 'Please enter your name.'); return; }
+        if (!email)   { showStatus('err', 'Please enter your email.'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showStatus('err', 'Please enter a valid email address.'); return;
+        }
+        if (!message) { showStatus('err', 'Please enter a message.'); return; }
+
+        var original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+
+        try {
+          var res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, email: email, subject: subject, message: message, website: honey }),
+          });
+          var data = await res.json().catch(function () { return {}; });
+          if (!res.ok) {
+            showStatus('err', (data && data.error) || 'Something went wrong. Please try again.');
+            btn.disabled = false;
+            btn.textContent = original;
+            return;
+          }
+          showStatus('ok', '✓ Message sent. We\'ll get back to you shortly.');
+          form.reset();
+          btn.textContent = 'Sent';
+          // Re-enable after a beat so a second message is possible
+          setTimeout(function () {
+            btn.disabled = false;
+            btn.textContent = original;
+          }, 3000);
+        } catch (err) {
+          showStatus('err', 'Network error — please try again or text us at (954) 289-1648.');
+          btn.disabled = false;
+          btn.textContent = original;
+        }
+      });
+    })();
+    </script>
   </div>
 </main>
 
