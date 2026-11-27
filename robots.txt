@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /cart.html
 Disallow: /account.html
+Disallow: /admin/
+Disallow: /api/
 
 Sitemap: https://uniteddispo.com/sitemap.xml
