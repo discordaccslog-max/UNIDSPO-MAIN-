@@ -81,10 +81,7 @@ function buildEmail(order, orderNumber) {
         <table role="presentation" cellpadding="0" cellspacing="0">
           <tr>
             <td style="width:52px;height:52px;border-radius:50%;background:rgba(212,175,55,0.12);text-align:center;vertical-align:middle;">
-              <img src="${SITE}/images/email-check.png" alt="" width="26" height="26" style="display:inline-block;">
-              <!--[if !mso]><!-->
-              <span style="display:inline-block;font-size:22px;line-height:52px;color:#FFD976;">✓</span>
-              <!--<![endif]-->
+              <span style="display:inline-block;font-size:22px;line-height:52px;color:#FFD976;font-weight:700;">✓</span>
             </td>
           </tr>
         </table>
