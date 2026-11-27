@@ -217,25 +217,55 @@ function buildTrackingEmail({ firstName, orderNumber, carrier, trackingNumber, e
 }
 
 /* --------------------------------------------------------------------
-   Template: follow-up (freeform custom message)
+   Template: follow-up (ONE fixed template, same body every send)
+
+   Edit FOLLOWUP_SUBJECT and FOLLOWUP_BODY below to customize.
+   Tokens supported in both: {{firstName}}, {{orderNumber}}
+   - {{firstName}} falls back to "there" if not provided
+   - {{orderNumber}} and its preceding "Order " text are removed cleanly
+     when orderNumber is empty (no "Order undefined" output)
    -------------------------------------------------------------------- */
 
-function buildFollowUpEmail({ firstName, orderNumber, subject, messageBody }) {
+const FOLLOWUP_SUBJECT = `Checking in on your United Dispo order`;
+
+const FOLLOWUP_BODY = `Hi {{firstName}},
+
+Just checking in to make sure your United Dispo order arrived safely and everything was exactly what you expected.
+
+[PLACEHOLDER — edit the FOLLOWUP_BODY constant at the top of /api/admin/send-email.js to replace this text with your actual follow-up message. You can use {{firstName}} and {{orderNumber}} tokens anywhere in the text.]
+
+If anything is off — damaged packaging, wrong item, missing anything, or you just have a question — reply to this email or text us at (954) 289-1648 any time. We're always here.
+
+Thanks for shopping with us,
+United Dispo`;
+
+function renderTemplate(tpl, { firstName, orderNumber }) {
+  const firstSafe = (firstName || '').trim() || 'there';
+  const orderSafe = (orderNumber || '').trim();
+  // Clean handling for missing orderNumber — strip "Order {{orderNumber}}"
+  let out = String(tpl || '');
+  if (!orderSafe) {
+    out = out.replace(/\s*Order\s+\{\{orderNumber\}\}/g, '');
+  }
+  out = out.replace(/\{\{firstName\}\}/g, firstSafe);
+  out = out.replace(/\{\{orderNumber\}\}/g, orderSafe);
+  return out;
+}
+
+function buildFollowUpEmail({ firstName, orderNumber }) {
+  const subject = renderTemplate(FOLLOWUP_SUBJECT, { firstName, orderNumber });
+  const bodyText = renderTemplate(FOLLOWUP_BODY, { firstName, orderNumber });
+
   const body = `
     <tr>
       <td style="background:#111113;padding:36px 32px 32px;text-align:left;">
         ${orderNumber ? `<p style="margin:0 0 6px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">Regarding Order ${esc(orderNumber)}</p>` : ''}
-        <h1 style="margin:${orderNumber ? '4px' : '0'} 0 20px;font-family:'Oswald',Arial,sans-serif;font-size:28px;font-weight:500;line-height:1.2;color:#fff;">${esc(firstName) ? `Hi ${esc(firstName)},` : 'Hi there,'}</h1>
-        ${bodyToHtml(messageBody)}
+        ${bodyToHtml(bodyText)}
       </td>
     </tr>
   `;
 
-  return wrap({
-    preheader: subject || `A message about your United Dispo order`,
-    headline: subject || `A message from United Dispo`,
-    bodyHtml: body,
-  });
+  return { html: wrap({ preheader: subject, headline: subject, bodyHtml: body }), subject };
 }
 
 /* --------------------------------------------------------------------
@@ -269,9 +299,6 @@ module.exports = async function handler(req, res) {
     trackingNumber,
     estimatedDelivery,
     shippingAddress,
-    // followup-specific
-    subject,
-    messageBody,
   } = body;
 
   if (!email) return res.status(400).json({ error: 'Missing customer email.' });
@@ -294,11 +321,9 @@ module.exports = async function handler(req, res) {
       ? `Your United Dispo order ${orderNumber} has shipped`
       : `Your United Dispo order has shipped`;
   } else if (template === 'followup') {
-    if (!messageBody || !String(messageBody).trim()) {
-      return res.status(400).json({ error: 'Missing message body.' });
-    }
-    html = buildFollowUpEmail({ firstName, orderNumber, subject, messageBody });
-    emailSubject = subject || 'A message from United Dispo';
+    const built = buildFollowUpEmail({ firstName, orderNumber });
+    html = built.html;
+    emailSubject = built.subject;
   } else {
     return res.status(400).json({ error: `Unknown template: ${template}` });
   }

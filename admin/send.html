@@ -31,7 +31,7 @@
   .hd__logout { font-size: 13px; color: var(--muted); background: none; border: 0; cursor: pointer; font-family: inherit; }
   .hd__logout:hover { color: var(--text); }
 
-  .wrap { max-width: 720px; margin: 0 auto; padding: 36px 24px 96px; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 36px 24px 96px; }
 
   .gate { background: var(--side); border: 1px solid var(--line); border-radius: 14px; padding: 28px; max-width: 420px; margin: 60px auto 0; }
   .gate h1 { font-family: "Oswald", sans-serif; font-size: 22px; font-weight: 500; margin: 0 0 8px; }
@@ -59,13 +59,17 @@
   }
   .btn:hover { background: linear-gradient(180deg, #ffd976, #c8a732); }
   .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn--sm { min-height: 36px; padding: 0 16px; font-size: 12.5px; letter-spacing: 1px; }
   .btn--hollow { background: transparent; border-color: rgba(255,255,255,.2); color: #fff; }
   .btn--hollow:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.35); }
+  .btn--danger { background: transparent; border-color: rgba(255,107,107,.3); color: var(--err); }
+  .btn--danger:hover { background: rgba(255,107,107,.08); border-color: rgba(255,107,107,.5); }
 
   .tabs { display: flex; gap: 8px; margin-bottom: 24px; padding: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
   .tab { flex: 1; text-align: center; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; letter-spacing: .04em; color: var(--muted); border: 0; background: transparent; font-family: inherit; }
   .tab.is-on { background: var(--side); color: var(--text); }
   .tab:hover:not(.is-on) { color: var(--text); }
+  .tab__count { display: inline-block; margin-left: 6px; padding: 1px 8px; background: rgba(255,217,118,.14); color: var(--gold-hi); border-radius: 999px; font-size: 11px; font-weight: 800; }
 
   .card { background: var(--side); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
   .card h2 { font-family: "Oswald", sans-serif; font-size: 20px; font-weight: 500; margin: 0 0 4px; }
@@ -77,6 +81,29 @@
   .status--err { background: rgba(255,107,107,.1); border: 1px solid rgba(255,107,107,.3); color: var(--err); }
 
   .actions { margin-top: 24px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Sent-tracking list */
+  .log { display: flex; flex-direction: column; gap: 12px; }
+  .log-empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
+  .log-item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; gap: 16px; align-items: flex-start; }
+  .log-item__main { flex: 1; min-width: 0; }
+  .log-item__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .log-item__email { font-weight: 700; font-size: 15px; color: #fff; word-break: break-all; }
+  .log-item__date { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .log-item__meta { font-size: 13px; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .log-item__meta b { color: var(--text); font-weight: 600; }
+  .log-item__tag { display: inline-block; padding: 2px 8px; background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .log-item__fu { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .log-item__fu-sent { font-size: 12.5px; color: var(--ok); font-weight: 600; }
+  .log-item__fu-sent svg { width: 14px; height: 14px; vertical-align: middle; margin-right: 4px; }
+  .log-item__actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; flex-shrink: 0; }
+  .log-item__del { background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 4px 6px; border-radius: 4px; }
+  .log-item__del:hover { color: var(--err); background: rgba(255,107,107,.08); }
+
+  @media (max-width: 520px) {
+    .log-item { flex-direction: column; }
+    .log-item__actions { flex-direction: row; align-self: stretch; justify-content: space-between; }
+  }
 </style>
 </head>
 <body>
@@ -106,11 +133,11 @@
   <!-- Compose panel (hidden until unlocked) -->
   <section id="panel" style="display:none;">
     <div class="tabs">
-      <button type="button" class="tab is-on" data-tab="tracking">Tracking</button>
-      <button type="button" class="tab" data-tab="followup">Follow-up</button>
+      <button type="button" class="tab is-on" data-tab="send">Send Tracking</button>
+      <button type="button" class="tab" data-tab="log">Sent Tracking <span class="tab__count" id="log-count" style="display:none;">0</span></button>
     </div>
 
-    <!-- Tracking form -->
+    <!-- Send tracking form -->
     <div class="card" id="form-tracking">
       <h2>Send tracking email</h2>
       <p class="card__sub">Notify a customer that their order has shipped, with carrier + tracking number.</p>
@@ -164,42 +191,16 @@
       </div>
     </div>
 
-    <!-- Follow-up form -->
-    <div class="card" id="form-followup" style="display:none;">
-      <h2>Send follow-up email</h2>
-      <p class="card__sub">Custom message to a customer. Freeform body (plain text with paragraph breaks).</p>
+    <!-- Sent-tracking log -->
+    <div class="card" id="log-view" style="display:none;">
+      <h2>Sent tracking emails</h2>
+      <p class="card__sub">Every tracking email you've sent from this device, newest first. Click <b>Send Follow-up</b> next to any entry to dispatch the fixed follow-up email to that customer.</p>
 
-      <div class="row">
-        <div class="field">
-          <label>Customer email <span style="color:var(--gold-hi)">*</span></label>
-          <input type="email" id="f-email" placeholder="customer@example.com" required>
-        </div>
-        <div class="field">
-          <label>Customer first name</label>
-          <input type="text" id="f-firstName" placeholder="First name">
-        </div>
+      <div class="log" id="log-list">
+        <div class="log-empty">No tracking emails sent yet. Send one from the first tab and it'll appear here.</div>
       </div>
 
-      <div class="field">
-        <label>Order number (optional, shown in header)</label>
-        <input type="text" id="f-orderNumber" placeholder="e.g. 9123720708">
-      </div>
-
-      <div class="field">
-        <label>Subject line</label>
-        <input type="text" id="f-subject" placeholder="A message from United Dispo" value="A message from United Dispo">
-      </div>
-
-      <div class="field">
-        <label>Message body <span style="color:var(--gold-hi)">*</span></label>
-        <textarea id="f-messageBody" placeholder="Write the full body of the email here.&#10;&#10;Use a blank line to start a new paragraph."></textarea>
-        <p class="field__hint">Plain text. Blank line = new paragraph, single Enter = line break. Automatically wrapped with branded header + support footer.</p>
-      </div>
-
-      <div class="status" id="f-status"></div>
-      <div class="actions">
-        <button type="button" class="btn" id="send-followup">Send Follow-up Email</button>
-      </div>
+      <div class="status" id="log-status"></div>
     </div>
   </section>
 
@@ -210,11 +211,11 @@
   'use strict';
 
   var KEY_STORE = 'ud_admin_key';
+  var LOG_STORE = 'ud_admin_tracking_log';
 
   var $ = function (id) { return document.getElementById(id); };
-
-  function show(el) { if (el) el.style.display = ''; }
-  function hide(el) { if (el) el.style.display = 'none'; }
+  var show = function (el) { if (el) el.style.display = ''; };
+  var hide = function (el) { if (el) el.style.display = 'none'; };
 
   function setStatus(el, type, msg) {
     if (!el) return;
@@ -227,31 +228,123 @@
     el.textContent = '';
   }
 
-  function getKey() {
-    try { return localStorage.getItem(KEY_STORE) || ''; } catch (e) { return ''; }
+  function getKey() { try { return localStorage.getItem(KEY_STORE) || ''; } catch (e) { return ''; } }
+  function setKey(k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} }
+  function clearKey() { try { localStorage.removeItem(KEY_STORE); } catch (e) {} }
+
+  function getLog() {
+    try {
+      var raw = localStorage.getItem(LOG_STORE);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
   }
-  function setKey(k) {
-    try { localStorage.setItem(KEY_STORE, k); } catch (e) {}
+  function setLog(arr) {
+    try { localStorage.setItem(LOG_STORE, JSON.stringify(arr)); } catch (e) {}
   }
-  function clearKey() {
-    try { localStorage.removeItem(KEY_STORE); } catch (e) {}
+  function addLogEntry(entry) {
+    var arr = getLog();
+    arr.unshift(entry);
+    setLog(arr);
+    renderLog();
+  }
+  function updateLogEntry(id, patch) {
+    var arr = getLog();
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].id === id) {
+        Object.assign(arr[i], patch);
+        break;
+      }
+    }
+    setLog(arr);
+    renderLog();
+  }
+  function deleteLogEntry(id) {
+    var arr = getLog().filter(function (e) { return e.id !== id; });
+    setLog(arr);
+    renderLog();
   }
 
-  function showPanel() {
-    hide($('gate'));
-    show($('panel'));
-    show($('logout'));
-  }
-  function showGate() {
-    hide($('panel'));
-    show($('gate'));
-    hide($('logout'));
-    $('admin-key').value = '';
-    $('admin-key').focus();
+  function fmtDate(ts) {
+    try {
+      var d = new Date(ts);
+      return d.toLocaleString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: 'numeric', minute: '2-digit', hour12: true
+      });
+    } catch (e) { return String(ts); }
   }
 
-  if (getKey()) showPanel();
-  else showGate();
+  function escHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function renderLog() {
+    var list = $('log-list');
+    var countEl = $('log-count');
+    var entries = getLog();
+
+    if (countEl) {
+      if (entries.length > 0) {
+        countEl.textContent = entries.length;
+        show(countEl);
+      } else {
+        hide(countEl);
+      }
+    }
+
+    if (!entries.length) {
+      list.innerHTML = '<div class="log-empty">No tracking emails sent yet. Send one from the first tab and it\'ll appear here.</div>';
+      return;
+    }
+
+    var html = entries.map(function (e) {
+      var fuBlock;
+      if (e.followUpSentAt) {
+        fuBlock =
+          '<div class="log-item__fu">' +
+            '<span class="log-item__fu-sent">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' +
+              'Follow-up sent ' + escHtml(fmtDate(e.followUpSentAt)) +
+            '</span>' +
+            '<button type="button" class="btn btn--sm btn--hollow" data-action="resend-followup" data-id="' + escHtml(e.id) + '">Re-send</button>' +
+          '</div>';
+      } else {
+        fuBlock =
+          '<div class="log-item__fu">' +
+            '<button type="button" class="btn btn--sm" data-action="send-followup" data-id="' + escHtml(e.id) + '">Send Follow-up</button>' +
+          '</div>';
+      }
+
+      return (
+        '<div class="log-item">' +
+          '<div class="log-item__main">' +
+            '<div class="log-item__top">' +
+              '<div class="log-item__email">' + escHtml(e.email) + (e.firstName ? ' <span style="color:var(--muted);font-weight:500;">(' + escHtml(e.firstName) + ')</span>' : '') + '</div>' +
+              '<div class="log-item__date">' + escHtml(fmtDate(e.sentAt)) + '</div>' +
+            '</div>' +
+            '<div class="log-item__meta">' +
+              (e.orderNumber ? '<span><b>Order:</b> ' + escHtml(e.orderNumber) + '</span>' : '') +
+              '<span class="log-item__tag">' + escHtml(e.carrier || 'USPS') + '</span>' +
+              '<span style="word-break:break-all;"><b>' + escHtml(e.trackingNumber) + '</b></span>' +
+            '</div>' +
+            fuBlock +
+          '</div>' +
+          '<div class="log-item__actions">' +
+            '<button type="button" class="log-item__del" title="Delete entry" data-action="delete" data-id="' + escHtml(e.id) + '">&times;</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    list.innerHTML = html;
+  }
+
+  function showPanel() { hide($('gate')); show($('panel')); show($('logout')); renderLog(); }
+  function showGate() { hide($('panel')); show($('gate')); hide($('logout')); $('admin-key').value = ''; $('admin-key').focus(); }
+
+  if (getKey()) showPanel(); else showGate();
 
   $('unlock').addEventListener('click', function () {
     var k = $('admin-key').value.trim();
@@ -263,7 +356,6 @@
   $('admin-key').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') $('unlock').click();
   });
-
   $('logout').addEventListener('click', function () {
     clearKey();
     showGate();
@@ -275,16 +367,15 @@
       document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('is-on'); });
       btn.classList.add('is-on');
       var tab = btn.getAttribute('data-tab');
-      if (tab === 'tracking') { show($('form-tracking')); hide($('form-followup')); }
-      else { show($('form-followup')); hide($('form-tracking')); }
+      if (tab === 'send') { show($('form-tracking')); hide($('log-view')); }
+      else { show($('log-view')); hide($('form-tracking')); renderLog(); }
     });
   });
 
-  async function sendEmail(payload, statusEl, button) {
+  async function sendEmail(payload, statusEl, button, onSuccess) {
     clearStatus(statusEl);
-    var oldText = button.textContent;
-    button.disabled = true;
-    button.textContent = 'Sending…';
+    var oldText = button ? button.textContent : '';
+    if (button) { button.disabled = true; button.textContent = 'Sending…'; }
     try {
       var res = await fetch('/api/admin/send-email', {
         method: 'POST',
@@ -299,23 +390,25 @@
         setStatus(statusEl, 'err', 'Invalid admin key. Re-enter.');
         clearKey();
         setTimeout(showGate, 1200);
-        return;
+        return false;
       }
       if (!res.ok) {
         setStatus(statusEl, 'err', data.error || ('Send failed (HTTP ' + res.status + ')'));
-        return;
+        return false;
       }
       setStatus(statusEl, 'ok', '✓ Email sent to ' + payload.email);
+      if (typeof onSuccess === 'function') onSuccess(data);
+      return true;
     } catch (err) {
       setStatus(statusEl, 'err', 'Network error: ' + (err && err.message || 'unknown'));
+      return false;
     } finally {
-      button.disabled = false;
-      button.textContent = oldText;
+      if (button) { button.disabled = false; button.textContent = oldText; }
     }
   }
 
-  // Tracking send
-  $('send-tracking').addEventListener('click', function () {
+  // Send tracking email
+  $('send-tracking').addEventListener('click', async function () {
     var payload = {
       template: 'tracking',
       email: $('t-email').value.trim(),
@@ -330,24 +423,60 @@
       setStatus($('t-status'), 'err', 'Email and tracking number are required.');
       return;
     }
-    sendEmail(payload, $('t-status'), $('send-tracking'));
+    var ok = await sendEmail(payload, $('t-status'), $('send-tracking'));
+    if (ok) {
+      // Log it so follow-ups can target this later
+      addLogEntry({
+        id: 'trk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+        sentAt: Date.now(),
+        email: payload.email,
+        firstName: payload.firstName,
+        orderNumber: payload.orderNumber,
+        carrier: payload.carrier,
+        trackingNumber: payload.trackingNumber,
+        estimatedDelivery: payload.estimatedDelivery,
+        shippingAddress: payload.shippingAddress,
+        followUpSentAt: null,
+      });
+      // Clear the form for the next send (but keep carrier selected)
+      ['t-email', 't-firstName', 't-orderNumber', 't-trackingNumber', 't-estimatedDelivery', 't-shippingAddress'].forEach(function (id) {
+        $(id).value = '';
+      });
+    }
   });
 
-  // Follow-up send
-  $('send-followup').addEventListener('click', function () {
-    var payload = {
-      template: 'followup',
-      email: $('f-email').value.trim(),
-      firstName: $('f-firstName').value.trim(),
-      orderNumber: $('f-orderNumber').value.trim(),
-      subject: $('f-subject').value.trim(),
-      messageBody: $('f-messageBody').value,
-    };
-    if (!payload.email || !payload.messageBody.trim()) {
-      setStatus($('f-status'), 'err', 'Email and message body are required.');
+  // Delegate clicks on log-list buttons
+  $('log-list').addEventListener('click', async function (ev) {
+    var btn = ev.target.closest('[data-action]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-action');
+    var id = btn.getAttribute('data-id');
+    var entry = getLog().find(function (e) { return e.id === id; });
+    if (!entry) return;
+
+    if (action === 'delete') {
+      if (confirm('Delete this entry from the sent-tracking log? This only removes it from your list here — it does NOT unsend the original email.')) {
+        deleteLogEntry(id);
+      }
       return;
     }
-    sendEmail(payload, $('f-status'), $('send-followup'));
+
+    if (action === 'send-followup' || action === 'resend-followup') {
+      var isResend = action === 'resend-followup';
+      if (isResend && !confirm('Re-send the follow-up email to ' + entry.email + '? They have already received one.')) {
+        return;
+      }
+      var payload = {
+        template: 'followup',
+        email: entry.email,
+        firstName: entry.firstName || '',
+        orderNumber: entry.orderNumber || '',
+      };
+      var ok = await sendEmail(payload, $('log-status'), btn);
+      if (ok) {
+        updateLogEntry(id, { followUpSentAt: Date.now() });
+      }
+    }
   });
 })();
 </script>
