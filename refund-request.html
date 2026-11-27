@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Request — United Dispo</title>
+<meta name="description" content="Submit a refund request for your United Dispo order.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=Oswald:ital,wght@0,400;0,500;0,700;0,800;1,500;1,700;1,800&amp;display=swap">
+<link rel="stylesheet" href="css/style.css?v=20261120a">
+<style>
+  .rfnd {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .rfnd__progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0 0 40px;
+    padding: 0;
+    list-style: none;
+  }
+  .rfnd__dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    color: #555;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    transition: background .3s ease, border-color .3s ease, color .3s ease;
+    flex: 0 0 32px;
+  }
+  .rfnd__dot.is-active {
+    background: linear-gradient(180deg, #E8C766, #BA9930);
+    border-color: transparent;
+    color: #111;
+  }
+  .rfnd__dot.is-done {
+    background: rgba(212,175,55,.18);
+    border-color: rgba(212,175,55,.4);
+    color: #FFD976;
+  }
+  .rfnd__line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,.1);
+    transition: background .3s ease;
+  }
+  .rfnd__line.is-done {
+    background: rgba(212,175,55,.4);
+  }
+
+  .rfnd__step {
+    display: none;
+  }
+  .rfnd__step.is-visible {
+    display: block;
+    animation: rfnd-in .4s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rfnd-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .rfnd__heading {
+    margin: 0 0 8px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: .3px;
+    color: #fff;
+  }
+  .rfnd__sub {
+    margin: 0 0 28px;
+    color: #A5A7AC;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.65;
+  }
+
+  .rfnd__eligible {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 0 0 28px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    background: rgba(212,175,55,.08);
+    border: 1px solid rgba(212,175,55,.28);
+  }
+  .rfnd__eligible svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    margin-top: 1px;
+    color: #D4AF37;
+  }
+  .rfnd__eligible p {
+    margin: 0;
+    color: #E6E6E8;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .rfnd__row {
+    margin-bottom: 18px;
+  }
+  .rfnd__row label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #A5A7AC;
+    font-weight: 600;
+  }
+  .rfnd__row input,
+  .rfnd__row select {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 0;
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .rfnd__row input:focus,
+  .rfnd__row select:focus {
+    border-color: rgba(212,175,55,.28);
+  }
+  .rfnd__row input.is-error,
+  .rfnd__row select.is-error {
+    border-color: #c0392b;
+  }
+  .rfnd__row select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #D4AF37 50%), linear-gradient(135deg, #D4AF37 50%, transparent 50%);
+    background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  .rfnd__error {
+    display: none;
+    margin: 6px 0 0;
+    color: #e74c3c;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .rfnd__error.is-show {
+    display: block;
+  }
+
+  .rfnd__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 480px) {
+    .rfnd__cols { grid-template-columns: 1fr; gap: 0; }
+  }
+
+  .rfnd__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 160px;
+    min-height: 50px;
+    padding: 14px 28px;
+    background: linear-gradient(180deg, #E8C766, #BA9930);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(186,153,48,.26);
+    color: #111;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: .04rem;
+    cursor: pointer;
+    transition: filter .2s ease, transform .1s ease;
+    margin-top: 8px;
+  }
+  .rfnd__btn:hover { filter: brightness(1.07); }
+  .rfnd__btn:active { transform: translateY(1px); }
+  .rfnd__btn:focus-visible { outline: 2px solid #FFD976; outline-offset: 3px; }
+  .rfnd__btn--back {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.14);
+    box-shadow: none;
+    color: #D5D6D9;
+    font-weight: 700;
+    min-width: 100px;
+  }
+  .rfnd__btn--back:hover {
+    border-color: rgba(212,175,55,.4);
+    color: #FFD976;
+  }
+  .rfnd__actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  /* Step 4 summary */
+  .rfnd__summary {
+    margin: 0 0 28px;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .rfnd__summary li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .rfnd__summary dt {
+    color: #A5A7AC;
+    white-space: nowrap;
+  }
+  .rfnd__summary dd {
+    margin: 0;
+    color: #fff;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  /* Confirmation */
+  .rfnd__confirm {
+    text-align: center;
+    padding: 20px 0 0;
+  }
+  .rfnd__confirm-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(212,175,55,.12);
+    border: 1px solid rgba(212,175,55,.36);
+    color: #D4AF37;
+  }
+  .rfnd__confirm-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+  .rfnd__confirm h2 {
+    margin: 0 0 14px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.2;
+    color: #fff;
+  }
+  .rfnd__confirm p {
+    margin: 0 0 14px;
+    color: #C9CACE;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.7;
+  }
+
+  .rfnd__notice {
+    margin: 28px 0 0;
+    padding: 22px 20px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    text-align: left;
+  }
+  .rfnd__notice p {
+    margin: 0;
+    color: #A5A7AC;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  .rfnd__notice strong {
+    color: #fff;
+    font-weight: 700;
+  }
+  .rfnd__credit {
+    display: block;
+    margin-top: 14px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: rgba(212,175,55,.08);
+    border: 1px solid rgba(212,175,55,.28);
+    color: #FFD976;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .rfnd__home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    padding: 14px 28px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px;
+    color: #D5D6D9;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .rfnd__home:hover {
+    border-color: rgba(212,175,55,.4);
+    color: #FFD976;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rfnd__step.is-visible { animation: none; }
+  }
+</style>
+</head>
+<body class="page">
+
+<div class="uni-announce">
+  <button class="uni-announce__arrow uni-announce__arrow--prev" type="button" aria-label="Previous">&#8249;</button>
+  <div class="uni-announce__track">
+    <div class="uni-announce__slide is-active">Based In California</div>
+    <div class="uni-announce__slide">Over 6,000+ Customers</div>
+  </div>
+  <button class="uni-announce__arrow uni-announce__arrow--next" type="button" aria-label="Next">&#8250;</button>
+</div>
+
+<header class="uni-header">
+  <div class="uni-header__bar">
+    <div class="uni-header__side uni-header__side--left">
+      <button type="button" aria-label="Search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+    </div>
+    <a href="index.html" class="uni-logo">UNITED DISPO</a>
+    <div class="uni-header__side uni-header__side--right">
+      <a href="account.html" aria-label="Account">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <a href="cart.html" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8 h14 v12 a1 1 0 0 1 -1 1 h-12 a1 1 0 0 1 -1 -1 Z"/><path d="M9 8 a3 3 0 0 1 6 0"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<nav class="uni-nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="catalog.html">Catalog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<script>
+(function () {
+  var slides = document.querySelectorAll('.uni-announce__slide');
+  if (slides.length < 2) return;
+  var i = 0, timer;
+  function show(n) {
+    slides.forEach(function (s) { s.classList.remove('is-active'); });
+    slides[n].classList.add('is-active');
+  }
+  function next() { i = (i + 1) % slides.length; show(i); }
+  function prev() { i = (i - 1 + slides.length) % slides.length; show(i); }
+  function restart() { clearInterval(timer); timer = setInterval(next, 4000); }
+  timer = setInterval(next, 4000);
+  document.querySelector('.uni-announce__arrow--prev').addEventListener('click', function () { prev(); restart(); });
+  document.querySelector('.uni-announce__arrow--next').addEventListener('click', function () { next(); restart(); });
+})();
+</script>
+
+<main id="primary" class="site-main">
+  <div class="uni-page">
+    <h1 class="uni-page__title">Refund Request</h1>
+    <p class="uni-page__intro">Submit a refund request for your order below.</p>
+
+    <div class="rfnd">
+
+      <!-- Progress indicator -->
+      <ol class="rfnd__progress" aria-label="Refund request steps">
+        <li class="rfnd__dot is-active" data-dot="1" aria-current="step">1</li>
+        <li class="rfnd__line" data-line="1"></li>
+        <li class="rfnd__dot" data-dot="2">2</li>
+        <li class="rfnd__line" data-line="2"></li>
+        <li class="rfnd__dot" data-dot="3">3</li>
+        <li class="rfnd__line" data-line="3"></li>
+        <li class="rfnd__dot" data-dot="4">4</li>
+      </ol>
+
+      <!-- Step 1: Order Verification -->
+      <div class="rfnd__step is-visible" data-step="1">
+        <h2 class="rfnd__heading">Order Verification</h2>
+        <p class="rfnd__sub">Enter your Order ID to begin the refund request process.</p>
+        <div class="rfnd__row">
+          <label for="rfnd-order">Order ID</label>
+          <input type="text" id="rfnd-order" placeholder="e.g. UD-10492" autocomplete="off" required>
+          <p class="rfnd__error" id="err-order">Please enter your Order ID.</p>
+        </div>
+        <div class="rfnd__actions">
+          <button type="button" class="rfnd__btn" data-next="2">Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Eligibility & Customer Details -->
+      <div class="rfnd__step" data-step="2">
+        <h2 class="rfnd__heading">Refund Eligibility</h2>
+        <div class="rfnd__eligible">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <p>Your order is eligible for a refund under our 30-day refund policy, no reason required.</p>
+        </div>
+        <p class="rfnd__sub">Please confirm your details below.</p>
+        <div class="rfnd__cols">
+          <div class="rfnd__row">
+            <label for="rfnd-fname">First Name</label>
+            <input type="text" id="rfnd-fname" placeholder="First name" autocomplete="given-name" required>
+            <p class="rfnd__error" id="err-fname">Please enter your first name.</p>
+          </div>
+          <div class="rfnd__row">
+            <label for="rfnd-lname">Last Name</label>
+            <input type="text" id="rfnd-lname" placeholder="Last name" autocomplete="family-name" required>
+            <p class="rfnd__error" id="err-lname">Please enter your last name.</p>
+          </div>
+        </div>
+        <div class="rfnd__row">
+          <label for="rfnd-email">Email Address</label>
+          <input type="email" id="rfnd-email" placeholder="your@email.com" autocomplete="email" required>
+          <p class="rfnd__error" id="err-email">Please enter a valid email address.</p>
+        </div>
+        <div class="rfnd__actions">
+          <button type="button" class="rfnd__btn rfnd__btn--back" data-prev="1">Back</button>
+          <button type="button" class="rfnd__btn" data-next="3">Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Refund Reason -->
+      <div class="rfnd__step" data-step="3">
+        <h2 class="rfnd__heading">Refund Reason</h2>
+        <p class="rfnd__sub">Please select the reason for your refund request.</p>
+        <div class="rfnd__row">
+          <label for="rfnd-reason">Reason</label>
+          <select id="rfnd-reason" required>
+            <option value="">Select a reason</option>
+            <option value="Item not delivered">Item not delivered</option>
+            <option value="Changed my mind">Changed my mind</option>
+            <option value="Item not as described">Item not as described</option>
+            <option value="Received the wrong item">Received the wrong item</option>
+            <option value="Item arrived damaged or defective">Item arrived damaged or defective</option>
+            <option value="Duplicate order">Duplicate order</option>
+            <option value="Other">Other</option>
+          </select>
+          <p class="rfnd__error" id="err-reason">Please select a reason.</p>
+        </div>
+        <div class="rfnd__actions">
+          <button type="button" class="rfnd__btn rfnd__btn--back" data-prev="2">Back</button>
+          <button type="button" class="rfnd__btn" data-next="4">Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Review & Submit -->
+      <div class="rfnd__step" data-step="4">
+        <h2 class="rfnd__heading">Review &amp; Submit</h2>
+        <p class="rfnd__sub">Please review your refund request details before submitting.</p>
+        <ul class="rfnd__summary">
+          <li><dt>Order ID</dt><dd id="sum-order"></dd></li>
+          <li><dt>Name</dt><dd id="sum-name"></dd></li>
+          <li><dt>Email</dt><dd id="sum-email"></dd></li>
+          <li><dt>Reason</dt><dd id="sum-reason"></dd></li>
+        </ul>
+        <div class="rfnd__actions">
+          <button type="button" class="rfnd__btn rfnd__btn--back" data-prev="3">Back</button>
+          <button type="button" class="rfnd__btn" id="rfnd-submit">Submit Request</button>
+        </div>
+      </div>
+
+      <!-- Confirmation -->
+      <div class="rfnd__step" data-step="done">
+        <div class="rfnd__confirm">
+          <div class="rfnd__confirm-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <h2>Refund Request Submitted</h2>
+          <p>Your refund request has been successfully submitted. Our team will review your request and begin processing it shortly.</p>
+
+          <div class="rfnd__notice">
+            <p><strong>PLEASE NOTE:</strong> Your refund may take up to 14 days to appear on your original payment method, depending on your bank or payment processor. Please understand that we have no control over these processing times, as they depend entirely on your bank or payment provider and how quickly they process the refund — we thank you for your understanding.</p>
+            <span class="rfnd__credit">Your $50 store credit will be emailed to the email on file after your refund has finished finalizing to your original payment method.</span>
+          </div>
+
+          <a href="index.html" class="rfnd__home">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Return to Home
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="uni-sitefooter">
+  <p>&copy; 2026 United Dispo. All rights reserved.<br>
+  Licensed vendor. Based in California.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var current = 1;
+  var steps = document.querySelectorAll('.rfnd__step');
+  var dots = document.querySelectorAll('.rfnd__dot');
+  var lines = document.querySelectorAll('.rfnd__line');
+
+  function show(step) {
+    steps.forEach(function (s) { s.classList.remove('is-visible'); });
+    var target = document.querySelector('[data-step="' + step + '"]');
+    if (target) target.classList.add('is-visible');
+
+    dots.forEach(function (d) {
+      var n = parseInt(d.getAttribute('data-dot'), 10);
+      d.classList.remove('is-active', 'is-done');
+      d.removeAttribute('aria-current');
+      if (step === 'done') {
+        d.classList.add('is-done');
+      } else if (n === step) {
+        d.classList.add('is-active');
+        d.setAttribute('aria-current', 'step');
+      } else if (n < step) {
+        d.classList.add('is-done');
+      }
+    });
+
+    lines.forEach(function (l) {
+      var n = parseInt(l.getAttribute('data-line'), 10);
+      l.classList.remove('is-done');
+      if (step === 'done' || n < step) l.classList.add('is-done');
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function clearError(input, errId) {
+    input.classList.remove('is-error');
+    var err = document.getElementById(errId);
+    if (err) err.classList.remove('is-show');
+  }
+  function showError(input, errId) {
+    input.classList.add('is-error');
+    var err = document.getElementById(errId);
+    if (err) err.classList.add('is-show');
+    input.focus();
+  }
+
+  function validateStep(step) {
+    if (step === 1) {
+      var order = document.getElementById('rfnd-order');
+      clearError(order, 'err-order');
+      if (!order.value.trim()) { showError(order, 'err-order'); return false; }
+    }
+    if (step === 2) {
+      var fname = document.getElementById('rfnd-fname');
+      var lname = document.getElementById('rfnd-lname');
+      var email = document.getElementById('rfnd-email');
+      clearError(fname, 'err-fname');
+      clearError(lname, 'err-lname');
+      clearError(email, 'err-email');
+      var ok = true;
+      if (!fname.value.trim()) { showError(fname, 'err-fname'); ok = false; }
+      if (!lname.value.trim()) { if (ok) showError(lname, 'err-lname'); else { lname.classList.add('is-error'); document.getElementById('err-lname').classList.add('is-show'); } ok = false; }
+      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { if (ok) showError(email, 'err-email'); else { email.classList.add('is-error'); document.getElementById('err-email').classList.add('is-show'); } ok = false; }
+      return ok;
+    }
+    if (step === 3) {
+      var reason = document.getElementById('rfnd-reason');
+      clearError(reason, 'err-reason');
+      if (!reason.value) { showError(reason, 'err-reason'); return false; }
+    }
+    return true;
+  }
+
+  function populateSummary() {
+    document.getElementById('sum-order').textContent = document.getElementById('rfnd-order').value.trim();
+    document.getElementById('sum-name').textContent = document.getElementById('rfnd-fname').value.trim() + ' ' + document.getElementById('rfnd-lname').value.trim();
+    document.getElementById('sum-email').textContent = document.getElementById('rfnd-email').value.trim();
+    document.getElementById('sum-reason').textContent = document.getElementById('rfnd-reason').value;
+  }
+
+  document.querySelectorAll('[data-next]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var next = parseInt(btn.getAttribute('data-next'), 10);
+      if (!validateStep(current)) return;
+      if (next === 4) populateSummary();
+      current = next;
+      show(current);
+    });
+  });
+
+  document.querySelectorAll('[data-prev]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      current = parseInt(btn.getAttribute('data-prev'), 10);
+      show(current);
+    });
+  });
+
+  document.getElementById('rfnd-submit').addEventListener('click', function () {
+    current = 'done';
+    show('done');
+  });
+
+  /* Clear error states on input */
+  ['rfnd-order', 'rfnd-fname', 'rfnd-lname', 'rfnd-email', 'rfnd-reason'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', function () {
+      clearError(el, 'err-' + id.replace('rfnd-', ''));
+    });
+  });
+})();
+</script>
+
+<script src="js/cart.js?v=20261120g"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
