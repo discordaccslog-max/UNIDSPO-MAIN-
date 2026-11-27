@@ -170,7 +170,7 @@ function buildTrackingEmail({ firstName, orderNumber, carrier, trackingNumber, e
           </tr>
         </table>
         <p style="margin:14px 0 4px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">${orderNumber ? `Order ${esc(orderNumber)} &middot; Shipped` : 'Shipped'}</p>
-        <h1 style="margin:4px 0 10px;font-family:'Oswald',Arial,sans-serif;font-size:32px;font-weight:500;line-height:1.15;color:#fff;">Your order is on the way, ${esc(firstName) || 'friend'}!</h1>
+        <h1 style="margin:4px 0 10px;font-family:'Oswald',Arial,sans-serif;font-size:32px;font-weight:500;line-height:1.15;color:#fff;">Your order is on the way!</h1>
         <p style="margin:0;font-family:'Figtree',Arial,sans-serif;font-size:15px;line-height:1.65;color:#C9CBD0;">Your package has shipped via ${carrierLabel(carrier)}. You can track its progress with the button below.</p>
       </td>
     </tr>
