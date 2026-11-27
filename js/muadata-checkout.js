@@ -93,6 +93,22 @@
         if (!result.ok || !result.data || !result.data.url) {
           throw new Error((result.data && result.data.error) || 'Payment could not be set up. Please try again.');
         }
+
+        // Stash the full order data for the confirmation-email trigger that
+        // fires when the customer lands back on /order-success.html. Keyed
+        // by the server-generated order_id so order-success can look it up
+        // from the ?order_no= URL param. Cleaned up after the email sends.
+        var orderId = result.data.order_id;
+        if (orderId) {
+          try {
+            localStorage.setItem('uni_order_' + orderId, JSON.stringify({
+              order: order,
+              orderNumber: orderId,
+              createdAt: Date.now(),
+            }));
+          } catch (e) { /* localStorage quota or disabled — email just won't fire */ }
+        }
+
         // Navigate. The promise never resolves after this.
         window.location.href = result.data.url;
       })

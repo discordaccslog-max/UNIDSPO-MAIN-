@@ -98,5 +98,70 @@
     }
   } catch (e) {}
 </script>
+<script>
+  /* Confirmation-email trigger.
+
+     muadata-checkout.js stashed the full order object in localStorage
+     under 'uni_order_<order_id>' before redirecting to Muadata. The
+     gateway returns the customer here with ?pay_no=X&order_no=Y. We
+     retrieve the stashed data and POST it to /api/send-confirmation,
+     which dispatches a Resend email to order.customer.email.
+
+     - Sends at most once per order (sessionStorage flag).
+     - Fire-and-forget; errors are logged to console but never blocking.
+     - Entries older than 7 days are cleaned up on page load. */
+  (function () {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var orderId = params.get('order_no') || params.get('order_id');
+      if (!orderId) return;
+
+      var sentFlag = 'uni_sent_' + orderId;
+      if (sessionStorage.getItem(sentFlag)) return;
+
+      var stashKey = 'uni_order_' + orderId;
+      var raw = localStorage.getItem(stashKey);
+      if (!raw) return;
+
+      var data;
+      try { data = JSON.parse(raw); } catch (e) { return; }
+      if (!data || !data.order || !data.order.customer || !data.order.customer.email) return;
+
+      fetch('/api/send-confirmation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: data.order, orderNumber: data.orderNumber || orderId })
+      })
+        .then(function (r) {
+          if (r.ok) {
+            try {
+              sessionStorage.setItem(sentFlag, '1');
+              localStorage.removeItem(stashKey);
+            } catch (e) {}
+          } else {
+            console.warn('[uni:confirmation-email] send returned', r.status);
+          }
+        })
+        .catch(function (e) {
+          console.warn('[uni:confirmation-email] send failed', e);
+        });
+
+      /* Cleanup stale entries (>7 days) from any abandoned sessions. */
+      var cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      for (var i = localStorage.length - 1; i >= 0; i--) {
+        var k = localStorage.key(i);
+        if (!k || k.indexOf('uni_order_') !== 0) continue;
+        try {
+          var d = JSON.parse(localStorage.getItem(k));
+          if (d && d.createdAt && d.createdAt < cutoff) {
+            localStorage.removeItem(k);
+          }
+        } catch (e) { localStorage.removeItem(k); }
+      }
+    } catch (e) {
+      console.warn('[uni:confirmation-email] unexpected error', e);
+    }
+  })();
+</script>
 </body>
 </html>
