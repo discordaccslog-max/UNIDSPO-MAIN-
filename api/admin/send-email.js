@@ -217,55 +217,48 @@ function buildTrackingEmail({ firstName, orderNumber, carrier, trackingNumber, e
 }
 
 /* --------------------------------------------------------------------
-   Template: follow-up (ONE fixed template, same body every send)
+   Template: follow-up (ONE fixed template — lost-in-transit refund notice)
 
-   Edit FOLLOWUP_SUBJECT and FOLLOWUP_BODY below to customize.
-   Tokens supported in both: {{firstName}}, {{orderNumber}}
-   - {{firstName}} falls back to "there" if not provided
-   - {{orderNumber}} and its preceding "Order " text are removed cleanly
-     when orderNumber is empty (no "Order undefined" output)
+   Fully hardcoded. To change copy, edit the strings and HTML directly
+   in buildFollowUpEmail below. Button links to the refund-request page
+   at /refund-request (served as refund-request.html via cleanUrls).
    -------------------------------------------------------------------- */
 
-const FOLLOWUP_SUBJECT = `Checking in on your United Dispo order`;
-
-const FOLLOWUP_BODY = `Hi {{firstName}},
-
-Just checking in to make sure your United Dispo order arrived safely and everything was exactly what you expected.
-
-[PLACEHOLDER — edit the FOLLOWUP_BODY constant at the top of /api/admin/send-email.js to replace this text with your actual follow-up message. You can use {{firstName}} and {{orderNumber}} tokens anywhere in the text.]
-
-If anything is off — damaged packaging, wrong item, missing anything, or you just have a question — reply to this email or text us at (954) 289-1648 any time. We're always here.
-
-Thanks for shopping with us,
-United Dispo`;
-
-function renderTemplate(tpl, { firstName, orderNumber }) {
-  const firstSafe = (firstName || '').trim() || 'there';
-  const orderSafe = (orderNumber || '').trim();
-  // Clean handling for missing orderNumber — strip "Order {{orderNumber}}"
-  let out = String(tpl || '');
-  if (!orderSafe) {
-    out = out.replace(/\s*Order\s+\{\{orderNumber\}\}/g, '');
-  }
-  out = out.replace(/\{\{firstName\}\}/g, firstSafe);
-  out = out.replace(/\{\{orderNumber\}\}/g, orderSafe);
-  return out;
-}
+const FOLLOWUP_SUBJECT = `[UNITED DISPO] Important Update Regarding Your United Dispo Order`;
+const REFUND_URL = `${SITE}/refund-request`;
 
 function buildFollowUpEmail({ firstName, orderNumber }) {
-  const subject = renderTemplate(FOLLOWUP_SUBJECT, { firstName, orderNumber });
-  const bodyText = renderTemplate(FOLLOWUP_BODY, { firstName, orderNumber });
+  const para = (text) =>
+    `<p style="margin:0 0 16px;font-family:'Figtree',Arial,sans-serif;font-size:15.5px;line-height:1.7;color:#E6E6E8;">${text}</p>`;
+
+  const paragraphs = [
+    para(`We regret to inform you that your order appears to have been lost during transit. Unfortunately, the shipping carrier has not provided us with a reason for the loss. While we sincerely apologize for this inconvenience, shipping-related incidents are outside of our direct control and depend on the carrier's handling and delivery processes.`),
+    para(`Please rest assured that you are eligible for a full refund. To proceed, please submit a refund request through the button below:`),
+    `<div style="margin:22px 0 28px;text-align:center;">
+       <a href="${REFUND_URL}" style="display:inline-block;padding:16px 36px;border-radius:999px;border:1px solid #FFD700;background:linear-gradient(180deg,#E8C766,#BA9930);color:#111;font-family:'Oswald',Arial,sans-serif;font-size:16px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;text-decoration:none;">Submit Refund Request</a>
+     </div>`,
+    para(`Additionally, as compensation for the inconvenience, we have issued you a <b style="color:#FFD976;">$50 store credit</b>. Your store credit coupon can be applied once your refund request has been successfully submitted.`),
+    para(`Once again, we sincerely apologize for this experience and appreciate your understanding. We hope to have the opportunity to serve you again in the future.`),
+    `<p style="margin:28px 0 0;font-family:'Figtree',Arial,sans-serif;font-size:15.5px;line-height:1.7;color:#E6E6E8;">Regards,<br><b style="color:#fff;letter-spacing:0.04em;">UNITED DISPO LLC</b></p>`,
+  ];
 
   const body = `
     <tr>
       <td style="background:#111113;padding:36px 32px 32px;text-align:left;">
-        ${orderNumber ? `<p style="margin:0 0 6px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">Regarding Order ${esc(orderNumber)}</p>` : ''}
-        ${bodyToHtml(bodyText)}
+        ${orderNumber ? `<p style="margin:0 0 18px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">Regarding Order ${esc(orderNumber)}</p>` : ''}
+        ${paragraphs.join('')}
       </td>
     </tr>
   `;
 
-  return { html: wrap({ preheader: subject, headline: subject, bodyHtml: body }), subject };
+  return {
+    html: wrap({
+      preheader: `An important update about your United Dispo order — refund available.`,
+      headline: FOLLOWUP_SUBJECT,
+      bodyHtml: body,
+    }),
+    subject: FOLLOWUP_SUBJECT,
+  };
 }
 
 /* --------------------------------------------------------------------
