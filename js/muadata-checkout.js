@@ -95,19 +95,21 @@
         }
 
         // Stash the full order data for the confirmation-email trigger that
-        // fires when the customer lands back on /order-success.html. Keyed
-        // by the server-generated order_id so order-success can look it up
-        // from the ?order_no= URL param. Cleaned up after the email sends.
-        var orderId = result.data.order_id;
-        if (orderId) {
-          try {
-            localStorage.setItem('uni_order_' + orderId, JSON.stringify({
-              order: order,
-              orderNumber: orderId,
-              createdAt: Date.now(),
-            }));
-          } catch (e) { /* localStorage quota or disabled — email just won't fire */ }
-        }
+        // fires when the customer lands back on /order-success.html.
+        //
+        // Stored under a single key 'uni_pending_order' because Site B's
+        // order-success redirect doesn't append ?order_no= to the back URL
+        // — the customer lands on a bare /order-success.html with no
+        // params, so we can't look up by order_id. One pending order per
+        // device at a time is fine: the customer only has one in-flight
+        // payment, and a new checkout overwrites the previous entry.
+        try {
+          localStorage.setItem('uni_pending_order', JSON.stringify({
+            order: order,
+            orderNumber: result.data.order_id || '',
+            createdAt: Date.now(),
+          }));
+        } catch (e) { /* localStorage quota or disabled — email just won't fire */ }
 
         // Navigate. The promise never resolves after this.
         window.location.href = result.data.url;

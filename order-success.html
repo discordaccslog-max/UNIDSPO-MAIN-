@@ -102,62 +102,64 @@
   /* Confirmation-email trigger.
 
      muadata-checkout.js stashed the full order object in localStorage
-     under 'uni_order_<order_id>' before redirecting to Muadata. The
-     gateway returns the customer here with ?pay_no=X&order_no=Y. We
-     retrieve the stashed data and POST it to /api/send-confirmation,
-     which dispatches a Resend email to order.customer.email.
+     under the fixed key 'uni_pending_order' before redirecting to Muadata.
+     The Site B redirect doesn't append any URL params to the back URL
+     (per MUADATA Section 17 Phase 3), so we can't look up by order_id —
+     instead, we always read the single pending entry on landing, POST
+     it to /api/send-confirmation, and clear it.
 
-     - Sends at most once per order (sessionStorage flag).
-     - Fire-and-forget; errors are logged to console but never blocking.
-     - Entries older than 7 days are cleaned up on page load. */
+     Guards:
+     - Pending entry must exist (reviewer pasting /order-success directly
+       without a prior checkout has no entry → no fire).
+     - Customer email must be present on the stashed order.
+     - Entry older than 1 hour is ignored and deleted (stale abandoned
+       checkout left behind).
+     - sessionStorage flag prevents duplicate sends on page refresh. */
   (function () {
+    var STASH_KEY = 'uni_pending_order';
+    var SENT_FLAG = 'uni_pending_order_sent';
+    var MAX_AGE_MS = 60 * 60 * 1000; // 1 hour
+
     try {
-      var params = new URLSearchParams(window.location.search);
-      var orderId = params.get('order_no') || params.get('order_id');
-      if (!orderId) return;
+      if (sessionStorage.getItem(SENT_FLAG)) return;
 
-      var sentFlag = 'uni_sent_' + orderId;
-      if (sessionStorage.getItem(sentFlag)) return;
-
-      var stashKey = 'uni_order_' + orderId;
-      var raw = localStorage.getItem(stashKey);
-      if (!raw) return;
+      var raw = localStorage.getItem(STASH_KEY);
+      if (!raw) { console.info('[uni:confirmation-email] no pending order in storage, skip'); return; }
 
       var data;
-      try { data = JSON.parse(raw); } catch (e) { return; }
-      if (!data || !data.order || !data.order.customer || !data.order.customer.email) return;
+      try { data = JSON.parse(raw); } catch (e) { localStorage.removeItem(STASH_KEY); return; }
+      if (!data || !data.order || !data.order.customer || !data.order.customer.email) {
+        console.warn('[uni:confirmation-email] pending order missing customer email, skip');
+        localStorage.removeItem(STASH_KEY);
+        return;
+      }
+      if (data.createdAt && (Date.now() - data.createdAt) > MAX_AGE_MS) {
+        console.warn('[uni:confirmation-email] pending order is stale (>1h), discarding');
+        localStorage.removeItem(STASH_KEY);
+        return;
+      }
+
+      console.info('[uni:confirmation-email] sending to', data.order.customer.email);
 
       fetch('/api/send-confirmation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order: data.order, orderNumber: data.orderNumber || orderId })
+        body: JSON.stringify({ order: data.order, orderNumber: data.orderNumber || 'N/A' })
       })
         .then(function (r) {
           if (r.ok) {
+            console.info('[uni:confirmation-email] sent ✓');
             try {
-              sessionStorage.setItem(sentFlag, '1');
-              localStorage.removeItem(stashKey);
+              sessionStorage.setItem(SENT_FLAG, '1');
+              localStorage.removeItem(STASH_KEY);
             } catch (e) {}
           } else {
-            console.warn('[uni:confirmation-email] send returned', r.status);
+            r.text().then(function (t) { console.warn('[uni:confirmation-email] send returned', r.status, t); });
           }
         })
         .catch(function (e) {
           console.warn('[uni:confirmation-email] send failed', e);
         });
-
-      /* Cleanup stale entries (>7 days) from any abandoned sessions. */
-      var cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
-      for (var i = localStorage.length - 1; i >= 0; i--) {
-        var k = localStorage.key(i);
-        if (!k || k.indexOf('uni_order_') !== 0) continue;
-        try {
-          var d = JSON.parse(localStorage.getItem(k));
-          if (d && d.createdAt && d.createdAt < cutoff) {
-            localStorage.removeItem(k);
-          }
-        } catch (e) { localStorage.removeItem(k); }
-      }
     } catch (e) {
       console.warn('[uni:confirmation-email] unexpected error', e);
     }
