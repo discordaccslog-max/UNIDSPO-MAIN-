@@ -169,7 +169,7 @@ function buildTrackingEmail({ firstName, orderNumber, carrier, trackingNumber, e
             </td>
           </tr>
         </table>
-        <p style="margin:14px 0 4px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">Order ${esc(orderNumber)} &middot; Shipped</p>
+        <p style="margin:14px 0 4px;font-family:'Figtree',Arial,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#FFD976;">${orderNumber ? `Order ${esc(orderNumber)} &middot; Shipped` : 'Shipped'}</p>
         <h1 style="margin:4px 0 10px;font-family:'Oswald',Arial,sans-serif;font-size:32px;font-weight:500;line-height:1.15;color:#fff;">Your order is on the way, ${esc(firstName) || 'friend'}!</h1>
         <p style="margin:0;font-family:'Figtree',Arial,sans-serif;font-size:15px;line-height:1.65;color:#C9CBD0;">Your package has shipped via ${carrierLabel(carrier)}. You can track its progress with the button below.</p>
       </td>
@@ -208,8 +208,10 @@ function buildTrackingEmail({ firstName, orderNumber, carrier, trackingNumber, e
   `;
 
   return wrap({
-    preheader: `Your United Dispo order ${orderNumber} has shipped — tracking inside.`,
-    headline: `Order ${orderNumber} shipped — United Dispo`,
+    preheader: orderNumber
+      ? `Your United Dispo order ${orderNumber} has shipped — tracking inside.`
+      : `Your United Dispo order has shipped — tracking inside.`,
+    headline: orderNumber ? `Order ${orderNumber} shipped — United Dispo` : `Order shipped — United Dispo`,
     bodyHtml: body,
   });
 }
@@ -280,7 +282,6 @@ module.exports = async function handler(req, res) {
 
   if (template === 'tracking') {
     if (!trackingNumber) return res.status(400).json({ error: 'Missing tracking number.' });
-    if (!orderNumber) return res.status(400).json({ error: 'Missing order number.' });
     html = buildTrackingEmail({
       firstName,
       orderNumber,
@@ -289,7 +290,9 @@ module.exports = async function handler(req, res) {
       estimatedDelivery,
       shippingAddress,
     });
-    emailSubject = `Your United Dispo order ${orderNumber} has shipped`;
+    emailSubject = orderNumber
+      ? `Your United Dispo order ${orderNumber} has shipped`
+      : `Your United Dispo order has shipped`;
   } else if (template === 'followup') {
     if (!messageBody || !String(messageBody).trim()) {
       return res.status(400).json({ error: 'Missing message body.' });
