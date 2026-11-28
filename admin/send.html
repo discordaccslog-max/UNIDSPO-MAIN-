@@ -604,12 +604,26 @@
     var query = ($('orders-search').value || '').trim().toLowerCase();
 
     if (ORDERS_CACHE.kvEnabled === false) {
+      var diagHtml = '';
+      var d = ORDERS_CACHE.diag || {};
+      if (d.matchingEnvKeys && d.matchingEnvKeys.length) {
+        diagHtml = '<div style="margin-top:18px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;text-align:left;">' +
+          '<div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Server sees these env vars:</div>' +
+          '<div style="font-family:ui-monospace,SFMono-Regular,monospace;font-size:12px;color:#d9d9dc;line-height:1.7;">' +
+            d.matchingEnvKeys.map(function (k) { return escHtml(k); }).join('<br>') +
+          '</div>' +
+          '<div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.55;">' +
+            'None match the expected pair. Expected either <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;color:#FFD976;">UPSTASH_REDIS_REST_URL</code> + <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;color:#FFD976;">UPSTASH_REDIS_REST_TOKEN</code>, or <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;color:#FFD976;">KV_REST_API_URL</code> + <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;color:#FFD976;">KV_REST_API_TOKEN</code>.' +
+          '</div>' +
+        '</div>';
+      } else {
+        diagHtml = '<div style="margin-top:14px;font-size:12.5px;color:var(--muted);">Server sees <b>no</b> Redis/KV-related env vars — either the KV store isn\'t connected to this project, or the project wasn\'t redeployed after connecting.</div>';
+      }
       list.innerHTML = '<div class="log-empty" style="padding:28px 20px;line-height:1.7;">' +
         '<b style="color:var(--gold-hi);display:block;margin-bottom:6px;">Order storage not yet enabled</b>' +
-        'Create a Vercel KV / Upstash Redis store in the Vercel dashboard and connect it to this project.' +
-        '<br>Env vars <code style="background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;">KV_REST_API_URL</code> + ' +
-        '<code style="background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;">KV_REST_API_TOKEN</code> get auto-injected.' +
-        '<br><br>Until then, use the <b>Manual Send</b> tab.' +
+        'Create a Vercel KV / Upstash Redis store in the Vercel dashboard, connect it to this project, and redeploy.' +
+        diagHtml +
+        '<div style="margin-top:14px;font-size:13px;">Until then, use the <b>Manual Send</b> tab.</div>' +
         '</div>';
       hide(countEl);
       return;

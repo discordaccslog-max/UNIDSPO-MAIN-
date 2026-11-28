@@ -9,7 +9,7 @@
  * Auth: x-admin-key header must equal ADMIN_EMAIL_KEY env var.
  */
 
-const { listOrders } = require('../_lib/orders');
+const { listOrders, diagnose } = require('../_lib/orders');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -33,5 +33,9 @@ module.exports = async function handler(req, res) {
   if (!Number.isFinite(offset) || offset < 0) offset = 0;
 
   const result = await listOrders({ limit, offset });
+  // Attach KV diagnostic info so the admin UI can show exactly what the
+  // server sees for env vars (just names, never values). Only exposed
+  // through this admin-gated endpoint.
+  result.diag = diagnose();
   return res.status(200).json(result);
 };
