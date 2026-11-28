@@ -245,23 +245,28 @@ module.exports = async function handler(req, res) {
     return null;
   });
 
-  const ownerSend = resend.emails.send({
-    from: FROM,
-    to: OWNER_INBOX,
-    reply_to: email,
-    subject: `[UD Refund] ${firstName} ${lastName} · Order ${orderNumber}`,
-    html: buildOwnerEmail({ firstName, lastName, email, orderNumber, reason, ip, userAgent }),
-    text:
-      `New refund request\n\n` +
-      `Customer: ${firstName} ${lastName} <${email}>\n` +
-      `Order: ${orderNumber}\n` +
-      `Reason: ${reason}\n\n` +
-      `---\nIP: ${ip}\nUA: ${userAgent}`,
-  }).catch(function (err) {
-    console.error('[refund-request] owner email failed (non-fatal):', err && err.message);
-    return null;
-  });
+  // --- OWNER NOTIFICATION DISABLED ---
+  // To re-enable: uncomment the ownerSend block below AND change the
+  // Promise.all call to include ownerSend:
+  //   await Promise.all([customerSend, ownerSend]);
+  //
+  // const ownerSend = resend.emails.send({
+  //   from: FROM,
+  //   to: OWNER_INBOX,
+  //   reply_to: email,
+  //   subject: `[UD Refund] ${firstName} ${lastName} · Order ${orderNumber}`,
+  //   html: buildOwnerEmail({ firstName, lastName, email, orderNumber, reason, ip, userAgent }),
+  //   text:
+  //     `New refund request\n\n` +
+  //     `Customer: ${firstName} ${lastName} <${email}>\n` +
+  //     `Order: ${orderNumber}\n` +
+  //     `Reason: ${reason}\n\n` +
+  //     `---\nIP: ${ip}\nUA: ${userAgent}`,
+  // }).catch(function (err) {
+  //   console.error('[refund-request] owner email failed (non-fatal):', err && err.message);
+  //   return null;
+  // });
 
-  await Promise.all([customerSend, ownerSend]);
+  await customerSend;
   return res.status(200).json({ ok: true });
 };
