@@ -503,6 +503,11 @@
           <li><dt>Email</dt><dd id="sum-email"></dd></li>
           <li><dt>Reason</dt><dd id="sum-reason"></dd></li>
         </ul>
+        <!-- Honeypot: hidden off-screen. Real users won't see or fill. -->
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+          <label for="rfnd-hp">Website</label>
+          <input type="text" id="rfnd-hp" name="rfnd_website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="rfnd__actions">
           <button type="button" class="rfnd__btn rfnd__btn--back" data-prev="3">Back</button>
           <button type="button" class="rfnd__btn" id="rfnd-submit">Submit Request</button>
@@ -638,9 +643,48 @@
     });
   });
 
-  document.getElementById('rfnd-submit').addEventListener('click', function () {
-    current = 'done';
-    show('done');
+  document.getElementById('rfnd-submit').addEventListener('click', async function () {
+    var btn = document.getElementById('rfnd-submit');
+    var payload = {
+      orderNumber: (document.getElementById('rfnd-order').value || '').trim(),
+      firstName:   (document.getElementById('rfnd-fname').value || '').trim(),
+      lastName:    (document.getElementById('rfnd-lname').value || '').trim(),
+      email:       (document.getElementById('rfnd-email').value || '').trim(),
+      reason:      (document.getElementById('rfnd-reason').value || '').trim(),
+      website:     (document.getElementById('rfnd-hp') ? document.getElementById('rfnd-hp').value : ''),
+    };
+
+    // Client-side validation safety net
+    if (!payload.orderNumber || !payload.firstName || !payload.lastName ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email) || !payload.reason) {
+      alert('Please complete every step of the form before submitting.');
+      return;
+    }
+
+    var oldTxt = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    try {
+      var res = await fetch('/api/refund-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) {
+        alert((data && data.error) || 'Something went wrong submitting your request. Please try again or text us at (954) 289-1648.');
+        btn.disabled = false;
+        btn.textContent = oldTxt;
+        return;
+      }
+      current = 'done';
+      show('done');
+    } catch (err) {
+      alert('Network error — please try again or text us at (954) 289-1648.');
+      btn.disabled = false;
+      btn.textContent = oldTxt;
+    }
   });
 
   /* Clear error states on input */
