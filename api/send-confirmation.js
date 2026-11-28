@@ -204,6 +204,8 @@ function buildEmail(order, orderNumber) {
 </html>`;
 }
 
+const { saveOrder } = require('./_lib/orders');
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -227,6 +229,27 @@ module.exports = async function handler(req, res) {
       subject: `Order ${orderNumber} confirmed — United Dispo`,
       html: buildEmail(order, orderNumber)
     });
+
+    // Persist to KV so it shows up in the admin tab. Failure here does
+    // not fail the response — the email already sent is the main job.
+    try {
+      await saveOrder({
+        orderNumber,
+        createdAt: Date.now(),
+        customer: order.customer || {},
+        item: order.item || {},
+        shipping: order.shipping || {},
+        subtotal: order.subtotal,
+        shippingProtection: !!order.shippingProtection,
+        protectionPrice: order.protectionPrice,
+        total: order.total,
+        tracking: null,
+        followUp: null,
+      });
+    } catch (persistErr) {
+      console.error('[send-confirmation] KV persist failed (non-fatal):', persistErr);
+    }
+
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('send-confirmation error:', err);

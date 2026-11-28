@@ -104,6 +104,44 @@
     .log-item { flex-direction: column; }
     .log-item__actions { flex-direction: row; align-self: stretch; justify-content: space-between; }
   }
+
+  /* Orders tab */
+  .order-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
+  .order-card__hd { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; background: rgba(255,255,255,.02); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .order-card__hd-l { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .order-card__num { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: .08em; color: var(--gold-hi); }
+  .order-card__date { font-size: 12px; color: var(--muted); }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .pill--new    { background: rgba(255,217,118,.14); color: var(--gold-hi); border: 1px solid rgba(255,217,118,.3); }
+  .pill--sent   { background: rgba(127,211,168,.12); color: var(--ok); border: 1px solid rgba(127,211,168,.3); }
+  .pill--fu     { background: rgba(255,107,107,.1); color: var(--err); border: 1px solid rgba(255,107,107,.3); }
+  .order-card__body { padding: 18px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 680px) { .order-card__body { grid-template-columns: 1fr; } }
+  .order-info h4 { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  .order-info p  { margin: 0 0 12px; font-size: 14px; line-height: 1.55; color: var(--text); }
+  .order-info p:last-child { margin-bottom: 0; }
+  .order-info a  { color: var(--gold-hi); text-decoration: none; }
+  .order-info a:hover { text-decoration: underline; }
+  .order-info .addr { color: #d9d9dc; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; }
+  .order-send {
+    background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .order-send__row { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: end; }
+  .order-send input, .order-send select {
+    padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--bg); color: var(--text); font: inherit; font-size: 14px;
+  }
+  .order-send input:focus, .order-send select:focus { outline: none; border-color: var(--gold); }
+  .order-send label { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .order-send__status { font-size: 12.5px; color: var(--muted); min-height: 16px; }
+  .order-send__status.ok  { color: var(--ok); }
+  .order-send__status.err { color: var(--err); }
+  .order-sent { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .order-sent__tr { background: rgba(127,211,168,.06); border: 1px solid rgba(127,211,168,.2); border-radius: 10px; padding: 12px 14px; }
+  .order-sent__tr b { color: var(--ok); font-weight: 700; }
+  .order-sent__tr a { color: var(--gold-hi); font-weight: 600; text-decoration: none; word-break: break-all; }
+  .order-sent__tr a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -133,14 +171,36 @@
   <!-- Compose panel (hidden until unlocked) -->
   <section id="panel" style="display:none;">
     <div class="tabs">
-      <button type="button" class="tab is-on" data-tab="send">Send Tracking</button>
-      <button type="button" class="tab" data-tab="log">Sent Tracking <span class="tab__count" id="log-count" style="display:none;">0</span></button>
+      <button type="button" class="tab is-on" data-tab="orders">Orders <span class="tab__count" id="orders-count" style="display:none;">0</span></button>
+      <button type="button" class="tab" data-tab="log">Sent <span class="tab__count" id="log-count" style="display:none;">0</span></button>
+      <button type="button" class="tab" data-tab="send">Manual Send</button>
     </div>
 
-    <!-- Send tracking form -->
-    <div class="card" id="form-tracking">
-      <h2>Send tracking email</h2>
-      <p class="card__sub">Notify a customer that their order has shipped, with carrier + tracking number.</p>
+    <!-- Orders (auto-populated from KV) -->
+    <div class="card" id="orders-view">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;margin-bottom:4px;">
+        <h2 style="margin:0;">Orders</h2>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="search" id="orders-search" placeholder="Search email or order #" style="padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);font:inherit;font-size:13px;min-width:200px;">
+          <select id="orders-filter" style="padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);font:inherit;font-size:13px;">
+            <option value="needs-tracking">Needs tracking</option>
+            <option value="tracking-sent">Tracking sent</option>
+            <option value="all" selected>All orders</option>
+          </select>
+          <button type="button" class="btn btn--sm btn--hollow" id="orders-refresh" title="Refresh">↻</button>
+        </div>
+      </div>
+      <p class="card__sub">Every successful purchase appears here automatically. Enter a tracking number and click Send — the customer's email, address, and order details are already filled in.</p>
+      <div id="orders-list">
+        <div class="log-empty">Loading orders…</div>
+      </div>
+      <div class="status" id="orders-status"></div>
+    </div>
+
+    <!-- Manual send form (fallback for orders not in KV) -->
+    <div class="card" id="form-tracking" style="display:none;">
+      <h2>Manual tracking send</h2>
+      <p class="card__sub">For orders that aren't in the Orders tab (e.g. pre-upgrade orders, orders where the confirmation flow never fired). All fields are typed in manually here.</p>
 
       <div class="row">
         <div class="field">
@@ -341,7 +401,7 @@
     list.innerHTML = html;
   }
 
-  function showPanel() { hide($('gate')); show($('panel')); show($('logout')); renderLog(); }
+  function showPanel() { hide($('gate')); show($('panel')); show($('logout')); renderLog(); loadOrders(); }
   function showGate() { hide($('panel')); show($('gate')); hide($('logout')); $('admin-key').value = ''; $('admin-key').focus(); }
 
   if (getKey()) showPanel(); else showGate();
@@ -367,8 +427,10 @@
       document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('is-on'); });
       btn.classList.add('is-on');
       var tab = btn.getAttribute('data-tab');
-      if (tab === 'send') { show($('form-tracking')); hide($('log-view')); }
-      else { show($('log-view')); hide($('form-tracking')); renderLog(); }
+      hide($('orders-view')); hide($('form-tracking')); hide($('log-view'));
+      if (tab === 'orders') { show($('orders-view')); loadOrders(); }
+      else if (tab === 'send') { show($('form-tracking')); }
+      else if (tab === 'log')  { show($('log-view')); renderLog(); }
     });
   });
 
@@ -478,6 +540,307 @@
       }
     }
   });
+  /* ============================================================
+     ORDERS TAB — fetches /api/admin/list-orders, renders cards
+     ============================================================ */
+
+  var ORDERS_CACHE = { ts: 0, items: [], total: 0, kvEnabled: null };
+  var ORDERS_TTL_MS = 30 * 1000; // 30s client cache
+
+  function carrierUrl(carrier, number) {
+    var t = encodeURIComponent(String(number || '').trim());
+    if (!t) return '';
+    switch (String(carrier || '').toLowerCase()) {
+      case 'usps':  return 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + t;
+      case 'fedex': return 'https://www.fedex.com/fedextrack/?trknbr=' + t;
+      case 'ups':   return 'https://www.ups.com/track?tracknum=' + t;
+      case 'dhl':   return 'https://www.dhl.com/en/express/tracking.html?AWB=' + t;
+      default: return '';
+    }
+  }
+
+  function fmtMoney(n) {
+    if (n == null || isNaN(Number(n))) return '';
+    return '$' + Number(n).toFixed(2);
+  }
+
+  function orderStatus(o) {
+    if (o.followUp && o.followUp.sentAt) return 'fu';
+    if (o.tracking && o.tracking.sentAt) return 'sent';
+    return 'new';
+  }
+
+  async function loadOrders(force) {
+    if (!force && ORDERS_CACHE.items.length && (Date.now() - ORDERS_CACHE.ts) < ORDERS_TTL_MS) {
+      renderOrders();
+      return;
+    }
+    try {
+      var res = await fetch('/api/admin/list-orders?limit=500', {
+        headers: { 'x-admin-key': getKey() }
+      });
+      if (res.status === 401) {
+        setStatus($('orders-status'), 'err', 'Session expired. Re-enter your key.');
+        clearKey(); setTimeout(showGate, 1200);
+        return;
+      }
+      var data = await res.json().catch(function () { return { ok: false }; });
+      if (!data.ok) {
+        setStatus($('orders-status'), 'err', data.error || 'Failed to load orders.');
+        return;
+      }
+      ORDERS_CACHE = { ts: Date.now(), items: data.orders || [], total: data.total || 0, kvEnabled: data.kvEnabled !== false };
+      clearStatus($('orders-status'));
+      renderOrders();
+    } catch (err) {
+      setStatus($('orders-status'), 'err', 'Network error loading orders.');
+    }
+  }
+
+  function renderOrders() {
+    var list = $('orders-list');
+    var countEl = $('orders-count');
+    var filter = $('orders-filter').value;
+    var query = ($('orders-search').value || '').trim().toLowerCase();
+
+    if (ORDERS_CACHE.kvEnabled === false) {
+      list.innerHTML = '<div class="log-empty" style="padding:28px 20px;line-height:1.7;">' +
+        '<b style="color:var(--gold-hi);display:block;margin-bottom:6px;">Order storage not yet enabled</b>' +
+        'Create a Vercel KV / Upstash Redis store in the Vercel dashboard and connect it to this project.' +
+        '<br>Env vars <code style="background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;">KV_REST_API_URL</code> + ' +
+        '<code style="background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;">KV_REST_API_TOKEN</code> get auto-injected.' +
+        '<br><br>Until then, use the <b>Manual Send</b> tab.' +
+        '</div>';
+      hide(countEl);
+      return;
+    }
+
+    var items = ORDERS_CACHE.items.slice();
+
+    // Filter
+    if (filter === 'needs-tracking') {
+      items = items.filter(function (o) { return !(o.tracking && o.tracking.sentAt); });
+    } else if (filter === 'tracking-sent') {
+      items = items.filter(function (o) { return o.tracking && o.tracking.sentAt; });
+    }
+
+    // Search
+    if (query) {
+      items = items.filter(function (o) {
+        var em = ((o.customer && o.customer.email) || '').toLowerCase();
+        var num = String(o.orderNumber || '').toLowerCase();
+        return em.indexOf(query) !== -1 || num.indexOf(query) !== -1;
+      });
+    }
+
+    // Count badge (total unfilled over all)
+    var needsTracking = ORDERS_CACHE.items.filter(function (o) { return !(o.tracking && o.tracking.sentAt); }).length;
+    if (needsTracking > 0) {
+      countEl.textContent = needsTracking;
+      show(countEl);
+    } else {
+      hide(countEl);
+    }
+
+    if (!items.length) {
+      list.innerHTML = '<div class="log-empty">No orders match this filter.</div>';
+      return;
+    }
+
+    list.innerHTML = items.map(function (o) {
+      var st = orderStatus(o);
+      var pillHtml = st === 'fu'   ? '<span class="pill pill--fu">Follow-up sent</span>'
+                   : st === 'sent' ? '<span class="pill pill--sent">Tracking sent</span>'
+                   : '<span class="pill pill--new">Needs tracking</span>';
+      var c = o.customer || {};
+      var item = o.item || {};
+      var addr = [
+        [c.first, c.last].filter(Boolean).join(' '),
+        c.address,
+        c.apt,
+        [[c.city, c.state].filter(Boolean).join(', '), c.zip].filter(Boolean).join(' '),
+        c.country,
+      ].filter(Boolean).join('\n');
+      var itemLine = [item.title, item.variant].filter(Boolean).join(' · ');
+
+      var rightPanel;
+      if (st === 'new') {
+        rightPanel =
+          '<div class="order-send" data-ord="' + escHtml(o.orderNumber) + '">' +
+            '<div class="order-send__row">' +
+              '<div><label>Carrier</label>' +
+                '<select class="js-carrier">' +
+                  '<option value="USPS">USPS</option>' +
+                  '<option value="FedEx">FedEx</option>' +
+                  '<option value="UPS">UPS</option>' +
+                  '<option value="DHL">DHL</option>' +
+                '</select>' +
+              '</div>' +
+              '<div><label>Tracking number</label>' +
+                '<input type="text" class="js-trk" placeholder="e.g. 9400111899223..." autocomplete="off">' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="btn btn--sm js-send">Send Tracking Email</button>' +
+            '<div class="order-send__status js-status"></div>' +
+          '</div>';
+      } else {
+        var trk = o.tracking || {};
+        var trUrl = carrierUrl(trk.carrier, trk.number);
+        var sentAt = trk.sentAt ? fmtDate(trk.sentAt) : '';
+        var fuBlock = '';
+        if (st === 'fu') {
+          fuBlock = '<div style="font-size:12.5px;color:var(--ok);">✓ Follow-up sent ' + escHtml(fmtDate(o.followUp.sentAt)) + '</div>';
+        } else {
+          fuBlock = '<button type="button" class="btn btn--sm btn--danger js-fu" data-ord="' + escHtml(o.orderNumber) + '">Send Follow-up</button>';
+        }
+        rightPanel =
+          '<div class="order-sent">' +
+            '<div class="order-sent__tr">' +
+              '<div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;"><b>' + escHtml(trk.carrier || 'USPS') + '</b> · Sent ' + escHtml(sentAt) + '</div>' +
+              (trUrl
+                ? '<a href="' + trUrl + '" target="_blank" rel="noopener">' + escHtml(trk.number || '') + ' ↗</a>'
+                : '<span>' + escHtml(trk.number || '') + '</span>') +
+            '</div>' +
+            fuBlock +
+            '<div class="order-send__status js-status"></div>' +
+          '</div>';
+      }
+
+      return (
+        '<div class="order-card" data-ord="' + escHtml(o.orderNumber) + '">' +
+          '<div class="order-card__hd">' +
+            '<div class="order-card__hd-l">' +
+              '<span class="order-card__num">#' + escHtml(o.orderNumber) + '</span>' +
+              '<span class="order-card__date">' + escHtml(fmtDate(o.createdAt || Date.now())) + '</span>' +
+            '</div>' +
+            pillHtml +
+          '</div>' +
+          '<div class="order-card__body">' +
+            '<div>' +
+              '<div class="order-info">' +
+                '<h4>Customer</h4>' +
+                '<p><b>' + escHtml([c.first, c.last].filter(Boolean).join(' ')) + '</b><br>' +
+                   (c.email ? '<a href="mailto:' + escHtml(c.email) + '">' + escHtml(c.email) + '</a>' : '') +
+                   (c.phone ? '<br><span style="color:var(--muted);">' + escHtml(c.phone) + '</span>' : '') +
+                '</p>' +
+                '<h4>Ship to</h4>' +
+                '<p class="addr">' + escHtml(addr) + '</p>' +
+                (itemLine ? '<h4>Item</h4><p>' + escHtml(itemLine) + (o.total ? ' · <b>' + fmtMoney(o.total) + '</b>' : '') + '</p>' : '') +
+              '</div>' +
+            '</div>' +
+            '<div>' + rightPanel + '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  // Inline send handlers (delegated)
+  $('orders-list').addEventListener('click', async function (e) {
+    var sendBtn = e.target.closest ? e.target.closest('.js-send') : null;
+    var fuBtn   = e.target.closest ? e.target.closest('.js-fu')   : null;
+    if (sendBtn) {
+      var box = sendBtn.closest('.order-send');
+      var ord = box.getAttribute('data-ord');
+      var trk = box.querySelector('.js-trk').value.trim();
+      var car = box.querySelector('.js-carrier').value;
+      var statusEl = box.querySelector('.js-status');
+      if (!trk) { statusEl.className = 'order-send__status err'; statusEl.textContent = 'Tracking number required.'; return; }
+      // Look up the order in cache for email + firstName
+      var o = ORDERS_CACHE.items.find(function (x) { return String(x.orderNumber) === String(ord); });
+      if (!o) { statusEl.className = 'order-send__status err'; statusEl.textContent = 'Order not found in cache. Refresh.'; return; }
+      sendBtn.disabled = true; var oldTxt = sendBtn.textContent; sendBtn.textContent = 'Sending…';
+      statusEl.className = 'order-send__status'; statusEl.textContent = '';
+
+      var c = o.customer || {};
+      var addr = [
+        c.address,
+        c.apt,
+        [[c.city, c.state].filter(Boolean).join(', '), c.zip].filter(Boolean).join(' '),
+      ].filter(Boolean).join('\n');
+
+      try {
+        var res = await fetch('/api/admin/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': getKey() },
+          body: JSON.stringify({
+            template: 'tracking',
+            email: c.email,
+            firstName: c.first,
+            orderNumber: ord,
+            carrier: car,
+            trackingNumber: trk,
+            shippingAddress: addr,
+          }),
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (res.status === 401) { clearKey(); setTimeout(showGate, 1000); return; }
+        if (!res.ok) {
+          statusEl.className = 'order-send__status err';
+          statusEl.textContent = data.error || 'Send failed.';
+          sendBtn.disabled = false; sendBtn.textContent = oldTxt;
+          return;
+        }
+        // Optimistic cache update
+        o.tracking = { number: trk, carrier: car, sentAt: Date.now(), sendId: data.id || null };
+        // Also append to the sent-tracking log for the Sent tab
+        addLogEntry({
+          id: 'trk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+          sentAt: Date.now(),
+          email: c.email, firstName: c.first || '', orderNumber: ord,
+          carrier: car, trackingNumber: trk,
+          estimatedDelivery: '', shippingAddress: addr,
+          followUpSentAt: null,
+        });
+        renderOrders();
+      } catch (err) {
+        statusEl.className = 'order-send__status err';
+        statusEl.textContent = 'Network error.';
+        sendBtn.disabled = false; sendBtn.textContent = oldTxt;
+      }
+    }
+    if (fuBtn) {
+      var ord2 = fuBtn.getAttribute('data-ord');
+      var o2 = ORDERS_CACHE.items.find(function (x) { return String(x.orderNumber) === String(ord2); });
+      if (!o2) return;
+      var c2 = o2.customer || {};
+      if (!confirm('Send the lost-in-transit follow-up email to ' + (c2.email || 'this customer') + '?')) return;
+      var statusEl2 = fuBtn.parentElement.querySelector('.js-status');
+      fuBtn.disabled = true; var oldTxt2 = fuBtn.textContent; fuBtn.textContent = 'Sending…';
+      try {
+        var res2 = await fetch('/api/admin/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': getKey() },
+          body: JSON.stringify({
+            template: 'followup', email: c2.email, firstName: c2.first, orderNumber: ord2,
+          }),
+        });
+        var data2 = await res2.json().catch(function () { return {}; });
+        if (res2.status === 401) { clearKey(); setTimeout(showGate, 1000); return; }
+        if (!res2.ok) {
+          statusEl2.className = 'order-send__status err';
+          statusEl2.textContent = data2.error || 'Send failed.';
+          fuBtn.disabled = false; fuBtn.textContent = oldTxt2;
+          return;
+        }
+        o2.followUp = { sentAt: Date.now(), sendId: data2.id || null };
+        renderOrders();
+      } catch (err) {
+        statusEl2.className = 'order-send__status err';
+        statusEl2.textContent = 'Network error.';
+        fuBtn.disabled = false; fuBtn.textContent = oldTxt2;
+      }
+    }
+  });
+
+  $('orders-refresh').addEventListener('click', function () { loadOrders(true); });
+  $('orders-filter').addEventListener('change', renderOrders);
+  var searchTimer;
+  $('orders-search').addEventListener('input', function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(renderOrders, 150);
+  });
+
 })();
 </script>
 </body>

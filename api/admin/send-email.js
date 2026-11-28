@@ -11,6 +11,7 @@
  */
 
 const { Resend } = require('resend');
+const { updateOrder } = require('../_lib/orders');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const SITE = 'https://uniteddispo.com';
@@ -328,7 +329,33 @@ module.exports = async function handler(req, res) {
       subject: emailSubject,
       html,
     });
-    return res.status(200).json({ ok: true, id: result && result.data && result.data.id });
+    const sendId = result && result.data && result.data.id;
+
+    // Update the stored order record so the admin UI reflects what was sent.
+    // Non-fatal if KV isn't configured.
+    if (orderNumber) {
+      try {
+        if (template === 'tracking') {
+          await updateOrder(orderNumber, {
+            tracking: {
+              number: trackingNumber,
+              carrier: carrier || 'USPS',
+              estimatedDelivery: estimatedDelivery || null,
+              sentAt: Date.now(),
+              sendId,
+            },
+          });
+        } else if (template === 'followup') {
+          await updateOrder(orderNumber, {
+            followUp: { sentAt: Date.now(), sendId },
+          });
+        }
+      } catch (persistErr) {
+        console.error('[admin-send] KV update failed (non-fatal):', persistErr);
+      }
+    }
+
+    return res.status(200).json({ ok: true, id: sendId });
   } catch (err) {
     console.error('[admin-send] Resend error:', err);
     return res.status(500).json({ error: 'Failed to send email: ' + (err && err.message || 'unknown') });
