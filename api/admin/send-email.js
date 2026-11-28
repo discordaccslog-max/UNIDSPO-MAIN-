@@ -11,7 +11,7 @@
  */
 
 const { Resend } = require('resend');
-const { updateOrder } = require('../_lib/orders');
+const { updateOrder, deleteOrder } = require('../_lib/orders');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const SITE = 'https://uniteddispo.com';
@@ -333,6 +333,7 @@ module.exports = async function handler(req, res) {
 
     // Update the stored order record so the admin UI reflects what was sent.
     // Non-fatal if KV isn't configured.
+    let archived = false;
     if (orderNumber) {
       try {
         if (template === 'tracking') {
@@ -346,16 +347,20 @@ module.exports = async function handler(req, res) {
             },
           });
         } else if (template === 'followup') {
-          await updateOrder(orderNumber, {
-            followUp: { sentAt: Date.now(), sendId },
-          });
+          // Follow-up is the terminal step for this order — there's
+          // nothing left for the admin to do on it. Remove it from
+          // KV so storage doesn't grow unbounded. The Sent-tab
+          // localStorage log on the admin's device still retains the
+          // full history for reference.
+          const r = await deleteOrder(orderNumber);
+          archived = !!(r && r.ok);
         }
       } catch (persistErr) {
         console.error('[admin-send] KV update failed (non-fatal):', persistErr);
       }
     }
 
-    return res.status(200).json({ ok: true, id: sendId });
+    return res.status(200).json({ ok: true, id: sendId, archived });
   } catch (err) {
     console.error('[admin-send] Resend error:', err);
     return res.status(500).json({ error: 'Failed to send email: ' + (err && err.message || 'unknown') });

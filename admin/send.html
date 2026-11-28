@@ -190,7 +190,7 @@
           <button type="button" class="btn btn--sm btn--hollow" id="orders-refresh" title="Refresh">↻</button>
         </div>
       </div>
-      <p class="card__sub">Every successful purchase appears here automatically. Enter a tracking number and click Send — the customer's email, address, and order details are already filled in.</p>
+      <p class="card__sub">Every successful purchase appears here automatically. Enter a tracking number and click Send — the customer's email, address, and order details are already filled in. Orders are removed from this list once their follow-up email has been sent (terminal step); the <b>Sent</b> tab keeps the full per-device history.</p>
       <div id="orders-list">
         <div class="log-empty">Loading orders…</div>
       </div>
@@ -537,6 +537,12 @@
       var ok = await sendEmail(payload, $('log-status'), btn);
       if (ok) {
         updateLogEntry(id, { followUpSentAt: Date.now() });
+        // Server also deletes the KV record on successful follow-up —
+        // bust the Orders-tab cache so the row is gone next load.
+        ORDERS_CACHE.ts = 0;
+        ORDERS_CACHE.items = ORDERS_CACHE.items.filter(function (x) {
+          return String(x.orderNumber) !== String(entry.orderNumber);
+        });
       }
     }
   });
@@ -837,7 +843,19 @@
           fuBtn.disabled = false; fuBtn.textContent = oldTxt2;
           return;
         }
-        o2.followUp = { sentAt: Date.now(), sendId: data2.id || null };
+        // Server deletes the KV record on successful follow-up — mirror
+        // that in the local cache so the card disappears on next render.
+        if (data2.archived) {
+          ORDERS_CACHE.items = ORDERS_CACHE.items.filter(function (x) { return String(x.orderNumber) !== String(ord2); });
+          ORDERS_CACHE.total = Math.max(0, (ORDERS_CACHE.total || 1) - 1);
+          var who = c2.email || ('order ' + ord2);
+          setStatus($('orders-status'), 'ok', '✓ Follow-up sent to ' + who + ' — order archived from storage.');
+          // Clear the toast after a few seconds
+          setTimeout(function () { clearStatus($('orders-status')); }, 6000);
+        } else {
+          // KV delete failed but email succeeded — just reflect the follow-up state
+          o2.followUp = { sentAt: Date.now(), sendId: data2.id || null };
+        }
         renderOrders();
       } catch (err) {
         statusEl2.className = 'order-send__status err';
