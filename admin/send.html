@@ -109,6 +109,9 @@
   .order-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
   .order-card__hd { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; background: rgba(255,255,255,.02); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
   .order-card__hd-l { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .order-card__hd-r { display: flex; gap: 10px; align-items: center; }
+  .order-card__del { background: none; border: 0; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; padding: 4px 8px; border-radius: 6px; font-family: inherit; }
+  .order-card__del:hover { color: var(--err); background: rgba(255,107,107,.08); }
   .order-card__num { font-family: "Oswald", sans-serif; font-weight: 500; font-size: 15px; letter-spacing: .08em; color: var(--gold-hi); }
   .order-card__date { font-size: 12px; color: var(--muted); }
   .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
@@ -733,7 +736,10 @@
               '<span class="order-card__num">#' + escHtml(o.orderNumber) + '</span>' +
               '<span class="order-card__date">' + escHtml(fmtDate(o.createdAt || Date.now())) + '</span>' +
             '</div>' +
-            pillHtml +
+            '<div class="order-card__hd-r">' +
+              pillHtml +
+              '<button type="button" class="order-card__del js-del" data-ord="' + escHtml(o.orderNumber) + '" title="Remove this order from storage (does not un-send any emails)">×</button>' +
+            '</div>' +
           '</div>' +
           '<div class="order-card__body">' +
             '<div>' +
@@ -759,6 +765,39 @@
   $('orders-list').addEventListener('click', async function (e) {
     var sendBtn = e.target.closest ? e.target.closest('.js-send') : null;
     var fuBtn   = e.target.closest ? e.target.closest('.js-fu')   : null;
+    var delBtn  = e.target.closest ? e.target.closest('.js-del')  : null;
+
+    if (delBtn) {
+      var delOrd = delBtn.getAttribute('data-ord');
+      if (!confirm('Remove order #' + delOrd + ' from storage?\n\nThis does NOT un-send any emails already sent to the customer — it only clears the record from the admin list.')) return;
+      delBtn.disabled = true;
+      var oldTxtDel = delBtn.textContent;
+      delBtn.textContent = '…';
+      try {
+        var rDel = await fetch('/api/admin/delete-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-key': getKey() },
+          body: JSON.stringify({ orderNumber: delOrd }),
+        });
+        var dDel = await rDel.json().catch(function () { return {}; });
+        if (rDel.status === 401) { clearKey(); setTimeout(showGate, 1000); return; }
+        if (!rDel.ok) {
+          setStatus($('orders-status'), 'err', dDel.error || 'Delete failed.');
+          delBtn.disabled = false; delBtn.textContent = oldTxtDel;
+          return;
+        }
+        // Prune from cache + re-render
+        ORDERS_CACHE.items = ORDERS_CACHE.items.filter(function (x) { return String(x.orderNumber) !== String(delOrd); });
+        ORDERS_CACHE.total = Math.max(0, (ORDERS_CACHE.total || 1) - 1);
+        setStatus($('orders-status'), 'ok', '✓ Order #' + delOrd + ' removed from storage.');
+        setTimeout(function () { clearStatus($('orders-status')); }, 4000);
+        renderOrders();
+      } catch (err) {
+        setStatus($('orders-status'), 'err', 'Network error on delete.');
+        delBtn.disabled = false; delBtn.textContent = oldTxtDel;
+      }
+      return;
+    }
     if (sendBtn) {
       var box = sendBtn.closest('.order-send');
       var ord = box.getAttribute('data-ord');
